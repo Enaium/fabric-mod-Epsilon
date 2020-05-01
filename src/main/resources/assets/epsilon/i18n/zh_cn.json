@@ -1,0 +1,13 @@
+{
+  "module.COMBAT": "战斗类",
+  "module.RENDER": "显示类",
+  "module.RENDER.Bright": "亮度最高",
+  "module.RENDER.HUD": "HUD",
+  "module.RENDER.setting.TabGUI": "标签栏",
+  "module.RENDER.setting.List": "EnableList",
+  "module.RENDER.setting.Armor": "Armor",
+  "module.RENDER.Glow": "发光",
+  "module.MOVEMENT": "移动类",
+  "module.MOVEMENT.Sprint": "疾跑",
+  "module.OTHER": "其他类"
+}
