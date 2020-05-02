@@ -1,9 +1,8 @@
 package cn.enaium.epsilon.command
 
 import cn.enaium.epsilon.command.commands.CommandHelp
-import cn.enaium.epsilon.command.commands.CommandToggle
+import cn.enaium.epsilon.command.commands.CommandEnable
 import cn.enaium.epsilon.utils.ChatUtils
-import cn.enaium.spongeyay.command.commands.*
 import java.util.*
 
 class CommandManager {
@@ -12,7 +11,7 @@ class CommandManager {
 
     init {
         commands[arrayOf("help", "h")] = CommandHelp()
-        commands[arrayOf("toggle", "t")] = CommandToggle()
+        commands[arrayOf("enable", "e")] = CommandEnable()
     }
 
     fun processCommand(rawMessage: String): Boolean {
