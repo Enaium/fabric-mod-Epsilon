@@ -12,4 +12,8 @@ public class I18nUtils {
     public static String getKey(String key) {
         return new Gson().fromJson(FileUtils.INSTANCE.readResource(I18nUtils.class.getResourceAsStream("/assets/epsilon/i18n/zh_cn.json")), JsonObject.class).get(key).getAsString();
     }
+
+    public static String getKey(String key, String path) {
+        return new Gson().fromJson(FileUtils.INSTANCE.readResource(I18nUtils.class.getResourceAsStream(path)), JsonObject.class).get(key).getAsString();
+    }
 }
