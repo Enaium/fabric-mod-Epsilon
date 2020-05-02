@@ -16,7 +16,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class ModuleConfig : Config("Module") {
+class ModuleConfig : Config("Modules") {
 
     override fun load() {
         super.load()
