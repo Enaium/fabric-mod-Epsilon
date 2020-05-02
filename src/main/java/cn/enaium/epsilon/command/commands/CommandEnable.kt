@@ -3,9 +3,8 @@ package cn.enaium.epsilon.command.commands
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
 import cn.enaium.epsilon.utils.ChatUtils
-import cn.enaium.epsilon.utils.I18nUtils
 
-class CommandToggle : Command {
+class CommandEnable : Command {
     override fun run(args: Array<String>): Boolean {
 
         if (args.size == 1 || args.size == 2) {
@@ -15,7 +14,7 @@ class CommandToggle : Command {
             } else if (args.size == 2) {
                 val module = Epsilon.moduleManager.getModule(args[1])
                 if (module == null) {
-                    ChatUtils.error(I18nUtils.getKey("command.toggle").replace("{{args[1]}}", args[1]))
+                    ChatUtils.error("The module with the name " + args[1] + " does not exist.")
                     return true
                 }
                 module.enable()
@@ -26,6 +25,6 @@ class CommandToggle : Command {
     }
 
     override fun usage(): Array<String> {
-        return arrayOf("-toggle [module]")
+        return arrayOf("`enable [module]")
     }
 }
