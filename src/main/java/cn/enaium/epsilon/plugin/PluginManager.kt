@@ -22,7 +22,7 @@ class PluginManager {
         try {
             if (file.listFiles().isNotEmpty()) {
                 for (f in file.listFiles()) {
-                    if (f.name.substring(f.name.lastIndexOf(".") + 1) == "jar") {
+                    if (f.name.endsWith(".jar")) {
                         val u = URLClassLoader(arrayOf<URL>(f.toURL()), Thread.currentThread().contextClassLoader)
                         val json = JSON.parseObject(FileUtils.readResource(u.getResourceAsStream("epsilon.plugin.json")))
                         val authors: ArrayList<String> = ArrayList()
