@@ -23,7 +23,7 @@ object ChatUtils {
      * @param string Message
      */
     fun success(string: String) {
-        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(success + message))
+        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(success + string))
     }
 
     /**
@@ -31,7 +31,7 @@ object ChatUtils {
      * @param string Message
      */
     fun warning(string: String) {
-        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(warning + message))
+        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(warning + string))
     }
 
     /**
@@ -39,7 +39,7 @@ object ChatUtils {
      * @param string Message
      */
     fun message(string: String) {
-        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(message + message))
+        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(message + string))
     }
 
     /**
@@ -47,6 +47,6 @@ object ChatUtils {
      * @param string Message
      */
     fun error(string: String) {
-        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(error + message))
+        Epsilon.MC.inGameHud.chatHud.addMessage(LiteralText(error + string))
     }
 }
