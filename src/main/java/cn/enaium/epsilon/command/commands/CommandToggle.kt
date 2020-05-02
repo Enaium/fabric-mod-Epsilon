@@ -3,6 +3,7 @@ package cn.enaium.epsilon.command.commands
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
 import cn.enaium.epsilon.utils.ChatUtils
+import cn.enaium.epsilon.utils.I18nUtils
 
 class CommandToggle : Command {
     override fun run(args: Array<String>): Boolean {
@@ -14,7 +15,7 @@ class CommandToggle : Command {
             } else if (args.size == 2) {
                 val module = Epsilon.moduleManager.getModule(args[1])
                 if (module == null) {
-                    ChatUtils.error("The module with the name " + args[1] + " does not exist.")
+                    ChatUtils.error(I18nUtils.getKey("command.toggle").replace("{{args[1]}}", args[1]))
                     return true
                 }
                 module.enable()

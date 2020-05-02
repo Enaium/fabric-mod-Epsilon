@@ -9,5 +9,7 @@
   "module.RENDER.Glow": "Glow",
   "module.MOVEMENT": "Movement",
   "module.MOVEMENT.Sprint": "Sprint",
-  "module.OTHER": "Other"
+  "module.OTHER": "Other",
+  "command.help": "Here are the list of commands",
+  "command.toggle": "The module with the name {{args[1]}} does not exist."
 }
