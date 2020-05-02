@@ -1,5 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
+import cn.enaium.epsilon.Epsilon;
 import cn.enaium.epsilon.event.Event;
 import cn.enaium.epsilon.event.events.EventMotion;
 import cn.enaium.epsilon.event.events.EventUpdate;
@@ -16,6 +17,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
+
+    @Inject(at = @At("HEAD"), method = "sendChatMessage", cancellable = true)
+    private void onSendChatMessage(String message, CallbackInfo info) {
+        if (Epsilon.commandManager.processCommand(message)) {
+            info.cancel();
+        }
+    }
 
     @Inject(at = @At("HEAD"), method = "tick()V")
     private void preTick(CallbackInfo ci) {

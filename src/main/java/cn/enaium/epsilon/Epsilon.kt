@@ -1,10 +1,12 @@
 package cn.enaium.epsilon
 
+import cn.enaium.epsilon.command.CommandManager
 import cn.enaium.epsilon.config.ConfigManager
 import cn.enaium.epsilon.event.EventManager
 import cn.enaium.epsilon.imixin.IMinecraftClient
 import cn.enaium.epsilon.module.ModuleManager
 import cn.enaium.epsilon.plugin.PluginManager
+import com.mojang.brigadier.Command
 import net.minecraft.client.MinecraftClient
 import java.io.File
 
@@ -25,6 +27,7 @@ object Epsilon {
 
     lateinit var eventManager: EventManager
     lateinit var moduleManager: ModuleManager
+    lateinit var commandManager: CommandManager
     lateinit var pluginManager: PluginManager
     lateinit var configManager: ConfigManager
 
@@ -32,6 +35,7 @@ object Epsilon {
         File(DIR).mkdir()
         eventManager = EventManager()
         moduleManager = ModuleManager()
+        commandManager = CommandManager()
         pluginManager = PluginManager()
         configManager = ConfigManager()
         configManager.load()
