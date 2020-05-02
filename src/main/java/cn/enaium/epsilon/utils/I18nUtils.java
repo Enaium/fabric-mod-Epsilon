@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
  */
 public class I18nUtils {
     public static String getKey(String key) {
-        return new Gson().fromJson(FileUtils.INSTANCE.readResource(I18nUtils.class.getResourceAsStream("/assets/epsilon/i18n/zh_cn.json")), JsonObject.class).get(key).getAsString();
+        return new Gson().fromJson(FileUtils.INSTANCE.readResource(I18nUtils.class.getResourceAsStream("/assets/epsilon/i18n/en.json")), JsonObject.class).get(key).getAsString();
     }
 
     public static String getKey(String key, String path) {
