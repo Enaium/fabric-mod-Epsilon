@@ -31,7 +31,7 @@ public class HUDModule extends Module {
 
     public HUDModule() {
         super("HUD", GLFW.GLFW_KEY_P, Category.RENDER);
-        this.categoryValues = new ArrayList<Category>();
+        this.categoryValues = new ArrayList();
         this.currentCategoryIndex = 0;
         this.currentModIndex = 0;
         this.currentSettingIndex = 0;
@@ -40,7 +40,6 @@ public class HUDModule extends Module {
         this.categoryValues.addAll(Arrays.asList(Category.values()));
         addSetting(tabGUI);
         addSetting(list);
-        ;
     }
 
     @EventTarget
@@ -57,11 +56,11 @@ public class HUDModule extends Module {
         }
 
         List<Module> mods = modules;
-        mods.sort((o1, o2) -> FontUtils.INSTANCE.getStringWidth(o2.getDisplayNameTag()) - FontUtils.INSTANCE.getStringWidth(o1.getDisplayNameTag()));
+        mods.sort((o1, o2) -> FontUtils.INSTANCE.getStringWidth(o2.getDisplayTag()) - FontUtils.INSTANCE.getStringWidth(o1.getDisplayTag()));
 
         for (Module module : mods) {
 
-            int startX = e.getWidth() - FontUtils.INSTANCE.getStringWidth(module.getDisplayNameTag()) - 6;
+            int startX = e.getWidth() - FontUtils.INSTANCE.getStringWidth(module.getDisplayTag()) - 6;
 
             Render2DUtils.drawRect(startX, yStart - 1, e.getWidth(), yStart + 12, ColorUtils.BG);
             Render2DUtils.drawRect(e.getWidth() - 2, yStart - 1, e.getWidth(), yStart + 12, ColorUtils.SELECT);
@@ -69,7 +68,7 @@ public class HUDModule extends Module {
             Render2DUtils.drawVerticalLine(startX - 1, yStart - 2, yStart + 12, ColorUtils.SELECT);
             Render2DUtils.drawHorizontalLine(startX - 1, e.getWidth(), yStart + 12, ColorUtils.SELECT);
 
-            FontUtils.INSTANCE.drawStringWithShadow(module.getDisplayNameTag(), startX + 3, yStart, ColorUtils.SELECT);
+            FontUtils.INSTANCE.drawStringWithShadow(module.getName(), startX + 3, yStart, ColorUtils.SELECT);
 
             yStart += FontUtils.INSTANCE.getFontHeight() + 4;
         }
@@ -88,7 +87,7 @@ public class HUDModule extends Module {
                 Render2DUtils.drawRect(startX + 1, startY, startX + this.getWidestCategory() + 5 - 1, startY + FontUtils.INSTANCE.getFontHeight() + 2, ColorUtils.SELECT);
             }
 
-            String name = I18nUtils.getKey("module." + c.name());
+            String name = c.name();
             FontUtils.INSTANCE.drawStringWithShadow(name.substring(0, 1).toUpperCase() + name.substring(1, name.length()).toLowerCase(), startX + 2 + (this.getCurrentCategory().equals(c) ? 2 : 0), startY + 2, -1);
             startY += FontUtils.INSTANCE.getFontHeight() + 2;
         }
@@ -101,7 +100,7 @@ public class HUDModule extends Module {
                 if (this.getCurrentModule().equals(m)) {
                     Render2DUtils.drawRect(startModsX + 1, startModsY, startModsX + this.getWidestMod() + 5 - 1, startModsY + FontUtils.INSTANCE.getFontHeight() + 2, ColorUtils.SELECT);
                 }
-                FontUtils.INSTANCE.drawStringWithShadow(m.getDisplayName() + (SettingManager.INSTANCE.getSettingsForModule(m) != null ? ">" : ""), startModsX + 2 + (this.getCurrentModule().equals(m) ? 2 : 0), startModsY + 2, m.getEnable() ? -1 : Color.GRAY.getRGB());
+                FontUtils.INSTANCE.drawStringWithShadow(m.getName() + (SettingManager.INSTANCE.getSettingsForModule(m) != null ? ">" : ""), startModsX + 2 + (this.getCurrentModule().equals(m) ? 2 : 0), startModsY + 2, m.getEnable() ? -1 : Color.GRAY.getRGB());
                 startModsY += FontUtils.INSTANCE.getFontHeight() + 2;
             }
         }
@@ -116,17 +115,17 @@ public class HUDModule extends Module {
                     Render2DUtils.drawRect(startSettingX + 1, startSettingY, startSettingX + this.getWidestSetting() + 5 - 1, startSettingY + FontUtils.INSTANCE.getFontHeight() + 2, ColorUtils.SELECT);
                 }
                 if (s instanceof SettingEnable) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingEnable) s).getEnable(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingEnable) s).getEnable(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 } else if (s instanceof SettingInteger) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingInteger) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingInteger) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 } else if (s instanceof SettingDouble) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingDouble) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingDouble) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 } else if (s instanceof SettingFloat) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingFloat) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingFloat) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 } else if (s instanceof SettingLong) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingLong) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingLong) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 } else if (s instanceof SettingMode) {
-                    FontUtils.INSTANCE.drawStringWithShadow(s.getDisplayName() + ": " + ((SettingMode) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
+                    FontUtils.INSTANCE.drawStringWithShadow(s.getName() + ": " + ((SettingMode) s).getCurrent(), startSettingX + 2 + (this.getCurrentSetting().equals(s) ? 2 : 0), startSettingY + 2, editMode && this.getCurrentSetting().equals(s) ? -1 : Color.GRAY.getRGB());
                 }
                 startSettingY += FontUtils.INSTANCE.getFontHeight() + 2;
             }
@@ -288,17 +287,17 @@ public class HUDModule extends Module {
         for (Setting s : getSettingForCurrentMod()) {
             String name;
             if (s instanceof SettingEnable) {
-                name = s.getDisplayName() + ": " + ((SettingEnable) s).getEnable();
+                name = s.getName() + ": " + ((SettingEnable) s).getEnable();
             } else if (s instanceof SettingInteger) {
-                name = s.getDisplayName() + ": " + ((SettingInteger) s).getCurrent();
+                name = s.getName() + ": " + ((SettingInteger) s).getCurrent();
             } else if (s instanceof SettingFloat) {
-                name = s.getDisplayName() + ": " + ((SettingFloat) s).getCurrent();
+                name = s.getName() + ": " + ((SettingFloat) s).getCurrent();
             } else if (s instanceof SettingDouble) {
-                name = s.getDisplayName() + ": " + ((SettingDouble) s).getCurrent();
+                name = s.getName() + ": " + ((SettingDouble) s).getCurrent();
             } else if (s instanceof SettingLong) {
-                name = s.getDisplayName() + ": " + ((SettingLong) s).getCurrent();
+                name = s.getName() + ": " + ((SettingLong) s).getCurrent();
             } else {
-                name = s.getDisplayName() + ": " + ((SettingMode) s).getCurrent();
+                name = s.getName() + ": " + ((SettingMode) s).getCurrent();
             }
             if (FontUtils.INSTANCE.getStringWidth(name) > width) {
                 width = FontUtils.INSTANCE.getStringWidth(name);
@@ -310,7 +309,7 @@ public class HUDModule extends Module {
     private int getWidestMod() {
         int width = 0;
         for (Module m : Epsilon.moduleManager.getModules()) {
-            int cWidth = FontUtils.INSTANCE.getStringWidth(m.getDisplayName());
+            int cWidth = FontUtils.INSTANCE.getStringWidth(m.getName());
             if (cWidth > width) {
                 width = cWidth;
             }
