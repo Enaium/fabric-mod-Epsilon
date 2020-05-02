@@ -15,7 +15,7 @@ import java.net.URLClassLoader
  */
 class PluginManager {
     private val file = File(Epsilon.DIR + "plugins")
-    private val plugins: ArrayList<PluginInitializer> = ArrayList()
+    private val plugins: ArrayList<Plugin> = ArrayList()
 
     init {
         file.mkdir()
@@ -25,14 +25,19 @@ class PluginManager {
                     if (f.name.substring(f.name.lastIndexOf(".") + 1) == "jar") {
                         val u = URLClassLoader(arrayOf<URL>(f.toURL()), Thread.currentThread().contextClassLoader)
                         val json = JSON.parseObject(FileUtils.readResource(u.getResourceAsStream("epsilon.plugin.json")))
-                        plugins.add(u.loadClass(json["mainClass"].toString()).newInstance() as PluginInitializer)
+                        val authors: ArrayList<String> = ArrayList()
+                        for (a in json.getJSONArray("authors")) {
+                            authors.add(a.toString())
+                        }
+                        plugins.add(Plugin(json.getString("name"), json.getString("description"), authors, u.loadClass(json.getString("mainClass")).newInstance() as PluginInitializer))
                     }
                 }
             }
 
             if (plugins.isNotEmpty()) {
                 for (p in plugins) {
-                    p.onInitialize()
+                    p.pluginInitializer.onInitialize()
+                    println(p.name + "|" + p.description + "|" + p.authors.toString())
                 }
             }
         } catch (e: Exception) {
