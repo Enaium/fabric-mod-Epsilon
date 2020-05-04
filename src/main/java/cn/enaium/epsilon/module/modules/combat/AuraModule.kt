@@ -10,16 +10,9 @@ import cn.enaium.epsilon.setting.settings.SettingEnable
 import cn.enaium.epsilon.setting.settings.SettingFloat
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.mob.*
-import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.entity.passive.IronGolemEntity
-import net.minecraft.entity.passive.VillagerEntity
-import net.minecraft.entity.passive.WolfEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
 import org.lwjgl.glfw.GLFW
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
+
 
 /**
  * Project: Epsilon
@@ -48,26 +41,38 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     fun onMotion(eventMotion: EventMotion) {
         when (eventMotion.type) {
             Event.Type.PRE -> {
+
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
-                val any = StreamSupport.stream(MC.world!!.entities.spliterator(), true).filter {
-                    isTarget(it)
-                }.sorted(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) }).toArray()
 
-                if (any.isNotEmpty() && target == null) {
-                    target = any[0] as LivingEntity
+                val targets = getTargets()
+                if (targets.size > 0) {
+                    target = getTargets()[0]
                 }
-
             }
             Event.Type.POST -> {
+
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
                 target = null
+
             }
         }
     }
 
+    private fun getTargets(): ArrayList<LivingEntity> {
+        val targets: ArrayList<LivingEntity> = ArrayList()
+        for (o in MC.world!!.entities) {
+            if (o is LivingEntity) {
+                if (isTarget(o)) {
+                    targets.add(o)
+                }
+            }
+        }
+        return targets
+    }
+
     private fun isTarget(e: Entity): Boolean {
-        return e is LivingEntity && e != MC.player && !e.removed && (e as LivingEntity).health > 0 && MC.player!!.squaredDistanceTo(e) <= (range.current * range.current)
+        return e is LivingEntity && e != MC.player && !e.removed && e.health > 0 && MC.player!!.squaredDistanceTo(e) <= (range.current * range.current)
     }
 }
