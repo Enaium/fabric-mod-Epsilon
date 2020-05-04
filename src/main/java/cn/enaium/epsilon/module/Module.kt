@@ -14,8 +14,8 @@ open class Module(var name: String, var keyCode: Int, var category: Category) {
     var enable = false
     var tag = ""
 
-    fun addSetting(setting: Setting) {
-        SettingManager.settings.add(setting)
+    fun addSettings(setting: List<Setting>) {
+        SettingManager.settings.addAll(setting)
     }
 
     fun enable() {
