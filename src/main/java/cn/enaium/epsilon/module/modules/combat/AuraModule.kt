@@ -33,7 +33,7 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private val mob = SettingEnable(this, "Mob", true)
     private val wolf = SettingEnable(this, "Wolf", false)
     private val villager = SettingEnable(this, "Villager", false)
-    private val ironGolem = SettingEnable(this, "ironGolem", false)
+    private val ironGolem = SettingEnable(this, "IronGolem", false)
     private val endermen = SettingEnable(this, "Endermen", false)
     private val endermite = SettingEnable(this, "Endermite", false)
     private val zombiePigman = SettingEnable(this, "ZombiePigman", false)
@@ -72,15 +72,6 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     }
 
     private fun isTarget(e: Entity): Boolean {
-        if (!player.enable && e is PlayerEntity) {
-            return false
-        }
-        if (!animal.enable && (e is AnimalEntity || e is AmbientEntity || e is WaterCreatureEntity)) {
-            return false
-        }
-        if (!mob.enable && e is MobEntity) {
-            return false
-        }
-        return true
+        return false
     }
 }
