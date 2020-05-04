@@ -32,13 +32,11 @@ open class Module(var name: String, var keyCode: Int, var category: Category) {
     }
 
 
-    open fun getDisplayTag(): String {
+    fun getDisplayTag(): String {
         return if (tag == "") {
             name
         } else {
             return "$name:$tag"
         }
     }
-
-
 }
