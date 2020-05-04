@@ -38,8 +38,7 @@ public class HUDModule extends Module {
         this.editMode = false;
         this.screen = 0;
         this.categoryValues.addAll(Arrays.asList(Category.values()));
-        addSetting(tabGUI);
-        addSetting(list);
+        addSettings(Arrays.asList(tabGUI, list));
     }
 
     @EventTarget
@@ -156,13 +155,17 @@ public class HUDModule extends Module {
             if (s instanceof SettingEnable) {
                 ((SettingEnable) s).setEnable(!((SettingEnable) s).getEnable());
             } else if (s instanceof SettingInteger) {
-                ((SettingInteger) s).setCurrent(((SettingInteger) s).getCurrent() + 1);
+                if (((SettingInteger) s).getCurrent() < ((SettingInteger) s).getMax())
+                    ((SettingInteger) s).setCurrent(((SettingInteger) s).getCurrent() + 1);
             } else if (s instanceof SettingDouble) {
-                ((SettingDouble) s).setCurrent(Utils.valueFix(((SettingDouble) s).getCurrent() + 0.1D));
+                if (((SettingDouble) s).getCurrent() < ((SettingDouble) s).getMax())
+                    ((SettingDouble) s).setCurrent(Utils.INSTANCE.valueFix(((SettingDouble) s).getCurrent() + 0.1D));
             } else if (s instanceof SettingFloat) {
-                ((SettingFloat) s).setCurrent(Utils.valueFix(((SettingFloat) s).getCurrent() + 0.1F));
+                if (((SettingFloat) s).getCurrent() < ((SettingFloat) s).getMax())
+                    ((SettingFloat) s).setCurrent(Utils.INSTANCE.valueFix(((SettingFloat) s).getCurrent() + 0.1F));
             } else if (s instanceof SettingLong) {
-                ((SettingLong) s).setCurrent(((SettingLong) s).getCurrent() + 1);
+                if (((SettingLong) s).getCurrent() < ((SettingLong) s).getMax())
+                    ((SettingLong) s).setCurrent(((SettingLong) s).getCurrent() + 1);
             } else {
                 try {
                     ((SettingMode) s).setCurrent(((SettingMode) s).getModes().get(((SettingMode) s).getCurrentIndex() - 1));
@@ -193,13 +196,17 @@ public class HUDModule extends Module {
             if (s instanceof SettingEnable) {
                 ((SettingEnable) s).setEnable(!((SettingEnable) s).getEnable());
             } else if (s instanceof SettingInteger) {
-                ((SettingInteger) s).setCurrent(((SettingInteger) s).getCurrent() - 1);
+                if (((SettingInteger) s).getCurrent() > ((SettingInteger) s).getMin())
+                    ((SettingInteger) s).setCurrent(((SettingInteger) s).getCurrent() - 1);
             } else if (s instanceof SettingDouble) {
-                ((SettingDouble) s).setCurrent(Utils.valueFix(((SettingDouble) s).getCurrent() - 0.1D));
+                if (((SettingDouble) s).getCurrent() > ((SettingDouble) s).getMin())
+                    ((SettingDouble) s).setCurrent(Utils.INSTANCE.valueFix(((SettingDouble) s).getCurrent() - 0.1D));
             } else if (s instanceof SettingFloat) {
-                ((SettingFloat) s).setCurrent(Utils.valueFix(((SettingFloat) s).getCurrent() - 0.1F));
+                if (((SettingFloat) s).getCurrent() > ((SettingFloat) s).getMin())
+                    ((SettingFloat) s).setCurrent(Utils.INSTANCE.valueFix(((SettingFloat) s).getCurrent() - 0.1F));
             } else if (s instanceof SettingLong) {
-                ((SettingLong) s).setCurrent(((SettingLong) s).getCurrent() - 1);
+                if (((SettingLong) s).getCurrent() > ((SettingLong) s).getMin())
+                    ((SettingLong) s).setCurrent(((SettingLong) s).getCurrent() - 1);
             } else {
                 try {
                     ((SettingMode) s).setCurrent(((SettingMode) s).getModes().get(((SettingMode) s).getCurrentIndex() + 1));
