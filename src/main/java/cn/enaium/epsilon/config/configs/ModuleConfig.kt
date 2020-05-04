@@ -36,22 +36,22 @@ class ModuleConfig : Config("Modules") {
                                 if (settingObject[s.name] != null) {
                                     when (s) {
                                         is SettingEnable -> {
-                                            s.enable = settingObject[s.name] as Boolean
+                                            s.enable = settingObject.getBoolean(s.name)
                                         }
                                         is SettingInteger -> {
-                                            s.current = settingObject[s.name] as Int
+                                            s.current = settingObject.getInteger(s.name)
                                         }
                                         is SettingFloat -> {
-                                            s.current = settingObject[s.name] as Float
+                                            s.current = settingObject.getFloat(s.name)
                                         }
                                         is SettingDouble -> {
-                                            s.current = settingObject[s.name] as Double
+                                            s.current = settingObject.getDouble(s.name)
                                         }
                                         is SettingLong -> {
-                                            s.current = settingObject[s.name] as Long
+                                            s.current = settingObject.getLong(s.name)
                                         }
                                         is SettingMode -> {
-                                            s.current = settingObject[s.name] as String
+                                            s.current = settingObject.getString(s.name)
                                         }
                                     }
                                 }
