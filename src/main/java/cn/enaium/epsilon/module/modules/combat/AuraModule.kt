@@ -49,17 +49,13 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         when (eventMotion.type) {
             Event.Type.PRE -> {
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
-                val stream: Stream<LivingEntity> = StreamSupport.stream(MC.world!!.entities.spliterator(), true).filter {
+                val any = StreamSupport.stream(MC.world!!.entities.spliterator(), true).filter {
                     isTarget(it)
-                }.filter {
-                    it is LivingEntity
-                }.map {
-                    it as LivingEntity
-                }.filter {
-                    it != MC.player && !it.removed && it.health > 0 && MC.player!!.squaredDistanceTo(it) <= (range.current * range.current)
-                }
+                }.sorted(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) }).toArray()
 
-                target = stream.min(Comparator.comparingDouble() { it.health.toDouble() }).orElse(null)
+                if (any.isNotEmpty() && target == null) {
+                    target = any[0] as LivingEntity
+                }
 
             }
             Event.Type.POST -> {
@@ -72,6 +68,6 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     }
 
     private fun isTarget(e: Entity): Boolean {
-        return false
+        return e is LivingEntity && e != MC.player && !e.removed && (e as LivingEntity).health > 0 && MC.player!!.squaredDistanceTo(e) <= (range.current * range.current)
     }
 }
