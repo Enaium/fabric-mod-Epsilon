@@ -3,6 +3,7 @@ package cn.enaium.epsilon.module
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventTarget
 import cn.enaium.epsilon.event.events.EventKeyboard
+import cn.enaium.epsilon.module.modules.combat.AuraModule
 import cn.enaium.epsilon.module.modules.movement.SprintModule
 import cn.enaium.epsilon.module.modules.render.BrightModule
 import cn.enaium.epsilon.module.modules.render.GlowModule
@@ -25,6 +26,7 @@ class ModuleManager {
         modules.add(BrightModule())
         modules.add(HUDModule())
         modules.add(GlowModule())
+        modules.add(AuraModule())
     }
 
     fun getModule(name: String): Module? {
