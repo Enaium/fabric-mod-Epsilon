@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.module.modules.render;
 
 import cn.enaium.epsilon.Epsilon;
+import cn.enaium.epsilon.module.ModuleAT;
 import cn.enaium.epsilon.setting.SettingAT;
 import cn.enaium.epsilon.event.EventTarget;
 import cn.enaium.epsilon.event.events.EventKeyboard;
@@ -17,6 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Project: Epsilon
+ * -----------------------------------------------------------
+ * Copyright © 2020 | Enaium | All rights reserved.
+ */
 public class HUDModule extends Module {
 
     private ArrayList<Category> categoryValues;
