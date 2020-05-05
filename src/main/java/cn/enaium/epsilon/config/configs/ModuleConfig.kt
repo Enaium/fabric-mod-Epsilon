@@ -27,7 +27,7 @@ class ModuleConfig : Config("Modules") {
                 if (m.name == moduleObject["name"]) {
                     if (moduleObject["enable"] as Boolean) m.enable()
                     m.keyCode = moduleObject["keyCode"] as Int
-                    val settings = SettingManager.getSettingsForModule(m)
+                    val settings = Epsilon.settingManager.getSettingsForModule(m)
                     if (settings != null) {
                         for (s in settings) {
                             val settingArray = JSON.parseArray(moduleObject["settings"].toString())
@@ -73,10 +73,10 @@ class ModuleConfig : Config("Modules") {
             moduleObject["keyCode"] = m.keyCode
 
             val settingArray = JSONArray()
-            val settings = SettingManager.getSettingsForModule(m)
+            val settings = Epsilon.settingManager.getSettingsForModule(m)
 
             if (settings != null) {
-                val settingObject = JSONObject()
+                val settingObject = JSONObject(true)
                 for (s in settings) {
                     when (s) {
                         is SettingEnable -> {

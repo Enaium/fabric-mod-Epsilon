@@ -1,6 +1,8 @@
 package cn.enaium.epsilon.setting
 
+import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.setting.settings.*
 import java.util.*
 
 /**
@@ -8,8 +10,38 @@ import java.util.*
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-object SettingManager {
+class SettingManager {
     var settings: ArrayList<Setting> = ArrayList()
+
+    fun load() {
+        for (module in Epsilon.moduleManager.modules) {
+            for (field in module.javaClass.declaredFields) {
+                if (field.isAnnotationPresent(SettingAT::class.java)) {
+                    field.isAccessible = true
+                    when (field.type) {
+                        SettingEnable::class.java -> {
+                            settings.add(field.get(module) as SettingEnable)
+                        }
+                        SettingInteger::class.java -> {
+                            settings.add(field.get(module) as SettingInteger)
+                        }
+                        SettingFloat::class.java -> {
+                            settings.add(field.get(module) as SettingFloat)
+                        }
+                        SettingDouble::class.java -> {
+                            settings.add(field.get(module) as SettingDouble)
+                        }
+                        SettingLong::class.java -> {
+                            settings.add(field.get(module) as SettingLong)
+                        }
+                        SettingMode::class.java -> {
+                            settings.add(field.get(module) as SettingMode)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     fun getSetting(m: Module, name: String): Setting? {
         for (s in settings) {

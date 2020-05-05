@@ -6,6 +6,7 @@ import cn.enaium.epsilon.event.events.EventKeyboard
 import cn.enaium.epsilon.module.modules.combat.AuraModule
 import cn.enaium.epsilon.module.modules.movement.SprintModule
 import cn.enaium.epsilon.module.modules.render.BrightModule
+import cn.enaium.epsilon.module.modules.render.ClickGUIModule
 import cn.enaium.epsilon.module.modules.render.GlowModule
 import cn.enaium.epsilon.module.modules.render.HUDModule
 import org.lwjgl.glfw.GLFW
@@ -22,11 +23,15 @@ class ModuleManager {
 
     init {
         Epsilon.eventManager.register(this)
+    }
+
+    fun load() {
         modules.add(SprintModule())
         modules.add(BrightModule())
         modules.add(HUDModule())
         modules.add(GlowModule())
         modules.add(AuraModule())
+        modules.add(ClickGUIModule())
     }
 
     fun getModule(name: String): Module? {

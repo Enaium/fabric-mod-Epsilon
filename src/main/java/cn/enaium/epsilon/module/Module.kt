@@ -15,7 +15,7 @@ open class Module(var name: String, var keyCode: Int, var category: Category) {
     var tag = ""
 
     fun addSettings(setting: List<Setting>) {
-        SettingManager.settings.addAll(setting)
+        Epsilon.settingManager.settings.addAll(setting)
     }
 
     fun enable() {

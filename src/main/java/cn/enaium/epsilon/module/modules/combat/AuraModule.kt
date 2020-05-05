@@ -6,9 +6,9 @@ import cn.enaium.epsilon.event.EventTarget
 import cn.enaium.epsilon.event.events.EventMotion
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.SettingEnable
 import cn.enaium.epsilon.setting.settings.SettingFloat
-import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
 import net.minecraft.entity.passive.AnimalEntity
@@ -28,21 +28,28 @@ import java.util.stream.StreamSupport
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
+
+    @SettingAT
     private val range = SettingFloat(this, "Range", 4.1f, 0.1f, 7.0f)
+    @SettingAT
     private val player = SettingEnable(this, "Player", true)
+    @SettingAT
     private val animal = SettingEnable(this, "Animal", false)
+    @SettingAT
     private val wolf = SettingEnable(this, "Wolf", false)
+    @SettingAT
     private val villager = SettingEnable(this, "Villager", false)
+    @SettingAT
     private val ironGolem = SettingEnable(this, "IronGolem", false)
+    @SettingAT
     private val endermen = SettingEnable(this, "Endermen", false)
+    @SettingAT
     private val endermite = SettingEnable(this, "Endermite", false)
+    @SettingAT
     private val zombiePigman = SettingEnable(this, "ZombiePigman", false)
+    @SettingAT
     private val zombieVillager = SettingEnable(this, "VillagerPigman", false)
     private var target: LivingEntity? = null
-
-    init {
-        addSettings(listOf(range, player, animal, villager, ironGolem, wolf, endermen, endermite, zombiePigman, zombieVillager))
-    }
 
     @EventTarget
     fun onMotion(eventMotion: EventMotion) {

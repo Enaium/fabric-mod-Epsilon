@@ -1,16 +1,15 @@
 package cn.enaium.epsilon.module.modules.render;
 
 import cn.enaium.epsilon.Epsilon;
+import cn.enaium.epsilon.setting.SettingAT;
 import cn.enaium.epsilon.event.EventTarget;
 import cn.enaium.epsilon.event.events.EventKeyboard;
 import cn.enaium.epsilon.event.events.EventRender2D;
 import cn.enaium.epsilon.module.Category;
 import cn.enaium.epsilon.module.Module;
 import cn.enaium.epsilon.setting.Setting;
-import cn.enaium.epsilon.setting.SettingManager;
 import cn.enaium.epsilon.setting.settings.*;
 import cn.enaium.epsilon.utils.*;
-import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -26,7 +25,10 @@ public class HUDModule extends Module {
 
     private int screen;
 
+    @SettingAT
     private SettingEnable tabGUI = new SettingEnable(this, "TabGUI", true);
+
+    @SettingAT
     private SettingEnable list = new SettingEnable(this, "List", true);
 
     public HUDModule() {
@@ -38,7 +40,6 @@ public class HUDModule extends Module {
         this.editMode = false;
         this.screen = 0;
         this.categoryValues.addAll(Arrays.asList(Category.values()));
-        addSettings(Arrays.asList(tabGUI, list));
     }
 
     @EventTarget
@@ -99,7 +100,7 @@ public class HUDModule extends Module {
                 if (this.getCurrentModule().equals(m)) {
                     Render2DUtils.drawRect(startModsX + 1, startModsY, startModsX + this.getWidestMod() + 5 - 1, startModsY + FontUtils.INSTANCE.getFontHeight() + 2, ColorUtils.SELECT);
                 }
-                FontUtils.INSTANCE.drawStringWithShadow(m.getName() + (SettingManager.INSTANCE.getSettingsForModule(m) != null ? ">" : ""), startModsX + 2 + (this.getCurrentModule().equals(m) ? 2 : 0), startModsY + 2, m.getEnable() ? -1 : Color.GRAY.getRGB());
+                FontUtils.INSTANCE.drawStringWithShadow(m.getName() + (Epsilon.settingManager.getSettingsForModule(m) != null ? ">" : ""), startModsX + 2 + (this.getCurrentModule().equals(m) ? 2 : 0), startModsY + 2, m.getEnable() ? -1 : Color.GRAY.getRGB());
                 startModsY += FontUtils.INSTANCE.getFontHeight() + 2;
             }
         }
@@ -274,7 +275,7 @@ public class HUDModule extends Module {
     }
 
     private ArrayList<Setting> getSettingForCurrentMod() {
-        return SettingManager.INSTANCE.getSettingsForModule(getCurrentModule());
+        return Epsilon.settingManager.getSettingsForModule(getCurrentModule());
     }
 
     private Category getCurrentCategory() {
