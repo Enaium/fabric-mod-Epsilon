@@ -4,7 +4,7 @@ import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
 import cn.enaium.epsilon.utils.ChatUtils
 
-class CommandEnable : Command {
+class EnableCommand : Command {
     override fun run(args: Array<String>): Boolean {
 
         if (args.size == 1 || args.size == 2) {

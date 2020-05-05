@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.command
 
-import cn.enaium.epsilon.command.commands.CommandHelp
-import cn.enaium.epsilon.command.commands.CommandEnable
+import cn.enaium.epsilon.command.commands.HelpCommand
+import cn.enaium.epsilon.command.commands.EnableCommand
 import cn.enaium.epsilon.utils.ChatUtils
 import java.util.*
 
@@ -10,8 +10,8 @@ class CommandManager {
     private val prefix: String = "`"
 
     init {
-        commands[arrayOf("help", "h")] = CommandHelp()
-        commands[arrayOf("enable", "e")] = CommandEnable()
+        commands[arrayOf("help", "h")] = HelpCommand()
+        commands[arrayOf("enable", "e")] = EnableCommand()
     }
 
     fun processCommand(rawMessage: String): Boolean {
