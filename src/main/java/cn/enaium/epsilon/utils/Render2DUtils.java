@@ -164,5 +164,4 @@ public class Render2DUtils {
     public static boolean isHovered(float mouseX, float mouseY, float x, float y, float width, float height) {
         return mouseX >= x && mouseX - width <= x && mouseY >= y && mouseY - height <= y;
     }
-
 }
