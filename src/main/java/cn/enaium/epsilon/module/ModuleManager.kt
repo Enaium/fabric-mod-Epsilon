@@ -29,9 +29,9 @@ class ModuleManager {
     fun load() {
         for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
             if (info.name.startsWith("cn.enaium.epsilon.module.modules")) {
-                val clazz: Class<*> = info.load()
-                if (Class.forName(clazz.name).isAnnotationPresent(ModuleAT::class.java)) {
-                    modules.add(Class.forName(clazz.name).newInstance() as Module)
+                val clazz: Class<*> = Class.forName(info.load().name)
+                if (clazz.isAnnotationPresent(ModuleAT::class.java)) {
+                    modules.add(clazz.newInstance() as Module)
                 }
             }
         }
