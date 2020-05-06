@@ -1,8 +1,7 @@
 package cn.enaium.epsilon.command
 
-import cn.enaium.epsilon.command.commands.HelpCommand
-import cn.enaium.epsilon.command.commands.EnableCommand
 import cn.enaium.epsilon.utils.ChatUtils
+import com.google.common.reflect.ClassPath
 import java.util.*
 
 class CommandManager {
@@ -10,8 +9,15 @@ class CommandManager {
     private val prefix: String = "`"
 
     init {
-        commands[arrayOf("help", "h")] = HelpCommand()
-        commands[arrayOf("enable", "e")] = EnableCommand()
+
+        for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
+            if (info.name.startsWith("cn.enaium.epsilon.command.commands")) {
+                val clazz: Class<*> = Class.forName(info.load().name)
+                if (clazz.isAnnotationPresent(CommandAT::class.java)) {
+                    commands[clazz.getAnnotation(CommandAT::class.java).value] = clazz.newInstance() as Command
+                }
+            }
+        }
     }
 
     fun processCommand(rawMessage: String): Boolean {
@@ -26,7 +32,7 @@ class CommandManager {
             if (command != null) {
                 if (!command.run(args)) {
                     for (s in command.usage()) {
-                        ChatUtils.error("USAGE:$s")
+                        ChatUtils.error("USAGE:`$s")
                     }
                 }
             } else {

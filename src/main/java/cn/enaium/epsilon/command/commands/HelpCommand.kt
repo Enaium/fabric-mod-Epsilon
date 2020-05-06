@@ -2,8 +2,10 @@ package cn.enaium.epsilon.command.commands
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
+import cn.enaium.epsilon.command.CommandAT
 import cn.enaium.epsilon.utils.ChatUtils
 
+@CommandAT(["help", "h"])
 class HelpCommand : Command {
     override fun run(args: Array<String>): Boolean {
         ChatUtils.message("Here are the list of commands:")
@@ -16,6 +18,6 @@ class HelpCommand : Command {
     }
 
     override fun usage(): Array<String> {
-        return arrayOf("`help")
+        return arrayOf("help")
     }
 }

@@ -2,8 +2,10 @@ package cn.enaium.epsilon.command.commands
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
+import cn.enaium.epsilon.command.CommandAT
 import cn.enaium.epsilon.utils.ChatUtils
 
+@CommandAT(["enable", "e"])
 class EnableCommand : Command {
     override fun run(args: Array<String>): Boolean {
 
@@ -25,6 +27,6 @@ class EnableCommand : Command {
     }
 
     override fun usage(): Array<String> {
-        return arrayOf("`enable [module]")
+        return arrayOf("enable [module]")
     }
 }
