@@ -9,6 +9,7 @@ import cn.enaium.epsilon.module.modules.render.BrightModule
 import cn.enaium.epsilon.module.modules.render.ClickGUIModule
 import cn.enaium.epsilon.module.modules.render.GlowModule
 import cn.enaium.epsilon.module.modules.render.HUDModule
+import com.google.common.reflect.ClassPath
 import org.lwjgl.glfw.GLFW
 import java.util.*
 
@@ -26,12 +27,14 @@ class ModuleManager {
     }
 
     fun load() {
-        modules.add(SprintModule())
-        modules.add(BrightModule())
-        modules.add(HUDModule())
-        modules.add(GlowModule())
-        modules.add(AuraModule())
-        modules.add(ClickGUIModule())
+        for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
+            if (info.name.startsWith("cn.enaium.epsilon.module.modules")) {
+                val clazz: Class<*> = info.load()
+                if (Class.forName(clazz.name).isAnnotationPresent(ModuleAT::class.java)) {
+                    modules.add(Class.forName(clazz.name).newInstance() as Module)
+                }
+            }
+        }
     }
 
     fun getModule(name: String): Module? {

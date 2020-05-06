@@ -23,6 +23,7 @@ import java.util.List;
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
+@ModuleAT
 public class HUDModule extends Module {
 
     private ArrayList<Category> categoryValues;
@@ -50,7 +51,8 @@ public class HUDModule extends Module {
 
     @EventTarget
     public void list(EventRender2D e) {
-        if (!this.list.getEnable()) return;
+        if (!this.list.getEnable())
+            return;
 
         int yStart = 1;
 
@@ -82,7 +84,8 @@ public class HUDModule extends Module {
 
     @EventTarget
     public void tabGUI(EventRender2D e) {
-        if (!this.tabGUI.getEnable()) return;
+        if (!this.tabGUI.getEnable())
+            return;
 
         this.renderTopString(5, 5);
         int startX = 5;
@@ -254,8 +257,10 @@ public class HUDModule extends Module {
     @EventTarget
     public void onKey(EventKeyboard eventKeyBoard) {
 
-        if (Epsilon.INSTANCE.getMC().currentScreen != null) return;
-        if (eventKeyBoard.getAction() != GLFW.GLFW_PRESS) return;
+        if (Epsilon.INSTANCE.getMC().currentScreen != null)
+            return;
+        if (eventKeyBoard.getAction() != GLFW.GLFW_PRESS)
+            return;
 
         switch (eventKeyBoard.getKeyCode()) {
             case GLFW.GLFW_KEY_UP:

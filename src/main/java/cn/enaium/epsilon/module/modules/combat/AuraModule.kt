@@ -6,6 +6,7 @@ import cn.enaium.epsilon.event.EventTarget
 import cn.enaium.epsilon.event.events.EventMotion
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.module.ModuleAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.SettingEnable
 import cn.enaium.epsilon.setting.settings.SettingFloat
@@ -27,6 +28,7 @@ import java.util.stream.StreamSupport
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
+@ModuleAT
 class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @SettingAT

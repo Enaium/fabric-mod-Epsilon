@@ -5,12 +5,14 @@ import cn.enaium.epsilon.event.EventTarget
 import cn.enaium.epsilon.event.events.EventUpdate
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.module.ModuleAT
 
 /**
  * Project: Epsilon
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
+@ModuleAT
 class GlowModule : Module("Glow", 0, Category.RENDER) {
     @EventTarget
     fun onUpdate(eventUpdate: EventUpdate) {

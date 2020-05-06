@@ -3,12 +3,14 @@ package cn.enaium.epsilon.module.modules.render
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.module.ModuleAT
 
 /**
  * Project: Epsilon
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
+@ModuleAT
 class BrightModule : Module("Bright", 0, Category.RENDER) {
     override fun onEnable() {
         Epsilon.MC.options.gamma = 300.0
