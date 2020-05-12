@@ -2,11 +2,9 @@ package cn.enaium.epsilon.config.configs
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.config.Config
-import cn.enaium.epsilon.setting.SettingManager
 import cn.enaium.epsilon.setting.settings.*
 import cn.enaium.epsilon.utils.FileUtils
 import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.serializer.SerializerFeature
 
@@ -20,42 +18,33 @@ class ModuleConfig : Config("Modules") {
 
     override fun load() {
         super.load()
-        for (m in Epsilon.moduleManager.modules) {
-            val moduleArray = JSON.parseArray(FileUtils.read(getPath()))
-            for (ma in moduleArray) {
-                val moduleObject = JSON.parseObject(ma.toString())
-                if (m.name == moduleObject["name"]) {
-                    if (moduleObject["enable"] as Boolean) m.enable()
-                    m.keyCode = moduleObject["keyCode"] as Int
-                    val settings = Epsilon.settingManager.getSettingsForModule(m)
-                    if (settings != null) {
-                        for (s in settings) {
-                            val settingArray = JSON.parseArray(moduleObject["settings"].toString())
-                            for (sa in settingArray) {
-                                val settingObject = JSON.parseObject(sa.toString())
-                                if (settingObject[s.name] != null) {
-                                    when (s) {
-                                        is SettingEnable -> {
-                                            s.enable = settingObject.getBoolean(s.name)
-                                        }
-                                        is SettingInteger -> {
-                                            s.current = settingObject.getInteger(s.name)
-                                        }
-                                        is SettingFloat -> {
-                                            s.current = settingObject.getFloat(s.name)
-                                        }
-                                        is SettingDouble -> {
-                                            s.current = settingObject.getDouble(s.name)
-                                        }
-                                        is SettingLong -> {
-                                            s.current = settingObject.getLong(s.name)
-                                        }
-                                        is SettingMode -> {
-                                            s.current = settingObject.getString(s.name)
-                                        }
-                                    }
-                                }
-                            }
+        val moduleObject = JSON.parseObject(FileUtils.read(getPath()))
+        for (module in Epsilon.moduleManager.modules) {
+            val moduleClassObject = JSON.parseObject(moduleObject.getString(module.name))
+            if (moduleClassObject.getBoolean("enable")) module.enable()
+            module.keyCode = moduleClassObject.getInteger("keyCode")
+            val settings = Epsilon.settingManager.getSettingsForModule(module)
+            if (settings != null) {
+                val settingObject = JSON.parseObject(moduleClassObject.getString("settings"))
+                for (setting in settings) {
+                    when (setting) {
+                        is SettingEnable -> {
+                            setting.enable = settingObject.getBoolean(setting.name)
+                        }
+                        is SettingInteger -> {
+                            setting.current = settingObject.getInteger(setting.name)
+                        }
+                        is SettingFloat -> {
+                            setting.current = settingObject.getFloat(setting.name)
+                        }
+                        is SettingDouble -> {
+                            setting.current = settingObject.getDouble(setting.name)
+                        }
+                        is SettingLong -> {
+                            setting.current = settingObject.getLong(setting.name)
+                        }
+                        is SettingMode -> {
+                            setting.current = settingObject.getString(setting.name)
                         }
                     }
                 }
@@ -65,16 +54,12 @@ class ModuleConfig : Config("Modules") {
 
     override fun save() {
         super.save()
-        val moduleArray = JSONArray()
-        for (m in Epsilon.moduleManager.modules) {
-            val moduleObject = JSONObject(true)
-            moduleObject["name"] = m.name
-            moduleObject["enable"] = m.enable
-            moduleObject["keyCode"] = m.keyCode
-
-            val settingArray = JSONArray()
-            val settings = Epsilon.settingManager.getSettingsForModule(m)
-
+        val moduleObject = JSONObject(true)
+        for (module in Epsilon.moduleManager.modules) {
+            val moduleClassObject = JSONObject(true)
+            moduleClassObject["enable"] = module.enable
+            moduleClassObject["keyCode"] = module.keyCode
+            val settings = Epsilon.settingManager.getSettingsForModule(module)
             if (settings != null) {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
@@ -99,13 +84,11 @@ class ModuleConfig : Config("Modules") {
                         }
                     }
                 }
-                settingArray.add(settingObject)
-                moduleObject["settings"] = settingArray
+                moduleClassObject["settings"] = settingObject
             }
-
-            moduleArray.add(moduleObject)
+            moduleObject[module.name] = moduleClassObject
         }
-        FileUtils.write(getPath(), JSON.toJSONString(moduleArray, SerializerFeature.PrettyFormat))
+        FileUtils.write(getPath(), JSON.toJSONString(moduleObject, SerializerFeature.PrettyFormat))
     }
 
 }
