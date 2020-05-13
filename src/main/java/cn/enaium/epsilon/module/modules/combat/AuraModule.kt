@@ -48,8 +48,6 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     @SettingAT
     private val endermite = SettingEnable(this, "Endermite", false)
     @SettingAT
-    private val zombiePigman = SettingEnable(this, "ZombiePigman", false)
-    @SettingAT
     private val zombieVillager = SettingEnable(this, "VillagerPigman", false)
     private var target: LivingEntity? = null
 
@@ -101,9 +99,6 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         }
         if (!zombieVillager.enable) {
             s = s.filter { it !is ZombieVillagerEntity }
-        }
-        if (!zombiePigman.enable) {
-            s = s.filter { it !is ZombiePigmanEntity }
         }
         return s
     }

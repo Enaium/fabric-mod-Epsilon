@@ -20,7 +20,7 @@ import java.io.File
 object Epsilon {
     var NAME = "Epsilon"
     var VERSION = "pre1"
-    var GAME = "1.15.2"
+    var GAME = "20w19a"
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()

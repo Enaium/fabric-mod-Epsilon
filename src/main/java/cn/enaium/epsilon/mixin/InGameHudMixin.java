@@ -2,6 +2,7 @@ package cn.enaium.epsilon.mixin;
 
 import cn.enaium.epsilon.event.events.EventRender2D;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,10 +22,8 @@ public class InGameHudMixin {
     @Shadow
     private int scaledHeight;
 
-    @Inject(at = @At(value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V",
-            ordinal = 4), method = "render")
-    private void render(float partialTicks, CallbackInfo ci) {
-        new EventRender2D(scaledWidth, scaledHeight).call();
+    @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V", ordinal = 4), method = "render")
+    private void render(MatrixStack matrixStack, float partialTicks, CallbackInfo ci) {
+        new EventRender2D(matrixStack, partialTicks).call();
     }
 }
