@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 @Mixin(Keyboard::class)
 class KeyboardMixin {
     @Inject(at = [At("HEAD")], method = ["onKey"])
-    private fun onKey(windowHandle: Long, keyCode: Int, scanCode: Int, action: Int, modifiers: Int, ci: CallbackInfo) {
+    private fun onKey(windowHandle: Long, keyCode: Int, scanCode: Int, action: Int, modifiers: Int, callbackInfo: CallbackInfo) {
         EventKeyboard(keyCode, scanCode, action, modifiers).call()
     }
 }

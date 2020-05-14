@@ -24,19 +24,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
  */
 @Mixin(MinecraftClient::class)
 class MinecraftClientMixin : IMinecraftClient {
+
     @Shadow
-    lateinit var window: Window
+    private lateinit var window: Window
+
     override fun window(): Window {
         return window
     }
 
     @Inject(at = [At("HEAD")], method = ["run()V"])
-    private fun run(ci: CallbackInfo) {
+    private fun run(callbackInfo: CallbackInfo) {
         run()
     }
 
     @Inject(at = [At("HEAD")], method = ["stop()V"])
-    private fun stop(ci: CallbackInfo) {
+    private fun stop(callbackInfo: CallbackInfo) {
         stop()
     }
 
@@ -44,13 +46,13 @@ class MinecraftClientMixin : IMinecraftClient {
 //    var currentScreen: Screen? = null
 //
 //    @Inject(at = [At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", shift = At.Shift.AFTER)], method = ["openScreen"])
-//    private fun openScreen(screen: Screen, info: CallbackInfo) {
+//    private fun openScreen(screen: Screen, callbackInfo: CallbackInfo) {
 //        if (currentScreen is TitleScreen) {
 //        }
 //    }
 
     @Inject(at = [At("RETURN")], method = ["updateWindowTitle()V"])
-    private fun updateWindowTitle(ci: CallbackInfo) {
+    private fun updateWindowTitle(callbackInfo: CallbackInfo) {
         window.setTitle("$NAME | $VERSION | $GAME | $AUTHOR")
     }
 }

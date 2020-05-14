@@ -18,24 +18,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 @Mixin(ClientPlayerEntity::class)
 class ClientPlayerEntityMixin {
     @Inject(at = [At("HEAD")], method = ["sendChatMessage"], cancellable = true)
-    private fun onSendChatMessage(message: String, info: CallbackInfo) {
+    private fun onSendChatMessage(message: String, callbackInfo: CallbackInfo) {
         if (Epsilon.commandManager.processCommand(message)) {
-            info.cancel()
+            callbackInfo.cancel()
         }
     }
 
     @Inject(at = [At("HEAD")], method = ["tick()V"])
-    private fun preTick(ci: CallbackInfo) {
+    private fun preTick(callbackInfo: CallbackInfo) {
         EventUpdate().call()
     }
 
     @Inject(at = [At("HEAD")], method = ["sendMovementPackets()V"])
-    private fun onSendMovementPacketsHEAD(ci: CallbackInfo) {
+    private fun onSendMovementPacketsHEAD(callbackInfo: CallbackInfo) {
         EventMotion(Event.Type.PRE).call()
     }
 
     @Inject(at = [At("TAIL")], method = ["sendMovementPackets()V"])
-    private fun onSendMovementPacketsTAIL(ci: CallbackInfo) {
+    private fun onSendMovementPacketsTAIL(callbackInfo: CallbackInfo) {
         EventMotion(Event.Type.POST).call()
     }
 }

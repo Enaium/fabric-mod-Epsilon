@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 @Mixin(InGameHud::class)
 class InGameHudMixin {
     @Inject(at = [At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V", ordinal = 4)], method = ["render"])
-    private fun render(matrixStack: MatrixStack, partialTicks: Float, ci: CallbackInfo) {
+    private fun render(matrixStack: MatrixStack, partialTicks: Float, callbackInfo: CallbackInfo) {
         EventRender2D(matrixStack, partialTicks).call()
     }
 }
