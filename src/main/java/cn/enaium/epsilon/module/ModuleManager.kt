@@ -3,12 +3,6 @@ package cn.enaium.epsilon.module
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventTarget
 import cn.enaium.epsilon.event.events.EventKeyboard
-import cn.enaium.epsilon.module.modules.combat.AuraModule
-import cn.enaium.epsilon.module.modules.movement.SprintModule
-import cn.enaium.epsilon.module.modules.render.BrightModule
-import cn.enaium.epsilon.module.modules.render.ClickGUIModule
-import cn.enaium.epsilon.module.modules.render.GlowModule
-import cn.enaium.epsilon.module.modules.render.HUDModule
 import com.google.common.reflect.ClassPath
 import org.lwjgl.glfw.GLFW
 import java.util.*
