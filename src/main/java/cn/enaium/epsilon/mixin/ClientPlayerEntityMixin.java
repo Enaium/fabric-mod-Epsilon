@@ -39,6 +39,4 @@ public class ClientPlayerEntityMixin {
     private void onSendMovementPacketsTAIL(CallbackInfo ci) {
         new EventMotion(Event.Type.POST).call();
     }
-
-
 }

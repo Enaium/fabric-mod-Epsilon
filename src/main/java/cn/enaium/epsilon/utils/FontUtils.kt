@@ -81,7 +81,7 @@ object FontUtils {
      * @param color Color
      */
     fun drawHCenteredString(matrixStack: MatrixStack, text: String, x: Int, y: Int, color: Int) {
-        tr.draw(matrixStack, text, x - tr.getStringWidth(LiteralText(text)) / 2.toFloat(), y.toFloat(), color)
+        tr.draw(matrixStack, text, x - tr.getWidth(LiteralText(text)) / 2.toFloat(), y.toFloat(), color)
     }
 
     /**
@@ -93,7 +93,7 @@ object FontUtils {
      * @param color Color
      */
     fun drawHCenteredString(matrixStack: MatrixStack, text: String, x: Double, y: Double, color: Int) {
-        tr.draw(matrixStack, text, x.toFloat() - tr.getStringWidth(LiteralText(text)) / 2, y.toFloat(), color)
+        tr.draw(matrixStack, text, x.toFloat() - tr.getWidth(LiteralText(text)) / 2, y.toFloat(), color)
     }
 
     /**
@@ -141,7 +141,7 @@ object FontUtils {
      * @param color Color
      */
     fun drawVCenteredString(matrixStack: MatrixStack, text: String, x: Float, y: Float, color: Int) {
-        tr.draw(matrixStack, text, x - tr.getStringWidth(LiteralText(text)) / 2, y - tr.fontHeight / 2, color)
+        tr.draw(matrixStack, text, x - tr.getWidth(LiteralText(text)) / 2, y - tr.fontHeight / 2, color)
     }
 
     /**
@@ -153,7 +153,7 @@ object FontUtils {
      * @param color Color
      */
     fun drawHVCenteredString(matrixStack: MatrixStack, text: String, x: Int, y: Int, color: Int) {
-        tr.draw(matrixStack, text, x - tr.getStringWidth(LiteralText(text)) / 2.toFloat(), y - tr.fontHeight / 2.toFloat(), color)
+        tr.draw(matrixStack, text, x - tr.getWidth(LiteralText(text)) / 2.toFloat(), y - tr.fontHeight / 2.toFloat(), color)
     }
 
     /**
@@ -165,7 +165,7 @@ object FontUtils {
      * @param color Color
      */
     fun drawHVCenteredString(matrixStack: MatrixStack, text: String, x: Double, y: Double, color: Int) {
-        tr.draw(matrixStack, text, x.toFloat() - tr.getStringWidth(LiteralText(text)) / 2, y.toFloat() - tr.fontHeight / 2, color)
+        tr.draw(matrixStack, text, x.toFloat() - tr.getWidth(LiteralText(text)) / 2, y.toFloat() - tr.fontHeight / 2, color)
     }
 
     /**
@@ -177,16 +177,15 @@ object FontUtils {
      * @param color Color
      */
     fun drawHVCenteredString(matrixStack: MatrixStack, text: String, x: Float, y: Float, color: Int) {
-        tr.draw(matrixStack, text, x - tr.getStringWidth(LiteralText(text)) / 2, y - tr.fontHeight / 2, color)
+        tr.draw(matrixStack, text, x - tr.getWidth(LiteralText(text)) / 2, y - tr.fontHeight / 2, color)
     }
 
     /**
      * Text Width
-     * @param matrixStack MatrixStack
      * @param text Text
      */
-    fun getStringWidth(text: String): Int {
-        return tr.getStringWidth(LiteralText(text))
+    fun getWidth(text: String): Int {
+        return tr.getWidth(LiteralText(text))
     }
 
     val fontHeight: Int

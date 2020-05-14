@@ -64,11 +64,11 @@ public class HUDModule extends Module {
         }
 
         List<Module> mods = modules;
-        mods.sort((o1, o2) -> FontUtils.INSTANCE.getStringWidth(o2.getDisplayTag()) - FontUtils.INSTANCE.getStringWidth(o1.getDisplayTag()));
+        mods.sort((o1, o2) -> FontUtils.INSTANCE.getWidth(o2.getDisplayTag()) - FontUtils.INSTANCE.getWidth(o1.getDisplayTag()));
 
         for (Module module : mods) {
 
-            int startX = Render2DUtils.INSTANCE.getScaledWidth() - FontUtils.INSTANCE.getStringWidth(module.getDisplayTag()) - 6;
+            int startX = Render2DUtils.INSTANCE.getScaledWidth() - FontUtils.INSTANCE.getWidth(module.getDisplayTag()) - 6;
 
             Render2DUtils.INSTANCE.drawRect(e.getMatrixStack(), startX, yStart - 1, Render2DUtils.INSTANCE.getScaledWidth(), yStart + 12, ColorUtils.BG);
             Render2DUtils.INSTANCE.drawRect(e.getMatrixStack(), Render2DUtils.INSTANCE.getScaledWidth() - 2, yStart - 1, Render2DUtils.INSTANCE.getScaledWidth(), yStart + 12, ColorUtils.SELECT);
@@ -318,8 +318,8 @@ public class HUDModule extends Module {
             } else {
                 name = s.getName() + ": " + ((SettingMode) s).getCurrent();
             }
-            if (FontUtils.INSTANCE.getStringWidth(name) > width) {
-                width = FontUtils.INSTANCE.getStringWidth(name);
+            if (FontUtils.INSTANCE.getWidth(name) > width) {
+                width = FontUtils.INSTANCE.getWidth(name);
             }
         }
         return width;
@@ -328,7 +328,7 @@ public class HUDModule extends Module {
     private int getWidestMod() {
         int width = 0;
         for (Module m : Epsilon.moduleManager.getModules()) {
-            int cWidth = FontUtils.INSTANCE.getStringWidth(m.getName());
+            int cWidth = FontUtils.INSTANCE.getWidth(m.getName());
             if (cWidth > width) {
                 width = cWidth;
             }
@@ -340,7 +340,7 @@ public class HUDModule extends Module {
         int width = 0;
         for (Category c : this.categoryValues) {
             String name = c.name();
-            int cWidth = FontUtils.INSTANCE.getStringWidth(name.substring(0, 1).toUpperCase() + name.substring(1, name.length()).toLowerCase());
+            int cWidth = FontUtils.INSTANCE.getWidth(name.substring(0, 1).toUpperCase() + name.substring(1, name.length()).toLowerCase());
             if (cWidth > width) {
                 width = cWidth;
             }
