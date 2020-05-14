@@ -2,7 +2,7 @@ package cn.enaium.epsilon.module.modules.combat
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.Event
-import cn.enaium.epsilon.event.EventTarget
+import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.EventMotion
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
@@ -51,7 +51,7 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private val zombieVillager = SettingEnable(this, "VillagerPigman", false)
     private var target: LivingEntity? = null
 
-    @EventTarget
+    @EventAT
     fun onMotion(eventMotion: EventMotion) {
         when (eventMotion.type) {
             Event.Type.PRE -> {

@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.module.modules.movement
 
-import cn.enaium.epsilon.event.EventTarget
+import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.EventUpdate
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFW
  */
 @ModuleAT
 class SprintModule : Module("Sprint", GLFW.GLFW_KEY_V, Category.MOVEMENT) {
-    @EventTarget
+    @EventAT
     fun onUpdate(eventUpdate: EventUpdate) {
         MinecraftClient.getInstance().player!!.isSprinting = true
     }

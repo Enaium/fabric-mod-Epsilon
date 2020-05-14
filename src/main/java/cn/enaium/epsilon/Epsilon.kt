@@ -7,7 +7,6 @@ import cn.enaium.epsilon.imixin.IMinecraftClient
 import cn.enaium.epsilon.module.ModuleManager
 import cn.enaium.epsilon.plugin.PluginManager
 import cn.enaium.epsilon.setting.SettingManager
-import com.mojang.brigadier.Command
 import net.minecraft.client.MinecraftClient
 import java.io.File
 

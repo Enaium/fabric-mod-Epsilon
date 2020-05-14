@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.module
 
 import cn.enaium.epsilon.Epsilon
-import cn.enaium.epsilon.event.EventTarget
+import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.EventKeyboard
 import com.google.common.reflect.ClassPath
 import org.lwjgl.glfw.GLFW
@@ -40,7 +40,7 @@ class ModuleManager {
         return null
     }
 
-    @EventTarget
+    @EventAT
     fun onKey(eventKeyBoard: EventKeyboard) {
 
         if (Epsilon.MC.currentScreen != null)

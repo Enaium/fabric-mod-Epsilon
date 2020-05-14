@@ -2,7 +2,7 @@ package cn.enaium.epsilon.module.modules.render
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventTarget
+import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.EventKeyboard
 import cn.enaium.epsilon.event.events.EventRender2D
 import cn.enaium.epsilon.module.Category
@@ -21,7 +21,6 @@ import cn.enaium.epsilon.utils.Render2DUtils.drawHorizontalLine
 import cn.enaium.epsilon.utils.Render2DUtils.drawVerticalLine
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
-import net.minecraft.predicate.entity.DistancePredicate.y
 import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
@@ -60,7 +59,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         this.categoryValues.addAll(Category.values());
     }
 
-    @EventTarget
+    @EventAT
     fun list(eventRender2D: EventRender2D) {
         if (!list.enable)
             return
@@ -90,7 +89,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
-    @EventTarget
+    @EventAT
     fun tabGUI(eventRender2D: EventRender2D) {
         if (!tabGUI.enable)
             return
@@ -250,7 +249,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
-    @EventTarget
+    @EventAT
     fun onKey(eventKeyBoard: EventKeyboard) {
         if (MC.currentScreen != null) return
         if (eventKeyBoard.action != GLFW.GLFW_PRESS) return
