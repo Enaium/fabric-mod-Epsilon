@@ -9,7 +9,7 @@ import cn.enaium.epsilon.Epsilon.stop
 import cn.enaium.epsilon.imixin.IMinecraftClient
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.screen.TitleScreen
+import net.minecraft.client.util.Session
 import net.minecraft.client.util.Window
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.Shadow
@@ -24,13 +24,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
  */
 @Mixin(MinecraftClient::class)
 class MinecraftClientMixin : IMinecraftClient {
-
     @Shadow
     private lateinit var window: Window
-
     override fun window(): Window {
         return window
     }
+
+    @Shadow
+    private lateinit var session: Session
+    override fun setSession(session: Session) {
+        this.session = session
+    }
+
 
     @Inject(at = [At("HEAD")], method = ["run()V"])
     private fun run(callbackInfo: CallbackInfo) {
@@ -42,15 +47,14 @@ class MinecraftClientMixin : IMinecraftClient {
         stop()
     }
 
-//    @Shadow
-//    var currentScreen: Screen? = null
-//
-//    @Inject(at = [At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", shift = At.Shift.AFTER)], method = ["openScreen"])
-//    private fun openScreen(screen: Screen, callbackInfo: CallbackInfo) {
-//        if (currentScreen is TitleScreen) {
-//        }
-//    }
+    @Shadow
+    var currentScreen: Screen? = null
 
+    //    @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", shift = At.Shift.AFTER), method = "openScreen")
+    //    private void openScreen(Screen screen, CallbackInfo callbackInfo) {
+    //        if (this.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
+    //        }
+    //    }
     @Inject(at = [At("RETURN")], method = ["updateWindowTitle()V"])
     private fun updateWindowTitle(callbackInfo: CallbackInfo) {
         window.setTitle("$NAME | $VERSION | $GAME | $AUTHOR")

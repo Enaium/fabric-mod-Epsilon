@@ -1,5 +1,6 @@
 package cn.enaium.epsilon.imixin
 
+import net.minecraft.client.util.Session
 import net.minecraft.client.util.Window
 
 /**
@@ -9,4 +10,5 @@ import net.minecraft.client.util.Window
  */
 interface IMinecraftClient {
     fun window(): Window
+    fun setSession(session: Session)
 }

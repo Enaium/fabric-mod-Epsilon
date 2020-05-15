@@ -20,31 +20,39 @@ class ModuleConfig : Config("Modules") {
         super.load()
         val moduleObject = JSON.parseObject(FileUtils.read(getPath()))
         for (module in Epsilon.moduleManager.modules) {
-            val moduleClassObject = JSON.parseObject(moduleObject.getString(module.name))
-            if (moduleClassObject.getBoolean("enable")) module.enable()
-            module.keyCode = moduleClassObject.getInteger("keyCode")
-            val settings = Epsilon.settingManager.getSettingsForModule(module)
-            if (settings != null) {
-                val settingObject = JSON.parseObject(moduleClassObject.getString("settings"))
-                for (setting in settings) {
-                    when (setting) {
-                        is SettingEnable -> {
-                            setting.enable = settingObject.getBoolean(setting.name)
-                        }
-                        is SettingInteger -> {
-                            setting.current = settingObject.getInteger(setting.name)
-                        }
-                        is SettingFloat -> {
-                            setting.current = settingObject.getFloat(setting.name)
-                        }
-                        is SettingDouble -> {
-                            setting.current = settingObject.getDouble(setting.name)
-                        }
-                        is SettingLong -> {
-                            setting.current = settingObject.getLong(setting.name)
-                        }
-                        is SettingMode -> {
-                            setting.current = settingObject.getString(setting.name)
+            if (moduleObject != null) {
+                if (moduleObject.containsKey(module.name)) {
+                    val moduleClassObject = JSON.parseObject(moduleObject.getString(module.name))
+                    if (moduleClassObject.getBoolean("enable")) module.enable()
+                    module.keyCode = moduleClassObject.getInteger("keyCode")
+                    val settings = Epsilon.settingManager.getSettingsForModule(module)
+                    if (settings != null) {
+                        val settingObject = JSON.parseObject(moduleClassObject.getString("settings"))
+                        for (setting in settings) {
+                            if (settingObject != null) {
+                                if (settingObject.containsKey(setting.name)) {
+                                    when (setting) {
+                                        is SettingEnable -> {
+                                            setting.enable = settingObject.getBoolean(setting.name)
+                                        }
+                                        is SettingInteger -> {
+                                            setting.current = settingObject.getInteger(setting.name)
+                                        }
+                                        is SettingFloat -> {
+                                            setting.current = settingObject.getFloat(setting.name)
+                                        }
+                                        is SettingDouble -> {
+                                            setting.current = settingObject.getDouble(setting.name)
+                                        }
+                                        is SettingLong -> {
+                                            setting.current = settingObject.getLong(setting.name)
+                                        }
+                                        is SettingMode -> {
+                                            setting.current = settingObject.getString(setting.name)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

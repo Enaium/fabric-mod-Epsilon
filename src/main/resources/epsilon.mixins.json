@@ -6,11 +6,11 @@
   "mixins": [
   ],
   "client": [
-    "MinecraftClientMixin",
     "ClientPlayerEntityMixin",
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin"
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
