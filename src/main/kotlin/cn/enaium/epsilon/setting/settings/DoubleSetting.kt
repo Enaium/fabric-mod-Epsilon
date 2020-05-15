@@ -8,4 +8,4 @@ import cn.enaium.epsilon.module.Module
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class SettingEnable(module: Module, name: String, var enable: Boolean) : Setting(module, name)
+class DoubleSetting(module: Module, name: String, var current: Double, var min: Double, var max: Double) : Setting(module, name)

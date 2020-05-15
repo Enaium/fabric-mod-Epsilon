@@ -19,23 +19,23 @@ class SettingManager {
                 if (field.isAnnotationPresent(SettingAT::class.java)) {
                     field.isAccessible = true
                     when (field.type) {
-                        SettingEnable::class.java -> {
-                            settings.add(field.get(module) as SettingEnable)
+                        EnableSetting::class.java -> {
+                            settings.add(field.get(module) as EnableSetting)
                         }
-                        SettingInteger::class.java -> {
-                            settings.add(field.get(module) as SettingInteger)
+                        IntegerSetting::class.java -> {
+                            settings.add(field.get(module) as IntegerSetting)
                         }
-                        SettingFloat::class.java -> {
-                            settings.add(field.get(module) as SettingFloat)
+                        FloatSetting::class.java -> {
+                            settings.add(field.get(module) as FloatSetting)
                         }
-                        SettingDouble::class.java -> {
-                            settings.add(field.get(module) as SettingDouble)
+                        DoubleSetting::class.java -> {
+                            settings.add(field.get(module) as DoubleSetting)
                         }
-                        SettingLong::class.java -> {
-                            settings.add(field.get(module) as SettingLong)
+                        LongSetting::class.java -> {
+                            settings.add(field.get(module) as LongSetting)
                         }
-                        SettingMode::class.java -> {
-                            settings.add(field.get(module) as SettingMode)
+                        ModeSetting::class.java -> {
+                            settings.add(field.get(module) as ModeSetting)
                         }
                     }
                 }

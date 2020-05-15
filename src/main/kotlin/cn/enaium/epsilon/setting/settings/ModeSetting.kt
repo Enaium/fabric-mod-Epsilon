@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class SettingMode(module: Module, name: String, var current: String, var modes: ArrayList<String>) : Setting(module, name) {
+class ModeSetting(module: Module, name: String, var current: String, var modes: ArrayList<String>) : Setting(module, name) {
     fun getCurrentIndex(): Int {
         var index = 0
         for (s in modes) {

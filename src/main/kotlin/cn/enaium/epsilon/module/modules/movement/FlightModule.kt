@@ -7,9 +7,7 @@ import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.module.ModuleAT
 import cn.enaium.epsilon.setting.SettingAT
-import cn.enaium.epsilon.setting.settings.SettingDouble
-import cn.enaium.epsilon.setting.settings.SettingFloat
-import net.minecraft.client.network.ClientPlayerEntity
+import cn.enaium.epsilon.setting.settings.DoubleSetting
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 
@@ -23,7 +21,7 @@ import org.lwjgl.glfw.GLFW
 class FlightModule : Module("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
 
     @SettingAT
-    private var speed = SettingDouble(this, "Speed", 3.0, 1.0, 10.0);
+    private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0);
 
     @EventAT
     fun on(eventUpdate: EventUpdate) {

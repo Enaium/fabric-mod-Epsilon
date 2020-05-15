@@ -32,22 +32,22 @@ class ModuleConfig : Config("Modules") {
                             if (settingObject != null) {
                                 if (settingObject.containsKey(setting.name)) {
                                     when (setting) {
-                                        is SettingEnable -> {
+                                        is EnableSetting -> {
                                             setting.enable = settingObject.getBoolean(setting.name)
                                         }
-                                        is SettingInteger -> {
+                                        is IntegerSetting -> {
                                             setting.current = settingObject.getInteger(setting.name)
                                         }
-                                        is SettingFloat -> {
+                                        is FloatSetting -> {
                                             setting.current = settingObject.getFloat(setting.name)
                                         }
-                                        is SettingDouble -> {
+                                        is DoubleSetting -> {
                                             setting.current = settingObject.getDouble(setting.name)
                                         }
-                                        is SettingLong -> {
+                                        is LongSetting -> {
                                             setting.current = settingObject.getLong(setting.name)
                                         }
-                                        is SettingMode -> {
+                                        is ModeSetting -> {
                                             setting.current = settingObject.getString(setting.name)
                                         }
                                     }
@@ -72,22 +72,22 @@ class ModuleConfig : Config("Modules") {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
                     when (s) {
-                        is SettingEnable -> {
+                        is EnableSetting -> {
                             settingObject[s.name] = s.enable
                         }
-                        is SettingInteger -> {
+                        is IntegerSetting -> {
                             settingObject[s.name] = s.current
                         }
-                        is SettingFloat -> {
+                        is FloatSetting -> {
                             settingObject[s.name] = s.current
                         }
-                        is SettingDouble -> {
+                        is DoubleSetting -> {
                             settingObject[s.name] = s.current
                         }
-                        is SettingLong -> {
+                        is LongSetting -> {
                             settingObject[s.name] = s.current
                         }
-                        is SettingMode -> {
+                        is ModeSetting -> {
                             settingObject[s.name] = s.current
                         }
                     }

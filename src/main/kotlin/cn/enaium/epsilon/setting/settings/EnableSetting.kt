@@ -8,4 +8,4 @@ import cn.enaium.epsilon.module.Module
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class SettingInteger(module: Module, name: String, var current: Int, var min: Int, var max: Int) : Setting(module, name)
+class EnableSetting(module: Module, name: String, var enable: Boolean) : Setting(module, name)

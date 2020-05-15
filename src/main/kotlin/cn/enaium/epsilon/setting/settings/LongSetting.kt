@@ -8,4 +8,4 @@ import cn.enaium.epsilon.module.Module
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class SettingFloat(module: Module, name: String, var current: Float, var min: Float, var max: Float) : Setting(module, name)
+class LongSetting(module: Module, name: String, var current: Long, var min: Long, var max: Long) : Setting(module, name)

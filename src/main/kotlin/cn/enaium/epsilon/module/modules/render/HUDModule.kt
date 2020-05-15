@@ -44,10 +44,10 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     private var screen = 0
 
     @SettingAT
-    private val tabGUI = SettingEnable(this, "TabGUI", true)
+    private val tabGUI = EnableSetting(this, "TabGUI", true)
 
     @SettingAT
-    private val list = SettingEnable(this, "List", true)
+    private val list = EnableSetting(this, "List", true)
 
     init {
         categoryValues = ArrayList()
@@ -127,22 +127,22 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                     Render2DUtils.drawRect(eventRender2D.matrixStack, startSettingX + 1, startSettingY, startSettingX + this.getWidestSetting() + 5 - 1, startSettingY + fontHeight + 2, ColorUtils.SELECT)
                 }
                 when (s) {
-                    is SettingEnable -> {
+                    is EnableSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.enable, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
-                    is SettingInteger -> {
+                    is IntegerSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
-                    is SettingDouble -> {
+                    is DoubleSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
-                    is SettingFloat -> {
+                    is FloatSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
-                    is SettingLong -> {
+                    is LongSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
-                    is SettingMode -> {
+                    is ModeSetting -> {
                         FontUtils.drawStringWithShadow(eventRender2D.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                 }
@@ -169,21 +169,21 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
         if (editMode) {
             val s: Setting = this.getCurrentSetting()
-            if (s is SettingEnable) {
+            if (s is EnableSetting) {
                 s.enable = !s.enable
-            } else if (s is SettingInteger) {
+            } else if (s is IntegerSetting) {
                 if (s.current < s.max) s.current = s.current + 1
-            } else if (s is SettingDouble) {
+            } else if (s is DoubleSetting) {
                 if (s.current < s.max) s.current = Utils.valueFix(s.current + 0.1)
-            } else if (s is SettingFloat) {
+            } else if (s is FloatSetting) {
                 if (s.current < s.max) s.current = Utils.valueFix(s.current + 0.1f)
-            } else if (s is SettingLong) {
+            } else if (s is LongSetting) {
                 if (s.current < s.max) s.current = s.current + 1
             } else {
                 try {
-                    (s as SettingMode).current = s.modes[s.getCurrentIndex() - 1]
+                    (s as ModeSetting).current = s.modes[s.getCurrentIndex() - 1]
                 } catch (e: Exception) {
-                    (s as SettingMode).current = s.modes[s.modes.size - 1]
+                    (s as ModeSetting).current = s.modes[s.modes.size - 1]
                 }
             }
         }
@@ -205,21 +205,21 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
         if (editMode) {
             val s: Setting = this.getCurrentSetting()
-            if (s is SettingEnable) {
+            if (s is EnableSetting) {
                 s.enable = !s.enable
-            } else if (s is SettingInteger) {
+            } else if (s is IntegerSetting) {
                 if (s.current > s.min) s.current = s.current - 1
-            } else if (s is SettingDouble) {
+            } else if (s is DoubleSetting) {
                 if (s.current > s.min) s.current = Utils.valueFix(s.current - 0.1)
-            } else if (s is SettingFloat) {
+            } else if (s is FloatSetting) {
                 if (s.current > s.min) s.current = Utils.valueFix(s.current - 0.1f)
-            } else if (s is SettingLong) {
+            } else if (s is LongSetting) {
                 if (s.current > s.min) s.current = s.current - 1
             } else {
                 try {
-                    (s as SettingMode).current = s.modes[s.getCurrentIndex() + 1]
+                    (s as ModeSetting).current = s.modes[s.getCurrentIndex() + 1]
                 } catch (e: Exception) {
-                    (s as SettingMode).current = s.modes[0]
+                    (s as ModeSetting).current = s.modes[0]
                 }
             }
         }
@@ -286,23 +286,23 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         var width = 0
         for (s in getSettingForCurrentMod()!!) {
             val name: String = when (s) {
-                is SettingEnable -> {
+                is EnableSetting -> {
                     s.name + ": " + s.enable
                 }
-                is SettingInteger -> {
+                is IntegerSetting -> {
                     s.name + ": " + s.current
                 }
-                is SettingFloat -> {
+                is FloatSetting -> {
                     s.name + ": " + s.current
                 }
-                is SettingDouble -> {
+                is DoubleSetting -> {
                     s.name + ": " + s.current
                 }
-                is SettingLong -> {
+                is LongSetting -> {
                     s.name + ": " + s.current
                 }
                 else -> {
-                    s.name + ": " + (s as SettingMode).current
+                    s.name + ": " + (s as ModeSetting).current
                 }
             }
             if (getWidth(name) > width) {
