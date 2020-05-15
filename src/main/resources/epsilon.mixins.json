@@ -9,7 +9,7 @@
     "ClientPlayerEntityMixin",
     "InGameHudMixin",
     "KeyboardMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
     "TitleScreenMixin"
   ],
   "injectors": {
