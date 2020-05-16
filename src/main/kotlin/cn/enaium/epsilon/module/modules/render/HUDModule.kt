@@ -17,14 +17,15 @@ import cn.enaium.epsilon.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.utils.FontUtils.getWidth
 import cn.enaium.epsilon.utils.Render2DUtils
-import cn.enaium.epsilon.utils.Render2DUtils.drawHorizontalLine
-import cn.enaium.epsilon.utils.Render2DUtils.drawVerticalLine
+import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
+import net.minecraft.entity.Entity
 import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -49,6 +50,9 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     @SettingAT
     private val list = EnableSetting(this, "List", true)
 
+    @SettingAT
+    private val entityList = EnableSetting(this, "EntityList", false)
+
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
@@ -57,6 +61,27 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         editMode = false
         screen = 0
         this.categoryValues.addAll(Category.values());
+    }
+
+    @EventAT
+    fun entityList(eventRender2D: EventRender2D) {
+        if (!entityList.enable)
+            return
+
+        val entities: MutableSet<String> = HashSet()
+        for (e in MC.world!!.entities) {
+            entities.add(e.javaClass.simpleName)
+        }
+
+        entities.sortedWith(Comparator { o1: String, o2: String -> getWidth(o2) - getWidth(o1) })
+
+        var yStart = scaledHeight - fontHeight
+
+        for (entity in entities) {
+            val startX = scaledWidth - getWidth(entity) - 6
+            drawStringWithShadow(eventRender2D.matrixStack, entity, startX + 3, yStart, Color.WHITE.rgb)
+            yStart -= fontHeight + 4
+        }
     }
 
     @EventAT
@@ -80,11 +105,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
         for (module in mods) {
             val startX = scaledWidth - getWidth(module.getDisplayTag()) - 6
-            Render2DUtils.drawRect(eventRender2D.matrixStack, startX, yStart - 1, scaledWidth, yStart + 12, ColorUtils.BG)
-            Render2DUtils.drawRect(eventRender2D.matrixStack, scaledWidth - 2, yStart - 1, scaledWidth, yStart + 12, ColorUtils.SELECT)
-            drawVerticalLine(eventRender2D.matrixStack, startX - 1, yStart - 2, yStart + 12, ColorUtils.SELECT)
-            drawHorizontalLine(eventRender2D.matrixStack, startX - 1, scaledWidth, yStart + 12, ColorUtils.SELECT)
-            FontUtils.drawStringWithShadow(eventRender2D.matrixStack, module.name, startX + 3, yStart, ColorUtils.SELECT)
+            drawStringWithShadow(eventRender2D.matrixStack, module.name, startX + 3, yStart, Color.WHITE.rgb)
             yStart += fontHeight + 4
         }
     }
