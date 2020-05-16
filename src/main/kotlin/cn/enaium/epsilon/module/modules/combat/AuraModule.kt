@@ -33,39 +33,52 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
+
     @SettingAT
     private val player = EnableSetting(this, "Player", true)
+
     @SettingAT
     private val animal = EnableSetting(this, "Animal", false)
+
     @SettingAT
     private val wolf = EnableSetting(this, "Wolf", false)
+
     @SettingAT
     private val villager = EnableSetting(this, "Villager", false)
+
     @SettingAT
     private val ironGolem = EnableSetting(this, "IronGolem", false)
+
     @SettingAT
-    private val endermen = EnableSetting(this, "Endermen", false)
+    private val enderman = EnableSetting(this, "Enderman", false)
+
     @SettingAT
     private val endermite = EnableSetting(this, "Endermite", false)
+
     @SettingAT
-    private val zombieVillager = EnableSetting(this, "VillagerPigman", false)
+    private val zombieVillager = EnableSetting(this, "ZombieVillager", false)
+
+    @SettingAT
+    private val zombiePigman = EnableSetting(this, "ZombiePigman", false)
+
+
     private var target: LivingEntity? = null
 
     @EventAT
     fun onMotion(eventMotion: EventMotion) {
-        when (eventMotion.type) {
+        target = when (eventMotion.type) {
             Event.Type.PRE -> {
 
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                target = getTargets().min(Comparator.comparingDouble() { it.health.toDouble() }).orElse(null)
+                getTargets().min(Comparator.comparingDouble() { it.health.toDouble() }).orElse(null)
 
             }
             Event.Type.POST -> {
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
-                target = null
+                null
             }
         }
     }
@@ -91,7 +104,7 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         if (!ironGolem.enable) {
             s = s.filter { it !is IronGolemEntity }
         }
-        if (!endermen.enable) {
+        if (!enderman.enable) {
             s = s.filter { it !is EndermanEntity }
         }
         if (!endermite.enable) {
@@ -99,6 +112,9 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         }
         if (!zombieVillager.enable) {
             s = s.filter { it !is ZombieVillagerEntity }
+        }
+        if (!zombiePigman.enable) {
+            s = s.filter { it !is ZombifiedPiglinEntity }
         }
         return s
     }
