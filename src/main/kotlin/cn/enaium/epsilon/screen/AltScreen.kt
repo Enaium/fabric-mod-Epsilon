@@ -28,12 +28,12 @@ class AltScreen : Screen(LiteralText("")) {
 
     override fun init() {
         super.init()
-        usernameField = TextFieldWidget(textRenderer, 35, 5, 250, 20, LiteralText(""))
-        passwordField = TextFieldWidget(textRenderer, 35, 25, 250, 20, LiteralText(""))
-        addButton(ButtonWidget(width / 2 - 250 / 2, 150 + 40 * 3, 250, 20, LiteralText("Login"), PressAction {
+        usernameField = TextFieldWidget(textRenderer, 65, 5, 250, 20, LiteralText(""))
+        passwordField = TextFieldWidget(textRenderer, 65, 35, 250, 20, LiteralText(""))
+        addButton(ButtonWidget(width / 2 - 200 / 2, 40 * 3, 250, 20, LiteralText("Login"), PressAction {
             login()
         }))
-        addButton(ButtonWidget(width / 2 - 250 / 2, 125 + 40 * 3 + 25 * 2, 250, 20, LiteralText("Back"), PressAction {
+        addButton(ButtonWidget(width / 2 - 200 / 2, 40 * 3 + 25 * 2, 250, 20, LiteralText("Back"), PressAction {
             MC.openScreen(null)
         }))
         usernameField.setSelected(true)
@@ -43,8 +43,8 @@ class AltScreen : Screen(LiteralText("")) {
 
     override fun render(matrixStack: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
         renderBackground(matrixStack)
-        drawCenteredString(matrixStack, textRenderer, "Username:", 5, 5, -1)
-        drawCenteredString(matrixStack, textRenderer, "Password:", 5, 25, -1)
+        drawCenteredString(matrixStack, textRenderer, "Username:", 35, 5, -1)
+        drawCenteredString(matrixStack, textRenderer, "Password:", 35, 35, -1)
         usernameField.render(matrixStack, mouseX, mouseY, delta);
         passwordField.render(matrixStack, mouseX, mouseY, delta);
         super.render(matrixStack, mouseX, mouseY, delta)
@@ -65,13 +65,6 @@ class AltScreen : Screen(LiteralText("")) {
         passwordField.mouseClicked(mouseX, mouseY, button)
         return super.mouseClicked(mouseX, mouseY, button)
     }
-
-    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        usernameField.keyPressed(keyCode, scanCode, modifiers)
-        passwordField.keyPressed(keyCode, scanCode, modifiers)
-        return super.keyPressed(keyCode, scanCode, modifiers)
-    }
-
 
     private fun createSession(username: String, password: String, proxy: Proxy): Session {
         val service = YggdrasilAuthenticationService(proxy, "")

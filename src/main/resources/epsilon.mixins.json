@@ -10,7 +10,8 @@
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
