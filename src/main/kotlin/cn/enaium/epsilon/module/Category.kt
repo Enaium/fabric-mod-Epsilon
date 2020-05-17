@@ -6,5 +6,5 @@ package cn.enaium.epsilon.module
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 enum class Category {
-    COMBAT, RENDER, MOVEMENT, OTHER
+    COMBAT, RENDER, MOVEMENT, WORLD, OTHER
 }
