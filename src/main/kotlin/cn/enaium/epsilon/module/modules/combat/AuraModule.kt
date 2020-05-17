@@ -12,10 +12,7 @@ import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
-import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.entity.passive.IronGolemEntity
-import net.minecraft.entity.passive.VillagerEntity
-import net.minecraft.entity.passive.WolfEntity
+import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
 import org.lwjgl.glfw.GLFW
@@ -50,6 +47,12 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private val ironGolem = EnableSetting(this, "IronGolem", false)
 
     @SettingAT
+    private val llama = EnableSetting(this, "Llama", false)
+
+    @SettingAT
+    private val strider = EnableSetting(this, "Strider", false)
+
+    @SettingAT
     private val enderman = EnableSetting(this, "Enderman", false)
 
     @SettingAT
@@ -60,7 +63,6 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @SettingAT
     private val zombiePigman = EnableSetting(this, "ZombiePigman", false)
-
 
     private var target: LivingEntity? = null
 
@@ -103,6 +105,12 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         }
         if (!ironGolem.enable) {
             s = s.filter { it !is IronGolemEntity }
+        }
+        if (!llama.enable) {
+            s = s.filter { it !is LlamaEntity }
+        }
+        if (!strider.enable) {
+            s = s.filter { it !is StriderEntity }
         }
         if (!enderman.enable) {
             s = s.filter { it !is EndermanEntity }
