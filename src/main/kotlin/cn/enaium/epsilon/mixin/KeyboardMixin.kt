@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin
 
-import cn.enaium.epsilon.event.events.EventKeyboard
+import cn.enaium.epsilon.event.events.KeyboardEvent
 import net.minecraft.client.Keyboard
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
@@ -16,6 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 class KeyboardMixin {
     @Inject(at = [At("HEAD")], method = ["onKey(JIIII)V"])
     private fun onKey(windowHandle: Long, keyCode: Int, scanCode: Int, action: Int, modifiers: Int, callbackInfo: CallbackInfo) {
-        EventKeyboard(keyCode, scanCode, action, modifiers).call()
+        KeyboardEvent(keyCode, scanCode, action, modifiers).call()
     }
 }

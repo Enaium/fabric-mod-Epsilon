@@ -10,5 +10,8 @@ import net.minecraft.client.util.Window
  */
 interface IMinecraftClient {
     fun window(): Window
+    fun getSession(): Session
     fun setSession(session: Session)
+    fun getItemUseCooldown(): Int
+    fun setItemUseCooldown(itemUseCooldown: Int)
 }

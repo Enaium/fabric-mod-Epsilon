@@ -3,7 +3,7 @@ package cn.enaium.epsilon.module.modules.combat
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.Event
 import cn.enaium.epsilon.event.EventAT
-import cn.enaium.epsilon.event.events.EventMotion
+import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.module.ModuleAT
@@ -67,8 +67,8 @@ class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private var target: LivingEntity? = null
 
     @EventAT
-    fun onMotion(eventMotion: EventMotion) {
-        target = when (eventMotion.type) {
+    fun onMotion(motionEvent: MotionEvent) {
+        target = when (motionEvent.type) {
             Event.Type.PRE -> {
 
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return

@@ -9,6 +9,7 @@ import cn.enaium.epsilon.Epsilon.stop
 import cn.enaium.epsilon.imixin.IMinecraftClient
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.network.ClientPlayerInteractionManager
 import net.minecraft.client.util.Session
 import net.minecraft.client.util.Window
 import org.spongepowered.asm.mixin.Mixin
@@ -16,6 +17,7 @@ import org.spongepowered.asm.mixin.Shadow
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+
 
 /**
  * Project: Epsilon
@@ -36,6 +38,19 @@ class MinecraftClientMixin : IMinecraftClient {
         this.session = session
     }
 
+    override fun getSession(): Session {
+        return this.session
+    }
+
+    @Shadow
+    private var itemUseCooldown: Int = 0
+    override fun getItemUseCooldown(): Int {
+        return itemUseCooldown;
+    }
+
+    override fun setItemUseCooldown(itemUseCooldown: Int) {
+        this.itemUseCooldown = itemUseCooldown
+    }
 
     @Inject(at = [At("HEAD")], method = ["run()V"])
     private fun run(callbackInfo: CallbackInfo) {

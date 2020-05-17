@@ -8,4 +8,4 @@ import net.minecraft.client.util.math.MatrixStack
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class EventRender3D(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Event(Type.PRE)
+class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Event(Type.PRE)

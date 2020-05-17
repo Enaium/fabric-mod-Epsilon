@@ -2,7 +2,7 @@ package cn.enaium.epsilon.module.modules.render
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventAT
-import cn.enaium.epsilon.event.events.EventRender3D
+import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.module.ModuleAT
@@ -42,7 +42,7 @@ class StorageESP : Module("StorageESP", 0, Category.RENDER) {
     private val furnace = EnableSetting(this, "Furnace", true)
 
     @EventAT
-    fun onRender(eventRender3D: EventRender3D) {
+    fun onRender(render3DEvent: Render3DEvent) {
 
     }
 

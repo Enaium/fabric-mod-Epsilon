@@ -2,7 +2,7 @@ package cn.enaium.epsilon.module.modules.movement
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.EventAT
-import cn.enaium.epsilon.event.events.EventUpdate
+import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.module.ModuleAT
@@ -24,7 +24,7 @@ class FlightModule : Module("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
     private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0);
 
     @EventAT
-    fun on(eventUpdate: EventUpdate) {
+    fun on(updateEvent: UpdateEvent) {
 
         MC.player!!.abilities.flying = false
         MC.player!!.flyingSpeed = speed.current.toFloat()

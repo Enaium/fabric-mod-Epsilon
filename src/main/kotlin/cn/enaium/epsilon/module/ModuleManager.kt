@@ -2,7 +2,7 @@ package cn.enaium.epsilon.module
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventAT
-import cn.enaium.epsilon.event.events.EventKeyboard
+import cn.enaium.epsilon.event.events.KeyboardEvent
 import com.google.common.reflect.ClassPath
 import org.lwjgl.glfw.GLFW
 import java.util.*
@@ -41,16 +41,16 @@ class ModuleManager {
     }
 
     @EventAT
-    fun onKey(eventKeyBoard: EventKeyboard) {
+    fun onKey(keyBoardEvent: KeyboardEvent) {
 
         if (Epsilon.MC.currentScreen != null)
             return
 
-        if (eventKeyBoard.action != GLFW.GLFW_PRESS)
+        if (keyBoardEvent.action != GLFW.GLFW_PRESS)
             return
 
         for (mod in modules) {
-            if (mod.keyCode == eventKeyBoard.keyCode) mod.enable()
+            if (mod.keyCode == keyBoardEvent.keyCode) mod.enable()
         }
     }
 

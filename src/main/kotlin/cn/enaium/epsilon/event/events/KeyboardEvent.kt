@@ -7,4 +7,4 @@ import cn.enaium.epsilon.event.Event
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class EventMotion(type: Type) : Event(type)
+class KeyboardEvent(val keyCode: Int, val scanCode: Int, val action: Int, val modifiers: Int) : Event(Type.PRE)

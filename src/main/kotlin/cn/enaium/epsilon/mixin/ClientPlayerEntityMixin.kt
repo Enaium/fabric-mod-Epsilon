@@ -2,8 +2,8 @@ package cn.enaium.epsilon.mixin
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.Event
-import cn.enaium.epsilon.event.events.EventMotion
-import cn.enaium.epsilon.event.events.EventUpdate
+import cn.enaium.epsilon.event.events.MotionEvent
+import cn.enaium.epsilon.event.events.UpdateEvent
 import net.minecraft.client.network.ClientPlayerEntity
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
@@ -26,16 +26,16 @@ class ClientPlayerEntityMixin {
 
     @Inject(at = [At("HEAD")], method = ["tick()V"])
     private fun preTick(callbackInfo: CallbackInfo) {
-        EventUpdate().call()
+        UpdateEvent().call()
     }
 
     @Inject(at = [At("HEAD")], method = ["sendMovementPackets()V"])
     private fun onSendMovementPacketsHEAD(callbackInfo: CallbackInfo) {
-        EventMotion(Event.Type.PRE).call()
+        MotionEvent(Event.Type.PRE).call()
     }
 
     @Inject(at = [At("TAIL")], method = ["sendMovementPackets()V"])
     private fun onSendMovementPacketsTAIL(callbackInfo: CallbackInfo) {
-        EventMotion(Event.Type.POST).call()
+        MotionEvent(Event.Type.POST).call()
     }
 }
