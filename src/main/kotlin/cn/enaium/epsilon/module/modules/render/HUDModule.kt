@@ -1,7 +1,10 @@
 package cn.enaium.epsilon.module.modules.render
 
 import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.Epsilon.AUTHOR
 import cn.enaium.epsilon.Epsilon.MC
+import cn.enaium.epsilon.Epsilon.NAME
+import cn.enaium.epsilon.Epsilon.VERSION
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.EventKeyboard
 import cn.enaium.epsilon.event.events.EventRender2D
@@ -23,6 +26,7 @@ import cn.enaium.epsilon.utils.Utils
 import net.minecraft.entity.Entity
 import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
+import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 import kotlin.collections.ArrayList
@@ -89,9 +93,6 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         if (!list.enable)
             return
 
-        drawStringWithShadow(eventRender2D.matrixStack, "" + Formatting.WHITE + Epsilon.NAME + Formatting.RESET
-                + Epsilon.VERSION, 5, 5, Color(67, 0, 99).rgb)
-
         var yStart = 1
 
         val modules = ArrayList<Module>()
@@ -115,8 +116,15 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         if (!tabGUI.enable)
             return
 
+        GL11.glScaled(2.0, 2.0, 2.0)
+        val i = drawStringWithShadow(eventRender2D.matrixStack, NAME, 2, 2, Color.WHITE.rgb);
+        GL11.glScaled(0.5, 0.5, 0.5)
+
+        drawStringWithShadow(eventRender2D.matrixStack, VERSION, i * 2, 2, Color.ORANGE.rgb)
+        drawStringWithShadow(eventRender2D.matrixStack, "By $AUTHOR", i * 2, fontHeight + 2, Color.YELLOW.rgb)
+
         val startX = 5
-        var startY = 5 + 9 + 2
+        var startY = 5 + 9 + 40
         Render2DUtils.drawRect(eventRender2D.matrixStack, startX, startY, startX + this.getWidestCategory() + 5, startY + categoryValues.size * (fontHeight + 2), ColorUtils.BG)
         for (c in categoryValues) {
             if (getCurrentCategory() == c) {
@@ -129,7 +137,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
         if (screen == 1 || screen == 2) {
             val startModsX: Int = startX + this.getWidestCategory() + 6
-            var startModsY = 5 + 9 + 2 + currentCategoryIndex * (fontHeight + 2)
+            var startModsY = 5 + 9 + 40 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(eventRender2D.matrixStack, startModsX, startModsY, startModsX + this.getWidestMod() + 5, startModsY + getModsForCurrentCategory().size * (fontHeight + 2), ColorUtils.BG)
             for (m in getModsForCurrentCategory()) {
                 if (getCurrentModule() == m) {
@@ -141,7 +149,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
         if (screen == 2) {
             val startSettingX: Int = startX + getWidestCategory() + 6 + getWidestCategory() + 8
-            var startSettingY = 5 + 9 + 2 + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
+            var startSettingY = 5 + 9 + 40 + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
             Render2DUtils.drawRect(eventRender2D.matrixStack, startSettingX, startSettingY, startSettingX + getWidestSetting() + 5, startSettingY + getSettingForCurrentMod()!!.size * (fontHeight + 2), ColorUtils.BG)
             for (s in getSettingForCurrentMod()!!) {
                 if (getCurrentSetting() == s) {
