@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.module
+package cn.enaium.epsilon.func
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventAT
@@ -13,8 +13,8 @@ import java.util.*
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class ModuleManager {
-    var modules: ArrayList<Module> = ArrayList()
+class FuncManager {
+    var funcs: ArrayList<Func> = ArrayList()
 
     init {
         Epsilon.eventManager.register(this)
@@ -22,17 +22,17 @@ class ModuleManager {
 
     fun load() {
         for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
-            if (info.name.startsWith(Module::class.java.`package`.name)) {
+            if (info.name.startsWith(Func::class.java.`package`.name)) {
                 val clazz: Class<*> = Class.forName(info.load().name)
-                if (clazz.isAnnotationPresent(ModuleAT::class.java)) {
-                    modules.add(clazz.newInstance() as Module)
+                if (clazz.isAnnotationPresent(FuncAT::class.java)) {
+                    funcs.add(clazz.newInstance() as Func)
                 }
             }
         }
     }
 
-    fun getModule(name: String): Module? {
-        for (m in modules) {
+    fun getModule(name: String): Func? {
+        for (m in funcs) {
             if (m.name.equals(name, ignoreCase = true)) {
                 return m
             }
@@ -49,14 +49,14 @@ class ModuleManager {
         if (keyBoardEvent.action != GLFW.GLFW_PRESS)
             return
 
-        for (mod in modules) {
+        for (mod in funcs) {
             if (mod.keyCode == keyBoardEvent.keyCode) mod.enable()
         }
     }
 
-    fun getModulesForCategory(c: Category): ArrayList<Module> {
-        val modules = ArrayList<Module>()
-        for (m in this.modules) {
+    fun getModulesForCategory(c: Category): ArrayList<Func> {
+        val modules = ArrayList<Func>()
+        for (m in this.funcs) {
             if (m.category == c) {
                 modules.add(m)
             }

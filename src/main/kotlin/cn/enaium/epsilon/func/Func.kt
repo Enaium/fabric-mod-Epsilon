@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.module
+package cn.enaium.epsilon.func
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.setting.Setting
@@ -8,7 +8,7 @@ import cn.enaium.epsilon.setting.Setting
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-open class Module(var name: String, var keyCode: Int, var category: Category) {
+open class Func(var name: String, var keyCode: Int, var category: Category) {
 
     var enable = false
     var tag = ""

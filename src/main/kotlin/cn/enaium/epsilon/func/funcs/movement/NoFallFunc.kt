@@ -1,11 +1,11 @@
-package cn.enaium.epsilon.module.modules.movement
+package cn.enaium.epsilon.func.funcs.movement
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
-import cn.enaium.epsilon.module.Category
-import cn.enaium.epsilon.module.Module
-import cn.enaium.epsilon.module.ModuleAT
+import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 
 
@@ -14,8 +14,8 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@ModuleAT
-class NoFallModule : Module("NoFall", 0, Category.MOVEMENT) {
+@FuncAT
+class NoFallFunc : Func("NoFall", 0, Category.MOVEMENT) {
     @EventAT
     fun on(updateEvent: UpdateEvent) {
         if (MC.player!!.fallDistance <= 2) return

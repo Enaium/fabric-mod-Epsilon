@@ -4,7 +4,7 @@ import cn.enaium.epsilon.command.CommandManager
 import cn.enaium.epsilon.config.ConfigManager
 import cn.enaium.epsilon.event.EventManager
 import cn.enaium.epsilon.imixin.IMinecraftClient
-import cn.enaium.epsilon.module.ModuleManager
+import cn.enaium.epsilon.func.FuncManager
 import cn.enaium.epsilon.plugin.PluginManager
 import cn.enaium.epsilon.setting.SettingManager
 import net.minecraft.client.MinecraftClient
@@ -26,7 +26,7 @@ object Epsilon {
     var IMC: IMinecraftClient = MC as IMinecraftClient
 
     lateinit var eventManager: EventManager
-    lateinit var moduleManager: ModuleManager
+    lateinit var funcManager: FuncManager
     lateinit var settingManager: SettingManager
     lateinit var commandManager: CommandManager
     lateinit var pluginManager: PluginManager
@@ -35,12 +35,12 @@ object Epsilon {
     fun run() {
         File(DIR).mkdir()
         eventManager = EventManager()
-        moduleManager = ModuleManager()
+        funcManager = FuncManager()
         settingManager = SettingManager()
         commandManager = CommandManager()
         pluginManager = PluginManager()
         configManager = ConfigManager()
-        moduleManager.load()
+        funcManager.load()
         settingManager.load()
         configManager.load()
     }

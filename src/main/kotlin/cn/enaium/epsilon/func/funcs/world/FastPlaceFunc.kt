@@ -1,11 +1,11 @@
-package cn.enaium.epsilon.module.modules.world
+package cn.enaium.epsilon.func.funcs.world
 
 import cn.enaium.epsilon.Epsilon.IMC
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
-import cn.enaium.epsilon.module.Category
-import cn.enaium.epsilon.module.Module
-import cn.enaium.epsilon.module.ModuleAT
+import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
 import org.lwjgl.glfw.GLFW
 
 /**
@@ -13,8 +13,8 @@ import org.lwjgl.glfw.GLFW
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@ModuleAT
-class FastPlaceModule : Module("FastPlace", GLFW.GLFW_KEY_B, Category.WORLD) {
+@FuncAT
+class FastPlaceFunc : Func("FastPlace", GLFW.GLFW_KEY_B, Category.WORLD) {
     @EventAT
     fun on(updateEvent: UpdateEvent) {
         IMC.setItemUseCooldown(0)

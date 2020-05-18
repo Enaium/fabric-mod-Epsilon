@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.module
+package cn.enaium.epsilon.func
 
 /**
  * Project: Epsilon

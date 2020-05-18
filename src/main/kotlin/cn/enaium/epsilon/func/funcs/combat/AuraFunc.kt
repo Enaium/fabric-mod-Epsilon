@@ -1,12 +1,12 @@
-package cn.enaium.epsilon.module.modules.combat
+package cn.enaium.epsilon.func.funcs.combat
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.Event
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
-import cn.enaium.epsilon.module.Category
-import cn.enaium.epsilon.module.Module
-import cn.enaium.epsilon.module.ModuleAT
+import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
@@ -25,8 +25,8 @@ import java.util.stream.StreamSupport
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@ModuleAT
-class AuraModule : Module("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
+@FuncAT
+class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)

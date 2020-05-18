@@ -19,7 +19,7 @@ class ModuleConfig : Config("Modules") {
     override fun load() {
         super.load()
         val moduleObject = JSON.parseObject(FileUtils.read(getPath()))
-        for (module in Epsilon.moduleManager.modules) {
+        for (module in Epsilon.funcManager.funcs) {
             if (moduleObject != null) {
                 if (moduleObject.containsKey(module.name)) {
                     val moduleClassObject = JSON.parseObject(moduleObject.getString(module.name))
@@ -63,7 +63,7 @@ class ModuleConfig : Config("Modules") {
     override fun save() {
         super.save()
         val moduleObject = JSONObject(true)
-        for (module in Epsilon.moduleManager.modules) {
+        for (module in Epsilon.funcManager.funcs) {
             val moduleClassObject = JSONObject(true)
             moduleClassObject["enable"] = module.enable
             moduleClassObject["keyCode"] = module.keyCode

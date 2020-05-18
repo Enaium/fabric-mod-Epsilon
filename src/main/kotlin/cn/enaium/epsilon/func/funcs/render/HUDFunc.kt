@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.module.modules.render
+package cn.enaium.epsilon.func.funcs.render
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.Epsilon.AUTHOR
@@ -8,9 +8,9 @@ import cn.enaium.epsilon.Epsilon.VERSION
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.KeyboardEvent
 import cn.enaium.epsilon.event.events.Render2DEvent
-import cn.enaium.epsilon.module.Category
-import cn.enaium.epsilon.module.Module
-import cn.enaium.epsilon.module.ModuleAT
+import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.Setting
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.*
@@ -35,8 +35,8 @@ import kotlin.collections.ArrayList
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@ModuleAT
-class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
+@FuncAT
+class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     private var categoryValues: ArrayList<Category> = ArrayList()
     private var currentCategoryIndex = 0
     private var currentModIndex = 0
@@ -93,14 +93,14 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
         var yStart = 1
 
-        val modules = ArrayList<Module>()
-        for (m in Epsilon.moduleManager.modules) {
+        val modules = ArrayList<Func>()
+        for (m in Epsilon.funcManager.funcs) {
             if (m.enable) {
                 modules.add(m)
             }
         }
 
-        val mods: ArrayList<Module> = modules
+        val mods: ArrayList<Func> = modules
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
         for (module in mods) {
             val startX = scaledWidth - getWidth(module.getDisplayTag()) - 6
@@ -301,12 +301,12 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         return categoryValues[currentCategoryIndex]
     }
 
-    private fun getCurrentModule(): Module {
+    private fun getCurrentModule(): Func {
         return getModsForCurrentCategory()[currentModIndex]
     }
 
-    private fun getModsForCurrentCategory(): ArrayList<Module> {
-        return Epsilon.moduleManager.getModulesForCategory(getCurrentCategory())
+    private fun getModsForCurrentCategory(): ArrayList<Func> {
+        return Epsilon.funcManager.getModulesForCategory(getCurrentCategory())
     }
 
     private fun getWidestSetting(): Int {
@@ -341,7 +341,7 @@ class HUDModule : Module("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private fun getWidestMod(): Int {
         var width = 0
-        for (m in Epsilon.moduleManager.modules) {
+        for (m in Epsilon.funcManager.funcs) {
             val cWidth = getWidth(m.name)
             if (cWidth > width) {
                 width = cWidth

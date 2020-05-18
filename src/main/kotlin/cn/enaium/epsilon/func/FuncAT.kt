@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.module
+package cn.enaium.epsilon.func
 
 /**
  * Project: Epsilon
@@ -7,4 +7,4 @@ package cn.enaium.epsilon.module
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ModuleAT
+annotation class FuncAT
