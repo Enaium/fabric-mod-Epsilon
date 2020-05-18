@@ -2,7 +2,6 @@ package cn.enaium.epsilon.setting.settings
 
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.setting.Setting
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

@@ -2,7 +2,6 @@ package cn.enaium.epsilon.module
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.setting.Setting
-import cn.enaium.epsilon.setting.SettingManager
 
 /**
  * Project: Epsilon

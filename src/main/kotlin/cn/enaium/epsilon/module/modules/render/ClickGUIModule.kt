@@ -1,6 +1,5 @@
 package cn.enaium.epsilon.module.modules.render
 
-import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.module.Category
 import cn.enaium.epsilon.module.Module
 import cn.enaium.epsilon.module.ModuleAT
