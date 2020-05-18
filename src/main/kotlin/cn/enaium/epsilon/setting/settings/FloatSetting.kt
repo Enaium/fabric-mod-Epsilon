@@ -1,11 +1,11 @@
 package cn.enaium.epsilon.setting.settings
 
 import cn.enaium.epsilon.setting.Setting
-import cn.enaium.epsilon.module.Module
+import cn.enaium.epsilon.func.Func
 
 /**
  * Project: Epsilon
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class FloatSetting(module: Module, name: String, var current: Float, var min: Float, var max: Float) : Setting(module, name)
+class FloatSetting(func: Func, name: String, var current: Float, var min: Float, var max: Float) : Setting(func, name)
