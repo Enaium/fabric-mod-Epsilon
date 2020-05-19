@@ -22,7 +22,7 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @FuncAT
-class StorageESP : Func("StorageESP", 0, Category.RENDER) {
+class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     @SettingAT
     private val chest = EnableSetting(this, "Chest", true)
