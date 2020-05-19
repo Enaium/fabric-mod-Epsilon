@@ -13,6 +13,7 @@ import cn.enaium.epsilon.setting.settings.FloatSetting
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.WitherSkeletonEntity
+import net.minecraft.entity.projectile.DragonFireballEntity
 import net.minecraft.entity.projectile.FireballEntity
 import net.minecraft.entity.projectile.ShulkerBulletEntity
 import net.minecraft.util.Hand
@@ -34,6 +35,9 @@ class BulletAura : Func("BulletAura", 0, Category.COMBAT) {
 
     @SettingAT
     private val fireball = EnableSetting(this, "Fireball", true)
+
+    @SettingAT
+    private val dragonFireball = EnableSetting(this, "DragonFireball", true)
 
     @EventAT
     fun onMotion(motionEvent: MotionEvent) {
@@ -60,6 +64,7 @@ class BulletAura : Func("BulletAura", 0, Category.COMBAT) {
                 when (entity) {
                     is ShulkerBulletEntity -> if (shulkerBullet.enable) entityList.add(entity)
                     is FireballEntity -> if (fireball.enable) entityList.add(entity)
+                    is DragonFireballEntity -> if (dragonFireball.enable) entityList.add(entity)
                 }
             }
         }
