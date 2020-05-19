@@ -14,28 +14,28 @@ class SettingManager {
     var settings: ArrayList<Setting> = ArrayList()
 
     fun load() {
-        for (module in Epsilon.funcManager.funcs) {
-            for (field in module.javaClass.declaredFields) {
+        for (func in Epsilon.funcManager.functions) {
+            for (field in func.javaClass.declaredFields) {
                 if (field.isAnnotationPresent(SettingAT::class.java)) {
                     field.isAccessible = true
                     when (field.type) {
                         EnableSetting::class.java -> {
-                            settings.add(field.get(module) as EnableSetting)
+                            settings.add(field.get(func) as EnableSetting)
                         }
                         IntegerSetting::class.java -> {
-                            settings.add(field.get(module) as IntegerSetting)
+                            settings.add(field.get(func) as IntegerSetting)
                         }
                         FloatSetting::class.java -> {
-                            settings.add(field.get(module) as FloatSetting)
+                            settings.add(field.get(func) as FloatSetting)
                         }
                         DoubleSetting::class.java -> {
-                            settings.add(field.get(module) as DoubleSetting)
+                            settings.add(field.get(func) as DoubleSetting)
                         }
                         LongSetting::class.java -> {
-                            settings.add(field.get(module) as LongSetting)
+                            settings.add(field.get(func) as LongSetting)
                         }
                         ModeSetting::class.java -> {
-                            settings.add(field.get(module) as ModeSetting)
+                            settings.add(field.get(func) as ModeSetting)
                         }
                     }
                 }
@@ -52,7 +52,7 @@ class SettingManager {
         return null
     }
 
-    fun getSettingsForModule(m: Func): ArrayList<Setting>? {
+    fun getSettingsForFunc(m: Func): ArrayList<Setting>? {
         val settings = ArrayList<Setting>()
         for (s in this.settings) {
             if (s.func == m) settings.add(s)

@@ -11,15 +11,15 @@ class EnableCommand : Command {
 
         if (args.size == 1 || args.size == 2) {
             if (args.size == 1) {
-                for (ms in Epsilon.funcManager.funcs) ChatUtils.message(ms.name)
+                for (ms in Epsilon.funcManager.functions) ChatUtils.message(ms.name)
                 return true
             } else if (args.size == 2) {
-                val module = Epsilon.funcManager.getFunc(args[1])
-                if (module == null) {
-                    ChatUtils.error("The module with the name " + args[1] + " does not exist.")
+                val func = Epsilon.funcManager.getFunc(args[1])
+                if (func == null) {
+                    ChatUtils.error("The func with the name " + args[1] + " does not exist.")
                     return true
                 }
-                module.enable()
+                func.enable()
                 return true
             }
         }
@@ -27,6 +27,6 @@ class EnableCommand : Command {
     }
 
     override fun usage(): Array<String> {
-        return arrayOf("enable [module]")
+        return arrayOf("enable [func]")
     }
 }

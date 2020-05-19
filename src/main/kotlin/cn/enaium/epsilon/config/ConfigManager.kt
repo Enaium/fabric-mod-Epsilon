@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.config
 
 import cn.enaium.epsilon.Epsilon
-import cn.enaium.epsilon.config.configs.ModuleConfig
+import cn.enaium.epsilon.config.configs.FuncConfig
 import java.io.File
 
 /**
@@ -14,7 +14,7 @@ class ConfigManager {
 
     init {
         File(Epsilon.DIR + "/configs").mkdir()
-        configs.add(ModuleConfig())
+        configs.add(FuncConfig())
     }
 
     fun load() {

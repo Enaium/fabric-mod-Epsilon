@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.func.funcs.render
+package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func

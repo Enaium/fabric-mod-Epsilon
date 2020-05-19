@@ -1,11 +1,12 @@
-package cn.enaium.epsilon.func.funcs.render
+package cn.enaium.epsilon.func.functions.movement
 
-import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.func.FuncAT
+import net.minecraft.client.MinecraftClient
+import org.lwjgl.glfw.GLFW
 
 /**
  * Project: Epsilon
@@ -13,19 +14,9 @@ import cn.enaium.epsilon.func.FuncAT
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @FuncAT
-class GlowFunc : Func("Glow", 0, Category.RENDER) {
-
+class SprintFunc : Func("Sprint", GLFW.GLFW_KEY_V, Category.MOVEMENT) {
     @EventAT
     fun onUpdate(updateEvent: UpdateEvent) {
-        for (e in Epsilon.MC.world!!.entities) {
-            e.isGlowing = true
-        }
-    }
-
-    override fun onDisable() {
-        super.onDisable()
-        for (e in Epsilon.MC.world!!.entities) {
-            e.isGlowing = false
-        }
+        MinecraftClient.getInstance().player!!.isSprinting = true
     }
 }

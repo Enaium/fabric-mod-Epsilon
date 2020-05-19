@@ -14,20 +14,20 @@ import com.alibaba.fastjson.serializer.SerializerFeature
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class ModuleConfig : Config("Modules") {
+class FuncConfig : Config("Functions") {
 
     override fun load() {
         super.load()
-        val moduleObject = JSON.parseObject(FileUtils.read(getPath()))
-        for (module in Epsilon.funcManager.funcs) {
-            if (moduleObject != null) {
-                if (moduleObject.containsKey(module.name)) {
-                    val moduleClassObject = JSON.parseObject(moduleObject.getString(module.name))
-                    if (moduleClassObject.getBoolean("enable")) module.enable()
-                    module.keyCode = moduleClassObject.getInteger("keyCode")
-                    val settings = Epsilon.settingManager.getSettingsForModule(module)
+        val funcObject = JSON.parseObject(FileUtils.read(getPath()))
+        for (func in Epsilon.funcManager.functions) {
+            if (funcObject != null) {
+                if (funcObject.containsKey(func.name)) {
+                    val funcClassObject = JSON.parseObject(funcObject.getString(func.name))
+                    if (funcClassObject.getBoolean("enable")) func.enable()
+                    func.keyCode = funcClassObject.getInteger("keyCode")
+                    val settings = Epsilon.settingManager.getSettingsForFunc(func)
                     if (settings != null) {
-                        val settingObject = JSON.parseObject(moduleClassObject.getString("settings"))
+                        val settingObject = JSON.parseObject(funcClassObject.getString("settings"))
                         for (setting in settings) {
                             if (settingObject != null) {
                                 if (settingObject.containsKey(setting.name)) {
@@ -62,12 +62,12 @@ class ModuleConfig : Config("Modules") {
 
     override fun save() {
         super.save()
-        val moduleObject = JSONObject(true)
-        for (module in Epsilon.funcManager.funcs) {
-            val moduleClassObject = JSONObject(true)
-            moduleClassObject["enable"] = module.enable
-            moduleClassObject["keyCode"] = module.keyCode
-            val settings = Epsilon.settingManager.getSettingsForModule(module)
+        val funcObject = JSONObject(true)
+        for (func in Epsilon.funcManager.functions) {
+            val funcClassObject = JSONObject(true)
+            funcClassObject["enable"] = func.enable
+            funcClassObject["keyCode"] = func.keyCode
+            val settings = Epsilon.settingManager.getSettingsForFunc(func)
             if (settings != null) {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
@@ -92,11 +92,11 @@ class ModuleConfig : Config("Modules") {
                         }
                     }
                 }
-                moduleClassObject["settings"] = settingObject
+                funcClassObject["settings"] = settingObject
             }
-            moduleObject[module.name] = moduleClassObject
+            funcObject[func.name] = funcClassObject
         }
-        FileUtils.write(getPath(), JSON.toJSONString(moduleObject, SerializerFeature.PrettyFormat))
+        FileUtils.write(getPath(), JSON.toJSONString(funcObject, SerializerFeature.PrettyFormat))
     }
 
 }
