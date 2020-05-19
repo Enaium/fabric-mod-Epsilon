@@ -1,0 +1,68 @@
+package cn.enaium.epsilon.func.functions.combat
+
+import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.event.Event
+import cn.enaium.epsilon.event.EventAT
+import cn.enaium.epsilon.event.events.MotionEvent
+import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
+import cn.enaium.epsilon.setting.SettingAT
+import cn.enaium.epsilon.setting.settings.EnableSetting
+import cn.enaium.epsilon.setting.settings.FloatSetting
+import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.mob.WitherSkeletonEntity
+import net.minecraft.entity.projectile.FireballEntity
+import net.minecraft.entity.projectile.ShulkerBulletEntity
+import net.minecraft.util.Hand
+
+/**
+ * Project: Epsilon
+ * -----------------------------------------------------------
+ * Copyright © 2020 | Enaium | All rights reserved.
+ */
+@FuncAT
+class BulletAura : Func("BulletAura", 0, Category.COMBAT) {
+    private var target: Entity? = null
+
+    @SettingAT
+    private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
+
+    @SettingAT
+    private val shulkerBullet = EnableSetting(this, "ShulkerBullet", true)
+
+    @SettingAT
+    private val fireball = EnableSetting(this, "Fireball", true)
+
+    @EventAT
+    fun onMotion(motionEvent: MotionEvent) {
+        target = when (motionEvent.type) {
+            Event.Type.PRE -> {
+
+                if (Epsilon.MC.player!!.getAttackCooldownProgress(0f) < 1) return
+
+                if (getTargets().isNotEmpty()) getTargets().sortedBy { Epsilon.MC.player!!.squaredDistanceTo(it) }[0] else null
+            }
+            Event.Type.POST -> {
+                if (target == null) return
+                Epsilon.MC.interactionManager!!.attackEntity(Epsilon.MC.player, target)
+                Epsilon.MC.player!!.swingHand(Hand.MAIN_HAND)
+                null
+            }
+        }
+    }
+
+    private fun getTargets(): ArrayList<Entity> {
+        val entityList: ArrayList<Entity> = ArrayList()
+        for (entity in Epsilon.MC.world!!.entities) {
+            if (Epsilon.MC.player!!.squaredDistanceTo(entity) <= (range.current * range.current)) {
+                when (entity) {
+                    is ShulkerBulletEntity -> if (shulkerBullet.enable) entityList.add(entity)
+                    is FireballEntity -> if (fireball.enable) entityList.add(entity)
+                }
+            }
+        }
+        return entityList
+    }
+}
