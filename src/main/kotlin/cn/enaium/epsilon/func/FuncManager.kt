@@ -31,7 +31,7 @@ class FuncManager {
         }
     }
 
-    fun getModule(name: String): Func? {
+    fun getFunc(name: String): Func? {
         for (m in funcs) {
             if (m.name.equals(name, ignoreCase = true)) {
                 return m
@@ -54,7 +54,7 @@ class FuncManager {
         }
     }
 
-    fun getModulesForCategory(c: Category): ArrayList<Func> {
+    fun getFuncForCategory(c: Category): ArrayList<Func> {
         val modules = ArrayList<Func>()
         for (m in this.funcs) {
             if (m.category == c) {

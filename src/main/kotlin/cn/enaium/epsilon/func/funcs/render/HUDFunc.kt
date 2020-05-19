@@ -306,7 +306,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     }
 
     private fun getModsForCurrentCategory(): ArrayList<Func> {
-        return Epsilon.funcManager.getModulesForCategory(getCurrentCategory())
+        return Epsilon.funcManager.getFuncForCategory(getCurrentCategory())
     }
 
     private fun getWidestSetting(): Int {

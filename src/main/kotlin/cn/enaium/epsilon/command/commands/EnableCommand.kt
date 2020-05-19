@@ -14,7 +14,7 @@ class EnableCommand : Command {
                 for (ms in Epsilon.funcManager.funcs) ChatUtils.message(ms.name)
                 return true
             } else if (args.size == 2) {
-                val module = Epsilon.funcManager.getModule(args[1])
+                val module = Epsilon.funcManager.getFunc(args[1])
                 if (module == null) {
                     ChatUtils.error("The module with the name " + args[1] + " does not exist.")
                     return true
