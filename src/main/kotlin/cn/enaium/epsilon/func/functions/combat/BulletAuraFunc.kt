@@ -24,11 +24,14 @@ import net.minecraft.util.Hand
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @FuncAT
-class BulletAura : Func("BulletAura", 0, Category.COMBAT) {
+class BulletAuraFunc : Func("BulletAura", 0, Category.COMBAT) {
     private var target: Entity? = null
 
     @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
+
+    @SettingAT
+    private val delay = EnableSetting(this, "Delay", false)
 
     @SettingAT
     private val shulkerBullet = EnableSetting(this, "ShulkerBullet", true)
@@ -44,7 +47,7 @@ class BulletAura : Func("BulletAura", 0, Category.COMBAT) {
         target = when (motionEvent.type) {
             Event.Type.PRE -> {
 
-                if (Epsilon.MC.player!!.getAttackCooldownProgress(0f) < 1) return
+                if(delay.enable) if (Epsilon.MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 if (getTargets().isNotEmpty()) getTargets().sortedBy { Epsilon.MC.player!!.squaredDistanceTo(it) }[0] else null
             }
