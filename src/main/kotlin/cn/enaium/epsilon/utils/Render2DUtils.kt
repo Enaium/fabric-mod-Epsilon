@@ -163,4 +163,20 @@ object Render2DUtils {
     fun isHovered(mouseX: Float, mouseY: Float, x: Float, y: Float, width: Float, height: Float): Boolean {
         return mouseX >= x && mouseX - width <= x && mouseY >= y && mouseY - height <= y
     }
+
+    fun scissorBox(x: Int, y: Int, width: Int, height: Int) {
+        scissor(x, y, x + width, y + height)
+    }
+
+    private fun scissor(startX: Int, startY: Int, endX: Int, endY: Int) {
+        val width = endX - startX
+        val height = endY - startY
+        val bottomY: Int = scaledHeight - endY
+        val factor: Double = MC.window.scaleFactor
+        val scissorX = (startX * factor).toInt()
+        val scissorY = (bottomY * factor).toInt()
+        val scissorWidth = (width * factor).toInt()
+        val scissorHeight = (height * factor).toInt()
+        GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight)
+    }
 }
