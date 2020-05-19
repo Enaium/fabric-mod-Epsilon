@@ -136,11 +136,11 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             val startModsX: Int = startX + this.getWidestCategory() + 6
             var startModsY = 5 + 9 + 40 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(render2DEvent.matrixStack, startModsX, startModsY, startModsX + this.getWidestMod() + 5, startModsY + getModsForCurrentCategory().size * (fontHeight + 2), ColorUtils.BG)
-            for (m in getModsForCurrentCategory()) {
-                if (getCurrentFunc() == m) {
+            for (f in getModsForCurrentCategory()) {
+                if (getCurrentFunc() == f) {
                     Render2DUtils.drawRect(render2DEvent.matrixStack, startModsX + 1, startModsY, startModsX + this.getWidestMod() + 5 - 1, startModsY + fontHeight + 2, ColorUtils.SELECT)
                 }
-                drawStringWithShadow(render2DEvent.matrixStack, m.name + if (Epsilon.settingManager.getSettingsForFunc(m) != null) ">" else "", startModsX + 2 + if (getCurrentFunc() == m) 2 else 0, startModsY + 2, if (m.enable) -1 else Color.GRAY.rgb)
+                drawStringWithShadow(render2DEvent.matrixStack, f.name + if (Epsilon.settingManager.getSettingsForFunc(f) != null) ">" else "", startModsX + 2 + if (getCurrentFunc() == f) 2 else 0, startModsY + 2, if (f.enable) -1 else Color.GRAY.rgb)
                 startModsY += fontHeight + 2
             }
         }
