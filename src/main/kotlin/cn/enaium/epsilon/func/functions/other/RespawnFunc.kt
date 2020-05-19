@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screen.DeathScreen
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @FuncAT
-class AutoRespawnFunc : Func("AutoRespawn", 0, Category.OTHER) {
+class RespawnFunc : Func("AutoRespawn", 0, Category.OTHER) {
     @EventAT
     fun on(updateEvent: UpdateEvent) {
         if (MC.currentScreen is DeathScreen) {

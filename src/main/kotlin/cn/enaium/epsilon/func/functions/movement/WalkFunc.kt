@@ -13,7 +13,7 @@ import cn.enaium.epsilon.func.FuncAT
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @FuncAT
-class AutoWalkFunc : Func("AutoWalk", 0, Category.MOVEMENT) {
+class WalkFunc : Func("AutoWalk", 0, Category.MOVEMENT) {
 
     @EventAT
     fun on(updateEvent: UpdateEvent) {
