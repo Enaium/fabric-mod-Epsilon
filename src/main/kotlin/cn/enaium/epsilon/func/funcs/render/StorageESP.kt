@@ -72,7 +72,6 @@ class StorageESP : Func("StorageESP", 0, Category.RENDER) {
 
     @EventAT
     fun onRender(render3DEvent: Render3DEvent) {
-        Render3DUtils.applyRenderOffset()
         for (t in getTargets()) {
             Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.DARK_GRAY)
         }

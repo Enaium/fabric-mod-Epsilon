@@ -33,7 +33,6 @@ class ESPFunc : Func("ESP", 0, Category.RENDER) {
 
     @EventAT
     fun on(render3DEvent: Render3DEvent) {
-        Render3DUtils.applyRenderOffset()
         for (e in MC.world!!.entities) {
             Render3DUtils.drawOutlinedBox(e, 0.5, render3DEvent.tickDelta, Color.CYAN)
         }
