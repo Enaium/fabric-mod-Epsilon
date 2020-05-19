@@ -103,7 +103,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
         for (func in mods) {
             val startX = scaledWidth - getWidth(func.getDisplayTag()) - 6
-            drawStringWithShadow(render2DEvent.matrixStack, func.name, startX + 3, yStart, Color.WHITE.rgb)
+            drawStringWithShadow(render2DEvent.matrixStack, func.getDisplayTag(), startX + 3, yStart, Color.WHITE.rgb)
             yStart += fontHeight + 4
         }
     }
