@@ -2,6 +2,7 @@ package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.Epsilon.AUTHOR
+import cn.enaium.epsilon.Epsilon.IMC
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.Epsilon.NAME
 import cn.enaium.epsilon.Epsilon.VERSION
@@ -22,6 +23,8 @@ import cn.enaium.epsilon.utils.Render2DUtils
 import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -54,6 +57,12 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     @SettingAT
     private val entityList = EnableSetting(this, "EntityList", false)
 
+    @SettingAT
+    private val coords = EnableSetting(this, "Coords", true)
+
+    @SettingAT
+    private val direction = EnableSetting(this, "Direction", true)
+    
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
@@ -83,6 +92,28 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             drawStringWithShadow(render2DEvent.matrixStack, entity, startX + 3, yStart, Color.WHITE.rgb)
             yStart -= fontHeight + 4
         }
+    }
+
+    @EventAT
+    fun infoList(render2DEvent: Render2DEvent) {
+        var infoY = 54 + categoryValues.size * (fontHeight + 2) + 10
+        val infoList: ArrayList<String> = ArrayList()
+
+        if (coords.enable) {
+            infoList.add("Coords:" + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(MC.player!!.z))
+        }
+
+        if (direction.enable) {
+            infoList.add("Direction:${MC.cameraEntity!!.horizontalFacing}")
+        }
+
+        infoList.sortedBy { getWidth(it) }
+
+        for (s in infoList) {
+            drawStringWithShadow(render2DEvent.matrixStack, s, 5, infoY, Color.WHITE.rgb)
+            infoY += fontHeight + 4
+        }
+
     }
 
     @EventAT
