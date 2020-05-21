@@ -23,8 +23,7 @@ import cn.enaium.epsilon.utils.Render2DUtils
 import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
+import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -63,6 +62,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     @SettingAT
     private val direction = EnableSetting(this, "Direction", true)
 
+    @SettingAT
+    private val fps = EnableSetting(this, "FPS", true)
+
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
@@ -100,12 +102,17 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         val infoList: ArrayList<String> = ArrayList()
 
         if (coords.enable) {
-            infoList.add("Coords:" + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(MC.player!!.z))
+            infoList.add("XYZ:" + Formatting.AQUA + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(MC.player!!.z))
         }
 
         if (direction.enable) {
-            infoList.add("Direction:${MC.cameraEntity!!.horizontalFacing}")
+            infoList.add("Face:${Formatting.BLUE} ${MC.cameraEntity!!.horizontalFacing}")
         }
+
+        if (fps.enable) {
+            infoList.add("FPS:${IMC.currentFps}")
+        }
+
 
         infoList.sortedBy { getWidth(it) }
 

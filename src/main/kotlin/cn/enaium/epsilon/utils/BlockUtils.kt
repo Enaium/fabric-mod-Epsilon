@@ -1,9 +1,11 @@
 package cn.enaium.epsilon.utils
 
 import cn.enaium.epsilon.Epsilon.MC
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
+import net.minecraft.util.registry.Registry
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 
@@ -17,6 +19,22 @@ object BlockUtils {
 
     fun getState(pos: BlockPos): BlockState {
         return MC.world!!.getBlockState(pos)
+    }
+
+    fun getBlock(pos: BlockPos): Block {
+        return getState(pos).block
+    }
+
+    fun getId(pos: BlockPos): Int {
+        return Block.getRawIdFromState(getState(pos))
+    }
+
+    fun getName(pos: BlockPos): String {
+        return getName(getBlock(pos))
+    }
+
+    fun getName(block: Block): String {
+        return Registry.BLOCK.getId(block).toString()
     }
 
     private fun getOutlineShape(pos: BlockPos): VoxelShape {

@@ -10,9 +10,14 @@
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
+    "IMinecraftClientMixin",
     "TitleScreenMixin",
     "GameRendererMixin",
-    "MouseMixin"
+    "MouseMixin",
+    "BlockEntityRenderDispatcherMixin",
+    "TerrainRenderContextMixin",
+    "BlockModelRendererMixin",
+    "BlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

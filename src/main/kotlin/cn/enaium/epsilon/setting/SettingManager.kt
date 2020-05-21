@@ -37,6 +37,9 @@ class SettingManager {
                         ModeSetting::class.java -> {
                             settings.add(field.get(func) as ModeSetting)
                         }
+                        BlockListSetting::class.java -> {
+                            settings.add(field.get(func) as BlockListSetting)
+                        }
                     }
                 }
             }
@@ -55,7 +58,8 @@ class SettingManager {
     fun getSettingsForFunc(m: Func): ArrayList<Setting>? {
         val settings = ArrayList<Setting>()
         for (s in this.settings) {
-            if (s.func == m) settings.add(s)
+            if (s !is BlockListSetting)
+                if (s.func == m) settings.add(s)
         }
         return if (settings.isEmpty()) null else settings
     }
