@@ -50,6 +50,12 @@ class FuncConfig : Config("Functions") {
                                         is ModeSetting -> {
                                             setting.current = settingObject.getString(setting.name)
                                         }
+                                        is BlockListSetting -> {
+                                            val blockArray = JSON.parseArray(settingObject.getString(setting.name))
+                                            for (ba in blockArray) {
+                                                setting.blockList.add(ba.toString())
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -89,6 +95,9 @@ class FuncConfig : Config("Functions") {
                         }
                         is ModeSetting -> {
                             settingObject[s.name] = s.current
+                        }
+                        is BlockListSetting -> {
+                            settingObject[s.name] = s.blockList
                         }
                     }
                 }
