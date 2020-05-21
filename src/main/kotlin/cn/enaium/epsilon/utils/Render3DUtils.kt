@@ -33,30 +33,41 @@ object Render3DUtils {
 
     fun drawOutlined(bb: Box) {
         GL11.glBegin(GL11.GL_LINES)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y1, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z1)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x2, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z2)
-        GL11.glVertex3d(bb.x1, bb.y2, bb.z1)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
         GL11.glEnd()
     }
 
@@ -78,8 +89,8 @@ object Render3DUtils {
 
     fun drawOutlinedBox(box: Box, color: Color) {
         GL11.glPushMatrix()
-        GL11.glTranslated(box.x1, box.y1, box.z1)
-        GL11.glScaled(box.x2 - box.x1, box.y2 - box.y1, box.z2 - box.z1)
+        GL11.glTranslated(box.minX, box.minY, box.minZ)
+        GL11.glScaled(box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ)
         GL11.glColor4f(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), color.alpha.toFloat())
         GL11.glCallList(1)
         GL11.glPopMatrix()
