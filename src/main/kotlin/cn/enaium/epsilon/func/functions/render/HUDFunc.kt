@@ -62,7 +62,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     @SettingAT
     private val direction = EnableSetting(this, "Direction", true)
-    
+
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
