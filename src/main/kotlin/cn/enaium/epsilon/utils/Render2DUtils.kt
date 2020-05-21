@@ -12,6 +12,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Matrix4f
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import kotlin.math.cos
+import kotlin.math.sin
+
 
 /**
  * Project: Epsilon
@@ -30,8 +33,12 @@ object Render2DUtils {
         DrawableHelper.fill(matrixStack, x1, y1, x2, y2, color)
     }
 
-    fun drawRect(matrix4f: Matrix4f, x1: Double, y1: Double, x2: Double, y2: Double, color: Int) {
-        fill(matrix4f, x1, y1, x2, y2, color)
+    fun drawRect(matrixStack: MatrixStack, x1: Double, y1: Double, x2: Double, y2: Double, color: Int) {
+        fill(matrixStack.peek().model, x1, y1, x2, y2, color)
+    }
+
+    fun drawRect(matrixStack: MatrixStack, x1: Float, y1: Float, x2: Float, y2: Float, color: Int) {
+        fill(matrixStack.peek().model, x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble(), color)
     }
 
     fun drawRectWH(matrixStack: MatrixStack, x: Int, y: Int, width: Int, height: Int, color: Int) {
@@ -53,6 +60,79 @@ object Render2DUtils {
         GL11.glDepthMask(true)
         GL11.glDisable(3042)
         GL11.glEnable(2929)
+    }
+
+    fun drawCircle(xx: Float, yy: Float, radius: Float, color: Int) {
+        val sections = 70
+        val dAngle = 6.283185307179586 / sections
+        GL11.glPushMatrix()
+        GL11.glEnable(3042)
+        GL11.glDisable(3553)
+        GL11.glBlendFunc(770, 771)
+        GL11.glEnable(2848)
+        GL11.glShadeModel(7425)
+        GL11.glBegin(2)
+        for (i in 0 until sections) {
+            val x = (radius * cos(i * dAngle)).toFloat()
+            val y = (radius * sin(i * dAngle)).toFloat()
+            val f = (color shr 24 and 255).toFloat() / 255.0f
+            val g = (color shr 16 and 255).toFloat() / 255.0f
+            val h = (color shr 8 and 255).toFloat() / 255.0f
+            val k = (color and 255).toFloat() / 255.0f
+            GL11.glColor4f(f, g, h, k)
+            GL11.glVertex2f(xx + x, yy + y)
+        }
+        GL11.glEnd()
+        GL11.glEnable(3553)
+        GL11.glDisable(3042)
+        GL11.glDisable(2848)
+        GL11.glPopMatrix()
+    }
+
+    fun drawFilledCircle(xx: Float, yy: Float, radius: Float, color: Int) {
+        val sections = 50
+        val dAngle = 6.283185307179586 / sections
+        GL11.glPushMatrix()
+        GL11.glEnable(3042)
+        GL11.glDisable(3553)
+        GL11.glBlendFunc(770, 771)
+        GL11.glEnable(2848)
+        GL11.glBegin(6)
+        for (i in 0 until sections) {
+            val x = (radius * sin(i * dAngle)).toFloat()
+            val y = (radius * cos(i * dAngle)).toFloat()
+            val f = (color shr 24 and 255).toFloat() / 255.0f
+            val g = (color shr 16 and 255).toFloat() / 255.0f
+            val h = (color shr 8 and 255).toFloat() / 255.0f
+            val k = (color and 255).toFloat() / 255.0f
+            GL11.glColor4f(f, g, h, k)
+            GL11.glVertex2f(xx + x, yy + y)
+        }
+        GL11.glEnd()
+        GL11.glEnable(3553)
+        GL11.glDisable(3042)
+        GL11.glDisable(2848)
+        GL11.glPopMatrix()
+    }
+
+    fun drawRoundedRect(matrixStack: MatrixStack, x: Float, y: Float, x2: Float, y2: Float, round: Float, color: Int) {
+        var x = x
+        var y = y
+        var x2 = x2
+        var y2 = y2
+        x += (round / 2.0f + 0.5).toFloat()
+        y += (round / 2.0f + 0.5).toFloat()
+        x2 -= (round / 2.0f + 0.5).toFloat()
+        y2 -= (round / 2.0f + 0.5).toFloat()
+        drawRect(matrixStack, x.toInt(), y.toInt(), x2.toInt(), y2.toInt(), color)
+        drawCircle(x2 - round / 2.0f, y + round / 2.0f, round, color)
+        drawCircle(x + round / 2.0f, y2 - round / 2.0f, round, color)
+        drawCircle(x + round / 2.0f, y + round / 2.0f, round, color)
+        drawCircle(x2 - round / 2.0f, y2 - round / 2.0f, round, color)
+        drawRect(matrixStack, (x - round / 2.0f - 0.5f).toInt(), (y + round / 2.0f).toInt(), x2.toInt(), (y2 - round / 2.0f).toInt(), color)
+        drawRect(matrixStack, x.toInt(), (y + round / 2.0f).toInt(), (x2 + round / 2.0f + 0.5f).toInt(), (y2 - round / 2.0f).toInt(), color)
+        drawRect(matrixStack, (x + round / 2.0f).toInt(), (y - round / 2.0f - 0.5f).toInt(), (x2 - round / 2.0f).toInt(), (y2 - round / 2.0f).toInt(), color)
+        drawRect(matrixStack, (x + round / 2.0f).toInt(), y.toInt(), (x2 - round / 2.0f).toInt(), (y2 + round / 2.0f + 0.5f).toInt(), color)
     }
 
     fun drawHorizontalLine(matrixStack: MatrixStack, i: Int, j: Int, k: Int, l: Int) {
@@ -136,6 +216,14 @@ object Render2DUtils {
         BufferRenderer.draw(bufferBuilder)
     }
 
+    fun reAlpha(color: Int, alpha: Float): Int {
+        val c = Color(color)
+        val r = 1.toFloat() / 255 * c.red
+        val g = 1.toFloat() / 255 * c.green
+        val b = 1.toFloat() / 255 * c.blue
+        return Color(r, g, b, alpha).rgb
+    }
+
     fun setColor(color: Color) {
         GL11.glColor4f(color.red / 255.0f, color.green / 255.0f, color.blue / 255.0f, color.alpha / 255.0f)
     }
@@ -162,5 +250,32 @@ object Render2DUtils {
 
     fun isHovered(mouseX: Float, mouseY: Float, x: Float, y: Float, width: Float, height: Float): Boolean {
         return mouseX >= x && mouseX - width <= x && mouseY >= y && mouseY - height <= y
+    }
+
+    fun scissorBox(x: Int, y: Int, width: Int, height: Int) {
+        scissor(x, y, x + width, y + height)
+    }
+
+    fun scissor(startX: Int, startY: Int, endX: Int, endY: Int) {
+        val width = endX - startX
+        val height = endY - startY
+        val bottomY: Int = scaledHeight - endY
+        val factor: Double = MC.window.scaleFactor
+        val scissorX = (startX * factor).toInt()
+        val scissorY = (bottomY * factor).toInt()
+        val scissorWidth = (width * factor).toInt()
+        val scissorHeight = (height * factor).toInt()
+        GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight)
+    }
+
+    fun getAnimationState(animation: Double, finalState: Double, speed: Double): Double {
+        var animation = animation
+        val add = (0.01 * speed).toFloat()
+        if (animation < finalState) {
+            if (animation + add < finalState) animation += add.toDouble() else animation = finalState
+        } else {
+            if (animation - add > finalState) animation -= add.toDouble() else animation = finalState
+        }
+        return animation
     }
 }

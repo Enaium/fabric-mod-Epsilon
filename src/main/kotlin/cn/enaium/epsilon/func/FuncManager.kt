@@ -14,7 +14,7 @@ import java.util.*
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class FuncManager {
-    var funcs: ArrayList<Func> = ArrayList()
+    var functions: ArrayList<Func> = ArrayList()
 
     init {
         Epsilon.eventManager.register(this)
@@ -25,14 +25,14 @@ class FuncManager {
             if (info.name.startsWith(Func::class.java.`package`.name)) {
                 val clazz: Class<*> = Class.forName(info.load().name)
                 if (clazz.isAnnotationPresent(FuncAT::class.java)) {
-                    funcs.add(clazz.newInstance() as Func)
+                    functions.add(clazz.newInstance() as Func)
                 }
             }
         }
     }
 
-    fun getModule(name: String): Func? {
-        for (m in funcs) {
+    fun getFunc(name: String): Func? {
+        for (m in functions) {
             if (m.name.equals(name, ignoreCase = true)) {
                 return m
             }
@@ -49,19 +49,19 @@ class FuncManager {
         if (keyBoardEvent.action != GLFW.GLFW_PRESS)
             return
 
-        for (mod in funcs) {
+        for (mod in functions) {
             if (mod.keyCode == keyBoardEvent.keyCode) mod.enable()
         }
     }
 
-    fun getModulesForCategory(c: Category): ArrayList<Func> {
-        val modules = ArrayList<Func>()
-        for (m in this.funcs) {
+    fun getFuncForCategory(c: Category): ArrayList<Func> {
+        val functions = ArrayList<Func>()
+        for (m in this.functions) {
             if (m.category == c) {
-                modules.add(m)
+                functions.add(m)
             }
         }
-        return modules
+        return functions
     }
 
 }

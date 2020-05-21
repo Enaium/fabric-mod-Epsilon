@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.func.funcs.movement
+package cn.enaium.epsilon.func.functions.movement
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.EventAT

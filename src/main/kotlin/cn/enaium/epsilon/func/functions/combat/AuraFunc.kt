@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.func.funcs.combat
+package cn.enaium.epsilon.func.functions.combat
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.Event
@@ -10,6 +10,8 @@ import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
+import cn.enaium.epsilon.setting.settings.ModeSetting
+import cn.enaium.epsilon.utils.RotationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
 import net.minecraft.entity.passive.*
@@ -30,6 +32,9 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
+
+    @SettingAT
+    private val priority = ModeSetting(this, "Priority", "Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))
 
     @SettingAT
     private val player = EnableSetting(this, "Player", true)
@@ -68,12 +73,22 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     @EventAT
     fun onMotion(motionEvent: MotionEvent) {
+        tag = priority.current
         target = when (motionEvent.type) {
             Event.Type.PRE -> {
 
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                getTargets().min(Comparator.comparingDouble() { it.health.toDouble() }).orElse(null)
+                when (priority.current) {
+                    "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) }).orElse(null)
+                    "Fov" -> getTargets().min(Comparator.comparingDouble {
+                        RotationUtils.getDistanceBetweenAngles(it.boundingBox.center)
+                    }).orElse(null)
+                    "Angle" -> getTargets().min(Comparator.comparingDouble {
+                        RotationUtils.getAngleToLookVec(it.boundingBox.center)
+                    }).orElse(null)
+                    else -> getTargets().min(Comparator.comparingDouble { it.health.toDouble() }).orElse(null)
+                }
 
             }
             Event.Type.POST -> {

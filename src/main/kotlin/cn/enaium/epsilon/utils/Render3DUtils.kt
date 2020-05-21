@@ -93,13 +93,17 @@ object Render3DUtils {
         GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glDisable(GL11.GL_DEPTH_TEST)
         GL11.glDisable(GL11.GL_LIGHTING)
+        GL11.glPushMatrix()
+        applyRenderOffset()
     }
 
     fun resets() {
+        GL11.glPopMatrix()
         GL11.glColor4f(1f, 1f, 1f, 1f)
         GL11.glEnable(GL11.GL_DEPTH_TEST)
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glDisable(GL11.GL_BLEND)
         GL11.glDisable(GL11.GL_LINE_SMOOTH)
+
     }
 }

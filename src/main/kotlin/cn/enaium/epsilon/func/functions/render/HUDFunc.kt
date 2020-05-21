@@ -1,7 +1,8 @@
-package cn.enaium.epsilon.func.funcs.render
+package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.Epsilon.AUTHOR
+import cn.enaium.epsilon.Epsilon.IMC
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.Epsilon.NAME
 import cn.enaium.epsilon.Epsilon.VERSION
@@ -15,7 +16,6 @@ import cn.enaium.epsilon.setting.Setting
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.*
 import cn.enaium.epsilon.utils.ColorUtils
-import cn.enaium.epsilon.utils.FontUtils
 import cn.enaium.epsilon.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.utils.FontUtils.getWidth
@@ -23,6 +23,8 @@ import cn.enaium.epsilon.utils.Render2DUtils
 import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -54,6 +56,12 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     @SettingAT
     private val entityList = EnableSetting(this, "EntityList", false)
+
+    @SettingAT
+    private val coords = EnableSetting(this, "Coords", true)
+
+    @SettingAT
+    private val direction = EnableSetting(this, "Direction", true)
 
     init {
         categoryValues = ArrayList()
@@ -87,24 +95,46 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     }
 
     @EventAT
+    fun infoList(render2DEvent: Render2DEvent) {
+        var infoY = 54 + categoryValues.size * (fontHeight + 2) + 10
+        val infoList: ArrayList<String> = ArrayList()
+
+        if (coords.enable) {
+            infoList.add("Coords:" + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(MC.player!!.z))
+        }
+
+        if (direction.enable) {
+            infoList.add("Direction:${MC.cameraEntity!!.horizontalFacing}")
+        }
+
+        infoList.sortedBy { getWidth(it) }
+
+        for (s in infoList) {
+            drawStringWithShadow(render2DEvent.matrixStack, s, 5, infoY, Color.WHITE.rgb)
+            infoY += fontHeight + 4
+        }
+
+    }
+
+    @EventAT
     fun list(render2DEvent: Render2DEvent) {
         if (!list.enable)
             return
 
         var yStart = 1
 
-        val modules = ArrayList<Func>()
-        for (m in Epsilon.funcManager.funcs) {
+        val functions = ArrayList<Func>()
+        for (m in Epsilon.funcManager.functions) {
             if (m.enable) {
-                modules.add(m)
+                functions.add(m)
             }
         }
 
-        val mods: ArrayList<Func> = modules
+        val mods: ArrayList<Func> = functions
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
-        for (module in mods) {
-            val startX = scaledWidth - getWidth(module.getDisplayTag()) - 6
-            drawStringWithShadow(render2DEvent.matrixStack, module.name, startX + 3, yStart, Color.WHITE.rgb)
+        for (func in mods) {
+            val startX = scaledWidth - getWidth(func.getDisplayTag()) - 6
+            drawStringWithShadow(render2DEvent.matrixStack, func.getDisplayTag(), startX + 3, yStart, Color.WHITE.rgb)
             yStart += fontHeight + 4
         }
     }
@@ -129,7 +159,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                 Render2DUtils.drawRect(render2DEvent.matrixStack, startX + 1, startY, startX + this.getWidestCategory() + 5 - 1, startY + fontHeight + 2, ColorUtils.SELECT)
             }
             val name: String = c.name
-            FontUtils.drawStringWithShadow(render2DEvent.matrixStack, name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(), startX + 2 + if (getCurrentCategory() == c) 2 else 0, startY + 2, -1)
+            drawStringWithShadow(render2DEvent.matrixStack, name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(), startX + 2 + if (getCurrentCategory() == c) 2 else 0, startY + 2, -1)
             startY += fontHeight + 2
         }
 
@@ -137,11 +167,11 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             val startModsX: Int = startX + this.getWidestCategory() + 6
             var startModsY = 5 + 9 + 40 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(render2DEvent.matrixStack, startModsX, startModsY, startModsX + this.getWidestMod() + 5, startModsY + getModsForCurrentCategory().size * (fontHeight + 2), ColorUtils.BG)
-            for (m in getModsForCurrentCategory()) {
-                if (getCurrentModule() == m) {
+            for (f in getModsForCurrentCategory()) {
+                if (getCurrentFunc() == f) {
                     Render2DUtils.drawRect(render2DEvent.matrixStack, startModsX + 1, startModsY, startModsX + this.getWidestMod() + 5 - 1, startModsY + fontHeight + 2, ColorUtils.SELECT)
                 }
-                FontUtils.drawStringWithShadow(render2DEvent.matrixStack, m.name + if (Epsilon.settingManager.getSettingsForModule(m) != null) ">" else "", startModsX + 2 + if (getCurrentModule() == m) 2 else 0, startModsY + 2, if (m.enable) -1 else Color.GRAY.rgb)
+                drawStringWithShadow(render2DEvent.matrixStack, f.name + if (Epsilon.settingManager.getSettingsForFunc(f) != null) ">" else "", startModsX + 2 + if (getCurrentFunc() == f) 2 else 0, startModsY + 2, if (f.enable) -1 else Color.GRAY.rgb)
                 startModsY += fontHeight + 2
             }
         }
@@ -155,22 +185,22 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                 }
                 when (s) {
                     is EnableSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.enable, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.enable, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                     is IntegerSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                     is DoubleSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                     is FloatSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                     is LongSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                     is ModeSetting -> {
-                        FontUtils.drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
+                        drawStringWithShadow(render2DEvent.matrixStack, s.name + ": " + s.current, startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0, startSettingY + 2, if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb)
                     }
                 }
                 startSettingY += fontHeight + 2
@@ -256,9 +286,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         if (screen == 0) {
             screen = 1
         } else if (screen == 1 && this.getSettingForCurrentMod() == null) {
-            this.getCurrentModule().enable()
+            this.getCurrentFunc().enable()
         } else if (screen == 1 && this.getSettingForCurrentMod() != null && key == GLFW.GLFW_KEY_ENTER) {
-            this.getCurrentModule().enable()
+            this.getCurrentFunc().enable()
         } else if (screen == 1 && this.getSettingForCurrentMod() != null) {
             screen = 2
         } else if (screen == 2) {
@@ -294,19 +324,19 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     }
 
     private fun getSettingForCurrentMod(): ArrayList<Setting>? {
-        return Epsilon.settingManager.getSettingsForModule(getCurrentModule())
+        return Epsilon.settingManager.getSettingsForFunc(getCurrentFunc())
     }
 
     private fun getCurrentCategory(): Category {
         return categoryValues[currentCategoryIndex]
     }
 
-    private fun getCurrentModule(): Func {
+    private fun getCurrentFunc(): Func {
         return getModsForCurrentCategory()[currentModIndex]
     }
 
     private fun getModsForCurrentCategory(): ArrayList<Func> {
-        return Epsilon.funcManager.getModulesForCategory(getCurrentCategory())
+        return Epsilon.funcManager.getFuncForCategory(getCurrentCategory())
     }
 
     private fun getWidestSetting(): Int {
@@ -341,7 +371,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private fun getWidestMod(): Int {
         var width = 0
-        for (m in Epsilon.funcManager.funcs) {
+        for (m in Epsilon.funcManager.functions) {
             val cWidth = getWidth(m.name)
             if (cWidth > width) {
                 width = cWidth

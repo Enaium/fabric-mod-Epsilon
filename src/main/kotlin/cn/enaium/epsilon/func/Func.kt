@@ -2,6 +2,7 @@ package cn.enaium.epsilon.func
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.setting.Setting
+import net.minecraft.util.Formatting
 
 /**
  * Project: Epsilon
@@ -35,7 +36,7 @@ open class Func(var name: String, var keyCode: Int, var category: Category) {
         return if (tag == "") {
             name
         } else {
-            return "$name:$tag"
+            return name + Formatting.GRAY + " [ " + tag + " ]"
         }
     }
 }
