@@ -9,7 +9,6 @@ import cn.enaium.epsilon.Epsilon.stop
 import cn.enaium.epsilon.imixin.IMinecraftClient
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.network.ClientPlayerInteractionManager
 import net.minecraft.client.util.Session
 import net.minecraft.client.util.Window
 import org.spongepowered.asm.mixin.Mixin
@@ -45,7 +44,7 @@ class MinecraftClientMixin : IMinecraftClient {
     @Shadow
     private var itemUseCooldown: Int = 0
     override fun getItemUseCooldown(): Int {
-        return itemUseCooldown;
+        return itemUseCooldown
     }
 
     override fun setItemUseCooldown(itemUseCooldown: Int) {
