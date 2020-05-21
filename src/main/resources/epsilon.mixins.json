@@ -13,7 +13,8 @@
     "IMinecraftClientMixin",
     "TitleScreenMixin",
     "GameRendererMixin",
-    "MouseMixin"
+    "MouseMixin",
+    "BlockEntityRenderDispatcherMixin"
   ],
   "injectors": {
     "defaultRequire": 1
