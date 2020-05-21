@@ -10,6 +10,7 @@
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
+    "IMinecraftClientMixin",
     "TitleScreenMixin",
     "GameRendererMixin",
     "MouseMixin"

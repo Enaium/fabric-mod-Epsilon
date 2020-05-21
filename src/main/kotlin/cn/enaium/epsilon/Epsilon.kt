@@ -4,7 +4,7 @@ import cn.enaium.epsilon.command.CommandManager
 import cn.enaium.epsilon.config.ConfigManager
 import cn.enaium.epsilon.event.EventManager
 import cn.enaium.epsilon.func.FuncManager
-import cn.enaium.epsilon.imixin.IMinecraftClient
+import cn.enaium.epsilon.mixin.IMinecraftClientMixin
 import cn.enaium.epsilon.plugin.PluginManager
 import cn.enaium.epsilon.setting.SettingManager
 import net.minecraft.client.MinecraftClient
@@ -23,7 +23,7 @@ object Epsilon {
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()
-    var IMC: IMinecraftClient = MC as IMinecraftClient
+    var IMC: IMinecraftClientMixin = MC as IMinecraftClientMixin
 
     lateinit var eventManager: EventManager
     lateinit var funcManager: FuncManager
