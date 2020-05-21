@@ -12,6 +12,7 @@ import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.func.FuncAT
+import cn.enaium.epsilon.mixin.IMinecraftClientMixin
 import cn.enaium.epsilon.setting.Setting
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.*
@@ -63,6 +64,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     @SettingAT
     private val direction = EnableSetting(this, "Direction", true)
 
+    @SettingAT
+    private val fps = EnableSetting(this, "FPS", true)
+
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
@@ -106,6 +110,11 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         if (direction.enable) {
             infoList.add("Direction:${MC.cameraEntity!!.horizontalFacing}")
         }
+
+        if (fps.enable) {
+            infoList.add("FPS:${IMC.currentFps}")
+        }
+
 
         infoList.sortedBy { getWidth(it) }
 
