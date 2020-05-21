@@ -1,6 +1,5 @@
 package cn.enaium.epsilon.mixin
 
-import cn.enaium.epsilon.event.events.KeyboardEvent
 import cn.enaium.epsilon.event.events.MouseScrollEvent
 import net.minecraft.client.Mouse
 import org.spongepowered.asm.mixin.Mixin
