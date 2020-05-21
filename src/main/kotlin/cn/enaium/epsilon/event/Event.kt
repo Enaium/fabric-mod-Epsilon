@@ -11,11 +11,14 @@ import java.util.function.Consumer
  */
 abstract class Event(val type: Type) {
 
+    var cancelled = false
+
     enum class Type {
         PRE, POST
     }
 
     fun call() {
+        cancelled = false
         val dataList = eventManager[this.javaClass] ?: return
         dataList.forEach(Consumer { data: Data ->
             try {
@@ -26,6 +29,10 @@ abstract class Event(val type: Type) {
                 e.printStackTrace()
             }
         })
+    }
+
+    fun cancel() {
+        cancelled = true
     }
 
 }
