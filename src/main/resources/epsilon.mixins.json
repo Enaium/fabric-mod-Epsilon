@@ -14,7 +14,8 @@
     "TitleScreenMixin",
     "GameRendererMixin",
     "MouseMixin",
-    "BlockEntityRenderDispatcherMixin"
+    "BlockEntityRenderDispatcherMixin",
+    "TerrainRenderContextMixin"
   ],
   "injectors": {
     "defaultRequire": 1
