@@ -81,6 +81,6 @@ class MinecraftClientMixin implements IMinecraftClient {
     //    }
     @Inject(at = @At("RETURN"), method = "updateWindowTitle()V")
     private void updateWindowTitle(CallbackInfo callbackInfo) {
-        window.setTitle(Epsilon.INSTANCE.getNAME() + "| " + Epsilon.INSTANCE.getVERSION() + " | " + Epsilon.INSTANCE.getGAME() + " | " + Epsilon.INSTANCE.getAUTHOR());
+        window.setTitle(Epsilon.INSTANCE.getNAME() + " | " + Epsilon.INSTANCE.getVERSION() + " | " + Epsilon.INSTANCE.getGAME() + " | " + Epsilon.INSTANCE.getAUTHOR());
     }
 }
