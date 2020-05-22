@@ -3,7 +3,8 @@ package cn.enaium.epsilon.command.commands
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.command.Command
 import cn.enaium.epsilon.command.CommandAT
-import cn.enaium.epsilon.utils.ChatUtils
+import cn.enaium.epsilon.utils.ChatUtils.error
+import cn.enaium.epsilon.utils.ChatUtils.message
 
 @CommandAT(["enable", "e"])
 class EnableCommand : Command {
@@ -11,12 +12,12 @@ class EnableCommand : Command {
 
         if (args.size == 1 || args.size == 2) {
             if (args.size == 1) {
-                for (ms in Epsilon.funcManager.functions) ChatUtils.message(ms.name)
+                for (ms in Epsilon.funcManager.functions) message(ms.name)
                 return true
             } else if (args.size == 2) {
                 val func = Epsilon.funcManager.getFunc(args[1])
                 if (func == null) {
-                    ChatUtils.error("The func with the name " + args[1] + " does not exist.")
+                    error("The func with the name " + args[1] + " does not exist.")
                     return true
                 }
                 func.enable()
