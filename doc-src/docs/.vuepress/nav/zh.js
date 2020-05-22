@@ -6,9 +6,5 @@ module.exports = [
     {
         text: '指南',
         link: '/zh/guide/'
-    },
-    {
-        text: 'GitHub',
-        link: 'https://github.com/Enaium/Epsilon',
     }
 ]

@@ -17,6 +17,10 @@ module.exports = {
     },
     themeConfig: {
         sidebar: 'auto',
+        repo: 'Enaium/Epsilon',
+        docsDir: 'docs',
+        editLinks: true,
+		smoothScroll: true,
         locales: {
             '/': {
                 label: 'English',
