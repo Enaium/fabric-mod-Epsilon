@@ -2,12 +2,15 @@ package cn.enaium.epsilon.utils
 
 import cn.enaium.epsilon.Epsilon.MC
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.block.Blocks
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.render.BufferRenderer
+import net.minecraft.client.render.DiffuseLighting
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Matrix4f
 import org.lwjgl.opengl.GL11
@@ -50,27 +53,39 @@ object Render2DUtils {
     }
 
     fun drawImage(image: String, x: Double, y: Double, width: Double, height: Double) {
-        GL11.glDisable(2929)
-        GL11.glEnable(3042)
+        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        GL11.glEnable(GL11.GL_BLEND)
         GL11.glDepthMask(false)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
         MC.textureManager.bindTexture(Identifier("epsilon", image))
         blit(x, y, 0.0f, 0.0f, width, height, width, height)
         GL11.glDepthMask(true)
-        GL11.glDisable(3042)
-        GL11.glEnable(2929)
+        GL11.glDisable(GL11.GL_BLEND)
+        GL11.glEnable(GL11.GL_DEPTH_TEST)
+    }
+
+    fun drawItemStack(itemStack: ItemStack, x: Double, y: Double) {
+        GL11.glPushMatrix()
+        GL11.glTranslated(x, y, 0.0)
+        GL11.glScaled(1.5, 1.5, 1.5)
+        GL11.glScaled(0.75, 0.75, 0.75)
+        DiffuseLighting.enable()
+        MC.itemRenderer.renderGuiItem(itemStack, 0, 0);
+        DiffuseLighting.disable();
+
+        GL11.glPopMatrix();
     }
 
     fun drawCircle(xx: Float, yy: Float, radius: Float, color: Int) {
         val sections = 70
         val dAngle = 6.283185307179586 / sections
         GL11.glPushMatrix()
-        GL11.glEnable(3042)
-        GL11.glDisable(3553)
-        GL11.glBlendFunc(770, 771)
-        GL11.glEnable(2848)
-        GL11.glShadeModel(7425)
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GL11.glEnable(GL11.GL_LINE_SMOOTH)
+        GL11.glShadeModel(GL11.GL_SMOOTH)
         GL11.glBegin(2)
         for (i in 0 until sections) {
             val x = (radius * cos(i * dAngle)).toFloat()
@@ -83,9 +98,9 @@ object Render2DUtils {
             GL11.glVertex2f(xx + x, yy + y)
         }
         GL11.glEnd()
-        GL11.glEnable(3553)
-        GL11.glDisable(3042)
-        GL11.glDisable(2848)
+        GL11.glEnable(GL11.GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_LINE_SMOOTH)
         GL11.glPopMatrix()
     }
 
@@ -93,10 +108,10 @@ object Render2DUtils {
         val sections = 50
         val dAngle = 6.283185307179586 / sections
         GL11.glPushMatrix()
-        GL11.glEnable(3042)
-        GL11.glDisable(3553)
-        GL11.glBlendFunc(770, 771)
-        GL11.glEnable(2848)
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GL11.glEnable(GL11.GL_LINE_SMOOTH)
         GL11.glBegin(6)
         for (i in 0 until sections) {
             val x = (radius * sin(i * dAngle)).toFloat()
@@ -109,9 +124,9 @@ object Render2DUtils {
             GL11.glVertex2f(xx + x, yy + y)
         }
         GL11.glEnd()
-        GL11.glEnable(3553)
-        GL11.glDisable(3042)
-        GL11.glDisable(2848)
+        GL11.glEnable(GL11.GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_LINE_SMOOTH)
         GL11.glPopMatrix()
     }
 
