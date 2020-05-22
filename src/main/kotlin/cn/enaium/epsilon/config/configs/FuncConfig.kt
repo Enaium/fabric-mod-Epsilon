@@ -51,6 +51,7 @@ class FuncConfig : Config("Functions") {
                                             setting.current = settingObject.getString(setting.name)
                                         }
                                         is BlockListSetting -> {
+                                            setting.blockList.clear()
                                             val blockArray = JSON.parseArray(settingObject.getString(setting.name))
                                             for (ba in blockArray) {
                                                 setting.blockList.add(ba.toString())
