@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "cn.enaium.epsilon.EpsilonMod"
+      "cn.enaium.epsilon.EpsilonModKt::init"
     ]
   },
   "mixins": [
@@ -25,6 +25,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
+    "fabric-language-kotlin": "*",
     "minecraft": "1.16-alpha.20.21.a"
   },
   "suggests": {
