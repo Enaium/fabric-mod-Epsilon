@@ -1,6 +1,8 @@
 package cn.enaium.epsilon.func
 
 import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.command.Command
+import cn.enaium.epsilon.command.CommandAT
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.KeyboardEvent
 import com.google.common.reflect.ClassPath
@@ -18,12 +20,9 @@ class FuncManager {
 
     init {
         Epsilon.eventManager.register(this)
-    }
-
-    fun load() {
         for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
-            if (info.name.startsWith(Func::class.java.`package`.name)) {
-                val clazz: Class<*> = Class.forName(info.load().name)
+            if (info.name.startsWith(FuncManager::class.java.packageName)) {
+                val clazz = Class.forName(info.name)
                 if (clazz.isAnnotationPresent(FuncAT::class.java)) {
                     functions.add(clazz.newInstance() as Func)
                 }

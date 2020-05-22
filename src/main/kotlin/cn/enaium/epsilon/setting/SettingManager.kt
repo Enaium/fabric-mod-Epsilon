@@ -2,7 +2,9 @@ package cn.enaium.epsilon.setting
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.func.Func
+import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.settings.*
+import com.google.common.reflect.ClassPath
 import java.util.*
 
 /**
@@ -13,36 +15,40 @@ import java.util.*
 class SettingManager {
     var settings: ArrayList<Setting> = ArrayList()
 
-    fun load() {
-        for (func in Epsilon.funcManager.functions) {
-            for (field in func.javaClass.declaredFields) {
-                if (field.isAnnotationPresent(SettingAT::class.java)) {
-                    field.isAccessible = true
-                    when (field.type) {
-                        EnableSetting::class.java -> {
-                            settings.add(field.get(func) as EnableSetting)
-                        }
-                        IntegerSetting::class.java -> {
-                            settings.add(field.get(func) as IntegerSetting)
-                        }
-                        FloatSetting::class.java -> {
-                            settings.add(field.get(func) as FloatSetting)
-                        }
-                        DoubleSetting::class.java -> {
-                            settings.add(field.get(func) as DoubleSetting)
-                        }
-                        LongSetting::class.java -> {
-                            settings.add(field.get(func) as LongSetting)
-                        }
-                        ModeSetting::class.java -> {
-                            settings.add(field.get(func) as ModeSetting)
-                        }
-                        BlockListSetting::class.java -> {
-                            settings.add(field.get(func) as BlockListSetting)
+    init {
+        try {
+            for (func in Epsilon.funcManager.functions) {
+                for (field in func.javaClass.declaredFields) {
+                    if (field.isAnnotationPresent(SettingAT::class.java)) {
+                        field.isAccessible = true
+                        when (field.type) {
+                            EnableSetting::class.java -> {
+                                settings.add(field.get(func) as EnableSetting)
+                            }
+                            IntegerSetting::class.java -> {
+                                settings.add(field.get(func) as IntegerSetting)
+                            }
+                            FloatSetting::class.java -> {
+                                settings.add(field.get(func) as FloatSetting)
+                            }
+                            DoubleSetting::class.java -> {
+                                settings.add(field.get(func) as DoubleSetting)
+                            }
+                            LongSetting::class.java -> {
+                                settings.add(field.get(func) as LongSetting)
+                            }
+                            ModeSetting::class.java -> {
+                                settings.add(field.get(func) as ModeSetting)
+                            }
+                            BlockListSetting::class.java -> {
+                                settings.add(field.get(func) as BlockListSetting)
+                            }
                         }
                     }
                 }
             }
+        } catch (throwable: Throwable) {
+            println(throwable.stackTrace)
         }
     }
 

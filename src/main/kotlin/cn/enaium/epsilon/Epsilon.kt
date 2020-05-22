@@ -41,8 +41,6 @@ object Epsilon {
         commandManager = CommandManager()
         pluginManager = PluginManager()
         configManager = ConfigManager()
-        funcManager.load()
-        settingManager.load()
         configManager.load()
     }
 
