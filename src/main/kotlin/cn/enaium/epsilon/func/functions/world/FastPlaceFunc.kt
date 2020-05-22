@@ -17,6 +17,6 @@ import org.lwjgl.glfw.GLFW
 class FastPlaceFunc : Func("FastPlace", GLFW.GLFW_KEY_B, Category.WORLD) {
     @EventAT
     fun on(updateEvent: UpdateEvent) {
-        IMC.setItemUseCooldown(0)
+        IMC.itemUseCooldown = 0
     }
 }
