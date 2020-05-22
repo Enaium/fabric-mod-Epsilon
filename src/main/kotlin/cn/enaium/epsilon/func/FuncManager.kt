@@ -21,7 +21,7 @@ class FuncManager {
     init {
         Epsilon.eventManager.register(this)
         for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
-            if (info.name.startsWith(FuncManager::class.java.packageName)) {
+            if (info.name.startsWith(FuncManager::class.java.`package`.name)) {
                 val clazz = Class.forName(info.name)
                 if (clazz.isAnnotationPresent(FuncAT::class.java)) {
                     functions.add(clazz.newInstance() as Func)
