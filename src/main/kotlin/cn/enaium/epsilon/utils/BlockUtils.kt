@@ -3,6 +3,9 @@ package cn.enaium.epsilon.utils
 import cn.enaium.epsilon.Epsilon.MC
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
+import net.minecraft.util.Identifier
+import net.minecraft.util.InvalidIdentifierException
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.registry.Registry
@@ -35,6 +38,14 @@ object BlockUtils {
 
     fun getName(block: Block): String {
         return Registry.BLOCK.getId(block).toString()
+    }
+
+    fun getBlockFromName(name: String): Block {
+        return try {
+            Registry.BLOCK.get(Identifier(name))
+        } catch (e: InvalidIdentifierException) {
+            Blocks.AIR
+        }
     }
 
     private fun getOutlineShape(pos: BlockPos): VoxelShape {
