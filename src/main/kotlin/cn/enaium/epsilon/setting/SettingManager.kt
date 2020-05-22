@@ -48,7 +48,7 @@ class SettingManager {
 
     fun getSetting(m: Func, name: String): Setting? {
         for (s in settings) {
-            if (s.func == m && s.name.equals(name, ignoreCase = true)) {
+            if (s.func == m && s.name.equals(name, true)) {
                 return s
             }
         }
