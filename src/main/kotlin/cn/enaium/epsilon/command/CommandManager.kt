@@ -9,10 +9,9 @@ class CommandManager {
     private val prefix: String = "`"
 
     init {
-
         for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
-            if (info.name.startsWith(Command::class.java.`package`.name)) {
-                val clazz: Class<*> = Class.forName(info.load().name)
+            if (info.name.startsWith(Command::class.java.packageName)) {
+                val clazz = Class.forName(info.name)
                 if (clazz.isAnnotationPresent(CommandAT::class.java)) {
                     commands[clazz.getAnnotation(CommandAT::class.java).value] = clazz.newInstance() as Command
                 }

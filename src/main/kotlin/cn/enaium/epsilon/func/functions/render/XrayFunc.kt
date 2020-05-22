@@ -42,7 +42,7 @@ class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
             "minecraft:redstone_block", "minecraft:redstone_ore",
             "minecraft:repeating_command_block", "minecraft:spawner",
             "minecraft:tnt", "minecraft:torch", "minecraft:trapped_chest",
-            "minecraft:water"))
+            "minecraft:water", "minecraft:ancient_debris"))
 
     override fun onEnable() {
         super.onEnable()

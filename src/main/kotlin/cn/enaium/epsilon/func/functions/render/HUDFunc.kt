@@ -178,7 +178,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                 if (getCurrentFunc() == f) {
                     Render2DUtils.drawRect(render2DEvent.matrixStack, startModsX + 1, startModsY, startModsX + this.getWidestMod() + 5 - 1, startModsY + fontHeight + 2, ColorUtils.SELECT)
                 }
-                drawStringWithShadow(render2DEvent.matrixStack, f.name + if (Epsilon.settingManager.getSettingsForFunc(f) != null) ">" else "", startModsX + 2 + if (getCurrentFunc() == f) 2 else 0, startModsY + 2, if (f.enable) -1 else Color.GRAY.rgb)
+                drawStringWithShadow(render2DEvent.matrixStack, f.name + if (getSettingsForFunc(f) != null) ">" else "", startModsX + 2 + if (getCurrentFunc() == f) 2 else 0, startModsY + 2, if (f.enable) -1 else Color.GRAY.rgb)
                 startModsY += fontHeight + 2
             }
         }
@@ -326,12 +326,21 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
+    fun getSettingsForFunc(m: Func): ArrayList<Setting>? {
+        val settings = ArrayList<Setting>()
+        for (s in Epsilon.settingManager.settings) {
+            if (s !is BlockListSetting)
+                if (s.func == m) settings.add(s)
+        }
+        return if (settings.isEmpty()) null else settings
+    }
+
     private fun getCurrentSetting(): Setting {
         return getSettingForCurrentMod()!![currentSettingIndex]
     }
 
     private fun getSettingForCurrentMod(): ArrayList<Setting>? {
-        return Epsilon.settingManager.getSettingsForFunc(getCurrentFunc())
+        return getSettingsForFunc(getCurrentFunc())
     }
 
     private fun getCurrentCategory(): Category {
