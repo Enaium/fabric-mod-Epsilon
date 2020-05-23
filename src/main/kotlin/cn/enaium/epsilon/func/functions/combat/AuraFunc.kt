@@ -55,6 +55,9 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private val llama = EnableSetting(this, "Llama", false)
 
     @SettingAT
+    private val fox = EnableSetting(this, "Fox", false)
+
+    @SettingAT
     private val strider = EnableSetting(this, "Strider", false)
 
     @SettingAT
@@ -80,7 +83,8 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 when (priority.current) {
-                    "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) }).orElse(null)
+                    "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) })
+                        .orElse(null)
                     "Fov" -> getTargets().min(Comparator.comparingDouble {
                         RotationUtils.getDistanceBetweenAngles(it.boundingBox.center)
                     }).orElse(null)
@@ -123,6 +127,9 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
         }
         if (!llama.enable) {
             s = s.filter { it !is LlamaEntity }
+        }
+        if (!fox.enable) {
+            s = s.filter { it !is FoxEntity }
         }
         if (!strider.enable) {
             s = s.filter { it !is StriderEntity }
