@@ -24,7 +24,7 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(at = {@At("RETURN")}, method = {"init()V"})
+    @Inject(at = @At("RETURN"), method = "init()V")
     private void init(CallbackInfo callbackInfo) {
 
         addButton(new ButtonWidget(5, 5, 20, 20, new LiteralText("Alt"), button -> Epsilon.INSTANCE.getMC().openScreen(new AltScreen())));
