@@ -12,6 +12,7 @@
     "IMinecraftClientMixin",
     "TitleScreenMixin",
     "GameRendererMixin",
+    "IGameRendererMixin",
     "MouseMixin",
     "BlockEntityRenderDispatcherMixin",
     "TerrainRenderContextMixin",
