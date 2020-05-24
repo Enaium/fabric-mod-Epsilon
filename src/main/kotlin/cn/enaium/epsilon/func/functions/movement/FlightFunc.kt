@@ -30,11 +30,16 @@ class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
         MC.player!!.flyingSpeed = speed.current.toFloat()
 
         MC.player!!.setVelocity(0.0, 0.0, 0.0)
-        val velcity: Vec3d = MC.player!!.velocity
+        val velocity: Vec3d = MC.player!!.velocity
 
-        if (MC.options.keyJump.isPressed) MC.player!!.velocity = velcity.add(0.0, speed.current, 0.0)
+        if (MC.options.keyJump.isPressed) MC.player!!.velocity = velocity.add(0.0, speed.current, 0.0)
 
-        if (MC.options.keySneak.isPressed) MC.player!!.velocity = velcity.subtract(0.0, speed.current, 0.0)
+        if (MC.options.keySneak.isPressed) MC.player!!.velocity = velocity.subtract(0.0, speed.current, 0.0)
+    }
+
+    override fun onEnable() {
+
+        super.onEnable()
     }
 
 }

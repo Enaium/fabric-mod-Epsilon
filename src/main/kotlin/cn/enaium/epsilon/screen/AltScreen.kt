@@ -1,9 +1,7 @@
 package cn.enaium.epsilon.screen
 
-import cn.enaium.epsilon.Epsilon
-import cn.enaium.epsilon.Epsilon.IMC
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.mixin.IMinecraftClientMixin
+import cn.enaium.epsilon.IMC
 import com.mojang.authlib.Agent
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
@@ -54,7 +52,7 @@ class AltScreen : Screen(LiteralText("")) {
 
     private fun login() {
         try {
-            IMC.session = createSession(usernameField.text, passwordField.text, Proxy.NO_PROXY)
+            IMC.mc.session = createSession(usernameField.text, passwordField.text, Proxy.NO_PROXY)
             MC.openScreen(null)
         } catch (e: Exception) {
             MC.openScreen(FatalErrorScreen(LiteralText("Login Error"), LiteralText(e.message)))

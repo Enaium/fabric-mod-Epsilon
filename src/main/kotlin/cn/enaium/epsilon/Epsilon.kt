@@ -23,7 +23,6 @@ object Epsilon {
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()
-    var IMC: IMinecraftClientMixin = MC as IMinecraftClientMixin
 
     lateinit var eventManager: EventManager
     lateinit var funcManager: FuncManager
