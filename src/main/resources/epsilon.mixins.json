@@ -5,7 +5,7 @@
   "mixins": [
   ],
   "client": [
-    "ClientPlayerEntityMixin",
+    "ClientPlayerEntityMixin"
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
@@ -17,7 +17,8 @@
     "BlockEntityRenderDispatcherMixin",
     "TerrainRenderContextMixin",
     "BlockModelRendererMixin",
-    "BlockMixin"
+    "BlockMixin",
+    "IClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
