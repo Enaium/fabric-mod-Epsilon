@@ -4,7 +4,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import net.minecraft.client.MinecraftClient
 import org.lwjgl.glfw.GLFW
 
@@ -13,7 +12,6 @@ import org.lwjgl.glfw.GLFW
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class SprintFunc : Func("Sprint", GLFW.GLFW_KEY_V, Category.MOVEMENT) {
     @EventAT
     fun onUpdate(updateEvent: UpdateEvent) {

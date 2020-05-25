@@ -6,13 +6,10 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
 import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.mob.WitherSkeletonEntity
 import net.minecraft.entity.projectile.DragonFireballEntity
 import net.minecraft.entity.projectile.FireballEntity
 import net.minecraft.entity.projectile.ShulkerBulletEntity
@@ -23,7 +20,6 @@ import net.minecraft.util.Hand
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class BulletAuraFunc : Func("BulletAura", 0, Category.COMBAT) {
     private var target: Entity? = null
 

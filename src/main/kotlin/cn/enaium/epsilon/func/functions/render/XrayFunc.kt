@@ -7,7 +7,6 @@ import cn.enaium.epsilon.event.events.ShouldDrawSideEvent
 import cn.enaium.epsilon.event.events.TessellateBlockEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.BlockListSetting
 import cn.enaium.epsilon.utils.BlockUtils
@@ -20,7 +19,6 @@ import java.util.*
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
 
     @SettingAT

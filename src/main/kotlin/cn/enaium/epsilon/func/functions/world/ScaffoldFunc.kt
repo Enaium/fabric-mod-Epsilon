@@ -7,7 +7,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import net.minecraft.block.AirBlock
@@ -25,7 +24,6 @@ import net.minecraft.util.math.Vec3d
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class ScaffoldFunc : Func("Scaffold", 0, Category.WORLD) {
     private var currentPos: BlockPos? = null
     private var currentDirection: Direction? = null

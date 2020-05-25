@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.ModeSetting
 import net.minecraft.entity.LivingEntity
@@ -19,7 +18,6 @@ import net.minecraft.util.hit.HitResult
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
 
     @SettingAT

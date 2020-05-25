@@ -2,9 +2,7 @@ package cn.enaium.epsilon.setting
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.settings.*
-import com.google.common.reflect.ClassPath
 import java.util.*
 
 /**

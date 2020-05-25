@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.utils.BlockUtils
 import cn.enaium.epsilon.utils.Render3DUtils
 import net.minecraft.util.math.BlockPos
@@ -18,7 +17,6 @@ import java.awt.Color
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
 
     override fun onEnable() {

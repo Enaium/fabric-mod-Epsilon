@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.utils.BlockUtils
@@ -21,7 +20,6 @@ import java.awt.Color
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     @SettingAT

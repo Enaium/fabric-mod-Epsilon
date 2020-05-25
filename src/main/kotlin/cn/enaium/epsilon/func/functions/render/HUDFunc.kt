@@ -11,7 +11,6 @@ import cn.enaium.epsilon.event.events.KeyboardEvent
 import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.func.FuncAT
 import cn.enaium.epsilon.setting.Setting
 import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.*
@@ -36,7 +35,6 @@ import kotlin.collections.ArrayList
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-@FuncAT
 class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     private var categoryValues: ArrayList<Category> = ArrayList()
     private var currentCategoryIndex = 0
