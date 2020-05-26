@@ -17,7 +17,7 @@ class SettingManager {
         try {
             for (func in Epsilon.funcManager.functions) {
                 for (field in func.javaClass.declaredFields) {
-                    if (field.type.superclass.name == Setting::class.java.name) {
+                    if (field.type.superclass == Setting::class.java) {
                         field.isAccessible = true
                         when (field.type) {
                             EnableSetting::class.java -> {
@@ -46,7 +46,6 @@ class SettingManager {
                 }
             }
         } catch (throwable: Throwable) {
-            println(throwable.stackTrace)
         }
     }
 

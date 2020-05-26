@@ -20,13 +20,16 @@ class FuncManager {
 
     init {
         Epsilon.eventManager.register(this)
-        for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
-            if (info.name.startsWith(FuncManager::class.java.`package`.name)) {
-                val clazz = Class.forName(info.name)
-                if (clazz.superclass.name == Func::class.java.name) {
-                    functions.add(clazz.newInstance() as Func)
+        try {
+            for (info in ClassPath.from(Thread.currentThread().contextClassLoader).topLevelClasses) {
+                if (info.name.startsWith(FuncManager::class.java.`package`.name)) {
+                    val clazz = Class.forName(info.name)
+                    if (clazz.superclass == Func::class.java) {
+                        functions.add(clazz.newInstance() as Func)
+                    }
                 }
             }
+        } catch (throwable: Throwable) {
         }
     }
 
