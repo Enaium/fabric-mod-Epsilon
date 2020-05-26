@@ -2,6 +2,7 @@ package cn.enaium.epsilon.utils
 
 import cn.enaium.epsilon.Epsilon.MC
 import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.util.math.Box
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import kotlin.math.abs
@@ -18,9 +19,19 @@ object RotationUtils {
 
     fun getEyesPos(): Vec3d {
         val player: ClientPlayerEntity = MC.player!!
-        return Vec3d(player.x,
-                player.y + player.getEyeHeight(player.pose),
-                player.z)
+        return Vec3d(
+            player.x,
+            player.y + player.getEyeHeight(player.pose),
+            player.z
+        )
+    }
+
+    fun getRandomCenter(bb: Box): Vec3d {
+        return Vec3d(
+            bb.minX + (bb.maxX - bb.minX) * 0.8 * Math.random(),
+            bb.minY + (bb.maxY - bb.minY) * 1 * Math.random(),
+            bb.minZ + (bb.maxZ - bb.minZ) * 0.8 * Math.random()
+        )
     }
 
     fun getNeededRotations(vec3d: Vec3d): Rotation {
@@ -56,6 +67,20 @@ object RotationUtils {
             angle = 360.0f - angle
         }
         return angle
+    }
+
+
+
+    fun wrapAngleTo180(value: Float): Float {
+        var value = value
+        value %= 360.0f
+        if (value >= 180.0f) {
+            value -= 360.0f
+        }
+        if (value < -180.0f) {
+            value += 360.0f
+        }
+        return value
     }
 
     class Rotation(yaw: Float, pitch: Float) {
