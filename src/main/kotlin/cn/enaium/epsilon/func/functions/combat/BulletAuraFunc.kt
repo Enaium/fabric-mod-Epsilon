@@ -6,7 +6,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
 import net.minecraft.entity.Entity
@@ -23,19 +22,14 @@ import net.minecraft.util.Hand
 class BulletAuraFunc : Func("BulletAura", 0, Category.COMBAT) {
     private var target: Entity? = null
 
-    @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
 
-    @SettingAT
     private val delay = EnableSetting(this, "Delay", false)
 
-    @SettingAT
     private val shulkerBullet = EnableSetting(this, "ShulkerBullet", true)
 
-    @SettingAT
     private val fireball = EnableSetting(this, "Fireball", true)
 
-    @SettingAT
     private val dragonFireball = EnableSetting(this, "DragonFireball", true)
 
     @EventAT

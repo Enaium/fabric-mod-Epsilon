@@ -12,7 +12,6 @@ import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.setting.Setting
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.*
 import cn.enaium.epsilon.utils.ColorUtils
 import cn.enaium.epsilon.utils.FontUtils.drawStringWithShadow
@@ -45,22 +44,16 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private var screen = 0
 
-    @SettingAT
     private val tabGUI = EnableSetting(this, "TabGUI", true)
 
-    @SettingAT
     private val list = EnableSetting(this, "List", true)
 
-    @SettingAT
     private val entityList = EnableSetting(this, "EntityList", false)
 
-    @SettingAT
     private val coords = EnableSetting(this, "Coords", true)
 
-    @SettingAT
     private val direction = EnableSetting(this, "Direction", true)
 
-    @SettingAT
     private val fps = EnableSetting(this, "FPS", true)
 
     init {

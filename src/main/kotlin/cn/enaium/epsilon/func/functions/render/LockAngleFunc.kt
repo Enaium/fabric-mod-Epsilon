@@ -1,11 +1,9 @@
 package cn.enaium.epsilon.func.functions.render
 
-import cn.enaium.epsilon.event.Event
 import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.FloatSetting
 
 /**
@@ -15,10 +13,8 @@ import cn.enaium.epsilon.setting.settings.FloatSetting
  */
 class LockAngleFunc : Func("LockAngle", 0, Category.RENDER) {
 
-    @SettingAT
     val yaw = FloatSetting(this, "Yaw", 0F, -180F, 180F)
 
-    @SettingAT
     val pitch = FloatSetting(this, "Pitch", 0F, -90F, 90F)
 
     @EventAT

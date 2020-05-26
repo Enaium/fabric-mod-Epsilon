@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.utils.Render3DUtils
 import net.minecraft.entity.Entity
@@ -21,7 +20,6 @@ import java.awt.Color
  */
 class ESPFunc : Func("ESP", 0, Category.RENDER) {
 
-    @SettingAT
     private val witherSkeleton = EnableSetting(this, "witherSkeleton", true)
 
     override fun onEnable() {

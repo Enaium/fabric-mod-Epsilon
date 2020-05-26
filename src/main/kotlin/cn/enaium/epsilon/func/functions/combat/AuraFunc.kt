@@ -6,7 +6,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import cn.enaium.epsilon.setting.settings.FloatSetting
 import cn.enaium.epsilon.setting.settings.ModeSetting
@@ -28,46 +27,32 @@ import java.util.stream.StreamSupport
  */
 class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
-    @SettingAT
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
 
-    @SettingAT
     private val priority = ModeSetting(this, "Priority", "Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))
 
-    @SettingAT
     private val player = EnableSetting(this, "Player", true)
 
-    @SettingAT
     private val animal = EnableSetting(this, "Animal", false)
 
-    @SettingAT
     private val wolf = EnableSetting(this, "Wolf", false)
 
-    @SettingAT
     private val villager = EnableSetting(this, "Villager", false)
 
-    @SettingAT
     private val ironGolem = EnableSetting(this, "IronGolem", false)
 
-    @SettingAT
     private val llama = EnableSetting(this, "Llama", false)
 
-    @SettingAT
     private val fox = EnableSetting(this, "Fox", false)
 
-    @SettingAT
     private val strider = EnableSetting(this, "Strider", false)
 
-    @SettingAT
     private val enderman = EnableSetting(this, "Enderman", false)
 
-    @SettingAT
     private val endermite = EnableSetting(this, "Endermite", false)
 
-    @SettingAT
     private val zombieVillager = EnableSetting(this, "ZombieVillager", false)
 
-    @SettingAT
     private val zombiePigman = EnableSetting(this, "ZombiePigman", false)
 
     private var target: LivingEntity? = null

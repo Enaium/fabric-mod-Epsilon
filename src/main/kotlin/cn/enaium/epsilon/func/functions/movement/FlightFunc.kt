@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.DoubleSetting
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
@@ -18,7 +17,6 @@ import org.lwjgl.glfw.GLFW
  */
 class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
 
-    @SettingAT
     private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0);
 
     @EventAT

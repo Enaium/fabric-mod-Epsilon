@@ -5,7 +5,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.ModeSetting
 import net.minecraft.entity.LivingEntity
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket.PositionOnly
@@ -20,7 +19,6 @@ import net.minecraft.util.hit.HitResult
  */
 class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
 
-    @SettingAT
     private val mode = ModeSetting(this, "Mode", "Packet", arrayListOf("Packet", "LowJump", "Jump"))
 
     @EventAT

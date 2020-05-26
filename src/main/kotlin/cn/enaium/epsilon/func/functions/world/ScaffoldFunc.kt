@@ -7,7 +7,6 @@ import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.EnableSetting
 import net.minecraft.block.AirBlock
 import net.minecraft.block.Blocks
@@ -28,7 +27,6 @@ class ScaffoldFunc : Func("Scaffold", 0, Category.WORLD) {
     private var currentPos: BlockPos? = null
     private var currentDirection: Direction? = null
 
-    @SettingAT
     private val eagle = EnableSetting(this, "Eagle", false)
 
     @EventAT

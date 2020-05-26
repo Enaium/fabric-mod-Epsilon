@@ -17,7 +17,7 @@ class SettingManager {
         try {
             for (func in Epsilon.funcManager.functions) {
                 for (field in func.javaClass.declaredFields) {
-                    if (field.isAnnotationPresent(SettingAT::class.java)) {
+                    if (field.type.superclass.name == Setting::class.java.name) {
                         field.isAccessible = true
                         when (field.type) {
                             EnableSetting::class.java -> {

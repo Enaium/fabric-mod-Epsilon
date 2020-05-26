@@ -7,7 +7,6 @@ import cn.enaium.epsilon.event.events.ShouldDrawSideEvent
 import cn.enaium.epsilon.event.events.TessellateBlockEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.SettingAT
 import cn.enaium.epsilon.setting.settings.BlockListSetting
 import cn.enaium.epsilon.utils.BlockUtils
 import net.minecraft.block.Block
@@ -21,7 +20,6 @@ import java.util.*
  */
 class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
 
-    @SettingAT
     private val blocks = BlockListSetting(this, "NoXray", arrayListOf("Ores", "",
             "minecraft:anvil", "minecraft:beacon", "minecraft:bone_block",
             "minecraft:bookshelf", "minecraft:brewing_stand",
