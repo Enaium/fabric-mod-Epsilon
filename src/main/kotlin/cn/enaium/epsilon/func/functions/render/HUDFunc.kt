@@ -393,7 +393,6 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
-    @EventAT
     fun onKey(keyBoardEvent: KeyboardEvent) {
         if (MC.currentScreen != null) return
         if (keyBoardEvent.action != GLFW.GLFW_PRESS) return

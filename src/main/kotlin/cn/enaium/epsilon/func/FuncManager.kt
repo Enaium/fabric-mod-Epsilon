@@ -39,7 +39,6 @@ class FuncManager {
         return null
     }
 
-    @EventAT
     fun onKey(keyBoardEvent: KeyboardEvent) {
 
         if (Epsilon.MC.currentScreen != null)
