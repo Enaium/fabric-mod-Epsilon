@@ -24,6 +24,7 @@ import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -54,6 +55,10 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
     private val direction = EnableSetting(this, "Direction", true)
 
     private val fps = EnableSetting(this, "FPS", true)
+
+    private val gameTime = EnableSetting(this, "GameTime", true)
+
+    private val realTime = EnableSetting(this, "RealTime", true)
 
     init {
         categoryValues = ArrayList()
@@ -98,13 +103,20 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
 
         if (direction.enable) {
-            infoList.add("Face:${Formatting.BLUE} ${MC.cameraEntity!!.horizontalFacing}")
+            infoList.add("Face:${Formatting.BLUE}${MC.cameraEntity!!.horizontalFacing}")
         }
 
         if (fps.enable) {
             infoList.add("FPS:${IMC.mc.currentFps}")
         }
 
+        if (gameTime.enable) {
+            infoList.add("GameTime:${Formatting.GRAY}${MC.world!!.timeOfDay % 24000L}")
+        }
+
+        if (realTime.enable) {
+            infoList.add("RealTime:${Formatting.GRAY}${SimpleDateFormat("HH:mm:ss").format(Date())}")
+        }
 
         infoList.sortedBy { getWidth(it) }
 
