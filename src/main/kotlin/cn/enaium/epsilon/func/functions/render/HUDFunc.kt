@@ -56,9 +56,11 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private val fps = EnableSetting(this, "FPS", true)
 
-    private val gameTime = EnableSetting(this, "GameTime", true)
+    private val gameTime = EnableSetting(this, "GameTime", false)
 
-    private val realTime = EnableSetting(this, "RealTime", true)
+    private val realTime = EnableSetting(this, "RealTime", false)
+
+    private val ping = EnableSetting(this, "Ping", false)
 
     init {
         categoryValues = ArrayList()
@@ -111,11 +113,20 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
 
         if (gameTime.enable) {
-            infoList.add("GameTime:${Formatting.GRAY}${MC.world!!.timeOfDay % 24000L}")
+            val timeOfDay = MC.world!!.timeOfDay
+            val timeTick = timeOfDay % 24000
+            val timeHour = ((timeTick / 1000) + 6) % 24
+            val timeMin = (timeTick / 16.6) % 60
+            val timeSec = (timeTick / 0.27) % 60
+            infoList.add("GameTime:${Formatting.GRAY}${timeHour.toInt()}:${timeMin.toInt()}:${timeSec.toInt()}")
         }
 
         if (realTime.enable) {
             infoList.add("RealTime:${Formatting.GRAY}${SimpleDateFormat("HH:mm:ss").format(Date())}")
+        }
+
+        if (ping.enable) {
+            infoList.add("Ping:${MC.networkHandler!!.getPlayerListEntry(MC.player!!.uuid)!!.latency}")
         }
 
         infoList.sortedBy { getWidth(it) }
