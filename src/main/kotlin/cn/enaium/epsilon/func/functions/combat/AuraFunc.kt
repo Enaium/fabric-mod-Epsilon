@@ -13,6 +13,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
 import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket
 import net.minecraft.util.Hand
 import org.lwjgl.glfw.GLFW
 import java.util.stream.Stream
@@ -29,6 +30,8 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
 
     private val priority = ModeSetting(this, "Priority", "Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))
+
+    private val aim = EnableSetting(this, "Aim", false)
 
     private val player = EnableSetting(this, "Player", true)
 
@@ -58,9 +61,8 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     fun onMotion(motionEvent: MotionEvent) {
         tag = priority.current
-         when (motionEvent.type) {
+        when (motionEvent.type) {
             Event.Type.PRE -> {
-
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 target = when (priority.current) {
@@ -77,6 +79,14 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
             }
             Event.Type.POST -> {
                 if (target == null) return
+
+                if(aim.enable) {
+                    motionEvent.yaw =
+                        RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).yaw
+                    motionEvent.pitch =
+                        RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).pitch
+                }
+                
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
                 target = null
