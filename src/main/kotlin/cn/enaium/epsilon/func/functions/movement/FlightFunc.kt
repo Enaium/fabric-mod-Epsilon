@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.func.functions.movement
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -19,7 +18,6 @@ class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
 
     private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0);
 
-    @EventAT
     fun on(updateEvent: UpdateEvent) {
 
         MC.player!!.abilities.flying = false

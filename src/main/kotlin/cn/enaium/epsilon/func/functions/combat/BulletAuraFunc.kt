@@ -2,7 +2,6 @@ package cn.enaium.epsilon.func.functions.combat
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.event.Event
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -32,7 +31,6 @@ class BulletAuraFunc : Func("BulletAura", 0, Category.COMBAT) {
 
     private val dragonFireball = EnableSetting(this, "DragonFireball", true)
 
-    @EventAT
     fun onMotion(motionEvent: MotionEvent) {
         target = when (motionEvent.type) {
             Event.Type.PRE -> {

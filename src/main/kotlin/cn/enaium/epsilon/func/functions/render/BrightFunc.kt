@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -19,7 +18,6 @@ class BrightFunc : Func("Bright", 0, Category.RENDER) {
 
     private val mode = ModeSetting(this, "Mode", "Gamma", arrayListOf("Gamma", "NightVision"))
 
-    @EventAT
     fun on(render2DEvent: Render2DEvent) {
         when (mode.current) {
             "Gamma" -> MC.options.gamma = 300.0

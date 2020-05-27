@@ -2,7 +2,6 @@ package cn.enaium.epsilon.func.functions.combat
 
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.Event
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -57,15 +56,14 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
 
     private var target: LivingEntity? = null
 
-    @EventAT
     fun onMotion(motionEvent: MotionEvent) {
         tag = priority.current
-        target = when (motionEvent.type) {
+         when (motionEvent.type) {
             Event.Type.PRE -> {
 
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                when (priority.current) {
+                target = when (priority.current) {
                     "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) })
                         .orElse(null)
                     "Fov" -> getTargets().min(Comparator.comparingDouble {
@@ -76,13 +74,12 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
                     }).orElse(null)
                     else -> getTargets().min(Comparator.comparingDouble { it.health.toDouble() }).orElse(null)
                 }
-
             }
             Event.Type.POST -> {
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
-                null
+                target = null
             }
         }
     }

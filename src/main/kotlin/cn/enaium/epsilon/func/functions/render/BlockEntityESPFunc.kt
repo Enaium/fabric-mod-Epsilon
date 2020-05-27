@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -32,7 +31,6 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
         GL11.glDeleteLists(1, 1)
     }
 
-    @EventAT
     fun onRender(render3DEvent: Render3DEvent) {
         for (be in MC.world!!.blockEntities) {
             Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY)

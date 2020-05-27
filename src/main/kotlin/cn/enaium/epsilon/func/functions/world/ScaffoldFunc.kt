@@ -3,7 +3,6 @@ package cn.enaium.epsilon.func.functions.world
 import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.IMC
 import cn.enaium.epsilon.event.Event.Type
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -28,8 +27,7 @@ class ScaffoldFunc : Func("Scaffold", 0, Category.WORLD) {
     private var currentDirection: Direction? = null
 
     private val eagle = EnableSetting(this, "Eagle", false)
-
-    @EventAT
+    
     fun on(motionEvent: MotionEvent) {
         if (eagle.enable) {
             MC.options.keySneak.isPressed = (currentPos != null)

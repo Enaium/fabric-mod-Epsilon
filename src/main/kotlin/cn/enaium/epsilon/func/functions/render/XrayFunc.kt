@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.RenderBlockEntityEvent
 import cn.enaium.epsilon.event.events.ShouldDrawSideEvent
 import cn.enaium.epsilon.event.events.TessellateBlockEvent
@@ -50,19 +49,16 @@ class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
         MC.worldRenderer.reload()
     }
 
-    @EventAT
     fun shouldDrawSideEvent(shouldDrawSideEvent: ShouldDrawSideEvent) {
         shouldDrawSideEvent.rendered = isXray(shouldDrawSideEvent.blockState.block)
     }
 
-    @EventAT
     fun tessellateBlockEvent(tessellateBlockEvent: TessellateBlockEvent) {
         if (!isXray(tessellateBlockEvent.blockState.block)) {
             tessellateBlockEvent.cancel()
         }
     }
 
-    @EventAT
     fun renderBlockEntityEvent(renderBlockEntityEvent: RenderBlockEntityEvent) {
         if (!isXray(BlockUtils.getBlock(renderBlockEntityEvent.blockEntity.pos))) {
             renderBlockEntityEvent.cancel()

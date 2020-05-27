@@ -6,7 +6,6 @@ import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.Epsilon.NAME
 import cn.enaium.epsilon.Epsilon.VERSION
 import cn.enaium.epsilon.IMC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.KeyboardEvent
 import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
@@ -66,7 +65,6 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         this.categoryValues.addAll(Category.values());
     }
 
-    @EventAT
     fun entityList(render2DEvent: Render2DEvent) {
         if (!entityList.enable)
             return
@@ -87,7 +85,6 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
-    @EventAT
     fun infoList(render2DEvent: Render2DEvent) {
         var infoY = 54 + categoryValues.size * (fontHeight + 2) + 10
         val infoList: ArrayList<String> = ArrayList()
@@ -118,7 +115,6 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     }
 
-    @EventAT
     fun list(render2DEvent: Render2DEvent) {
         if (!list.enable)
             return
@@ -141,7 +137,6 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
-    @EventAT
     fun tabGUI(render2DEvent: Render2DEvent) {
         if (!tabGUI.enable)
             return

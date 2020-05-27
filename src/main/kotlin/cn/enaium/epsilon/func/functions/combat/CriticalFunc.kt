@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.func.functions.combat
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.EventAT
 import cn.enaium.epsilon.event.events.UpdateEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -21,7 +20,6 @@ class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
 
     private val mode = ModeSetting(this, "Mode", "Packet", arrayListOf("Packet", "LowJump", "Jump"))
 
-    @EventAT
     fun on(updateEvent: UpdateEvent) {
 
         if (MC.crosshairTarget == null || MC.crosshairTarget!!.type != HitResult.Type.ENTITY || (MC.crosshairTarget as EntityHitResult).entity !is LivingEntity)
