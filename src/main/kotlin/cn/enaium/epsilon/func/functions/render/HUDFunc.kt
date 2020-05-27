@@ -79,7 +79,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             entities.add(e.javaClass.simpleName)
         }
 
-        entities.sortedWith(Comparator { o1: String, o2: String -> getWidth(o2) - getWidth(o1) })
+        entities.sortedBy { getWidth(it) }
 
         var yStart = scaledHeight - fontHeight
 
