@@ -56,11 +56,12 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
     override fun onDisable() {
         super.onDisable()
         GL11.glDeleteLists(storageBox, 1)
+        storageBox = 0
     }
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (t in getTargets()) {
-            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.DARK_GRAY, storageBox)
+            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.GREEN, storageBox)
         }
     }
 

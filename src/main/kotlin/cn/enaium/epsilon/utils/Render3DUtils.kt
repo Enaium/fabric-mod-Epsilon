@@ -71,23 +71,24 @@ object Render3DUtils {
         GL11.glEnd()
     }
 
-    fun drawOutlinedBox(entity: Entity, extraSize: Double, tickDelta: Float, color: Color) {
+    fun drawOutlinedBox(entity: Entity, extraSize: Double, tickDelta: Float, color: Color, list: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(
-                entity.prevX + (entity.x - entity.prevX) * tickDelta,
-                entity.prevY + (entity.y - entity.prevY) * tickDelta,
-                entity.prevZ + (entity.z - entity.prevZ) * tickDelta
+            entity.prevX + (entity.x - entity.prevX) * tickDelta,
+            entity.prevY + (entity.y - entity.prevY) * tickDelta,
+            entity.prevZ + (entity.z - entity.prevZ) * tickDelta
         )
-        GL11.glScaled(entity.width + extraSize,
-                entity.height + extraSize,
-                entity.width + extraSize
+        GL11.glScaled(
+            entity.width + extraSize,
+            entity.height + extraSize,
+            entity.width + extraSize
         )
         GL11.glColor4f(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), color.alpha.toFloat())
-        GL11.glCallList(1)
+        GL11.glCallList(list)
         GL11.glPopMatrix()
     }
 
-    fun drawOutlinedBox(box: Box, color: Color,list: Int) {
+    fun drawOutlinedBox(box: Box, color: Color, list: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(box.minX, box.minY, box.minZ)
         GL11.glScaled(box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ)

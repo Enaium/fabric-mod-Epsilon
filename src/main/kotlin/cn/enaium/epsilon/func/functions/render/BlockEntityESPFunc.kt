@@ -18,7 +18,7 @@ import java.awt.Color
  */
 class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
 
-    var blockEntityBox = 0
+    private var blockEntityBox = 0
 
     override fun onEnable() {
         super.onEnable()
@@ -32,6 +32,7 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
     override fun onDisable() {
         super.onDisable()
         GL11.glDeleteLists(blockEntityBox, 1)
+        blockEntityBox = 0
     }
 
     fun onRender(render3DEvent: Render3DEvent) {

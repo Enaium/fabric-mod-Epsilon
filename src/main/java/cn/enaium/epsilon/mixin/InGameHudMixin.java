@@ -1,5 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
+import cn.enaium.epsilon.Epsilon;
 import cn.enaium.epsilon.event.events.Render2DEvent;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 class InGameHudMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V", ordinal = 4), method = "render")
     private void render(MatrixStack matrixStack, float partialTicks, CallbackInfo callbackInfo) {
-        new Render2DEvent(matrixStack, partialTicks).call();
+        if (!Epsilon.INSTANCE.getMC().options.debugEnabled)
+            new Render2DEvent(matrixStack, partialTicks).call();
     }
 }
