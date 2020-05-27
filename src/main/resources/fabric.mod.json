@@ -8,8 +8,9 @@
     "Enaium"
   ],
   "contact": {
-    "homepage": "https://github.com/Enaium",
-    "sources": "https://github.com/Enaium"
+    "homepage": "https://github.com/Enaium/Epsilon",
+    "sources": "https://github.com/Enaium/Epsilon",
+    "issues": "https://github.com/Enaium/Epsilon/issues"
   },
   "license": "GPL-3.0",
   "icon": "assets/epsilon/icon.png",
