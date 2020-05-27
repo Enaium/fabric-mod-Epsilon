@@ -42,9 +42,12 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     private val smoker = EnableSetting(this, "Smoker", true)
 
+    private var storageBox = 0
+
     override fun onEnable() {
         super.onEnable()
-        GL11.glNewList(1, GL11.GL_COMPILE)
+        storageBox = GL11.glGenLists(1)
+        GL11.glNewList(storageBox, GL11.GL_COMPILE)
         val bb = Box(BlockPos.ORIGIN)
         Render3DUtils.drawOutlined(bb)
         GL11.glEndList()
@@ -52,12 +55,12 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     override fun onDisable() {
         super.onDisable()
-        GL11.glDeleteLists(1, 1)
+        GL11.glDeleteLists(storageBox, 1)
     }
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (t in getTargets()) {
-            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.DARK_GRAY)
+            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.DARK_GRAY, storageBox)
         }
     }
 

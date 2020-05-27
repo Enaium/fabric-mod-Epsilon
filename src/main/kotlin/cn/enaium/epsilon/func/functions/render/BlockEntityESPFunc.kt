@@ -18,9 +18,12 @@ import java.awt.Color
  */
 class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
 
+    var blockEntityBox = 0
+
     override fun onEnable() {
         super.onEnable()
-        GL11.glNewList(1, GL11.GL_COMPILE)
+        blockEntityBox = GL11.glGenLists(1)
+        GL11.glNewList(blockEntityBox, GL11.GL_COMPILE)
         val bb = Box(BlockPos.ORIGIN)
         Render3DUtils.drawOutlined(bb)
         GL11.glEndList()
@@ -28,12 +31,12 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
 
     override fun onDisable() {
         super.onDisable()
-        GL11.glDeleteLists(1, 1)
+        GL11.glDeleteLists(blockEntityBox, 1)
     }
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (be in MC.world!!.blockEntities) {
-            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY)
+            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY, blockEntityBox)
         }
     }
 }

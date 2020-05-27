@@ -87,12 +87,12 @@ object Render3DUtils {
         GL11.glPopMatrix()
     }
 
-    fun drawOutlinedBox(box: Box, color: Color) {
+    fun drawOutlinedBox(box: Box, color: Color,list: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(box.minX, box.minY, box.minZ)
         GL11.glScaled(box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ)
         GL11.glColor4f(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), color.alpha.toFloat())
-        GL11.glCallList(1)
+        GL11.glCallList(list)
         GL11.glPopMatrix()
     }
 
