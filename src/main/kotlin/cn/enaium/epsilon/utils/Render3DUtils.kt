@@ -146,6 +146,5 @@ object Render3DUtils {
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glDisable(GL11.GL_BLEND)
         GL11.glDisable(GL11.GL_LINE_SMOOTH)
-
     }
 }
