@@ -1,15 +1,11 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.utils.BlockUtils
-import cn.enaium.epsilon.utils.FontUtils
-import cn.enaium.epsilon.utils.Render2DUtils
 import cn.enaium.epsilon.utils.Render3DUtils
-import net.minecraft.text.TranslatableText
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
