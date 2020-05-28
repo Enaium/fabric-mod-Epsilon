@@ -37,7 +37,7 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (be in MC.world!!.blockEntities) {
-            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY, blockEntityBox)
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY, blockEntityBox)
         }
     }
 }

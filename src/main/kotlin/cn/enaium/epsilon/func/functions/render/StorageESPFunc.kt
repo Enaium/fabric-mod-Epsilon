@@ -61,7 +61,7 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (t in getTargets()) {
-            Render3DUtils.drawOutlinedBox(BlockUtils.getBoundingBox(t.pos), Color.GREEN, storageBox)
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(t.pos), Color.GREEN, storageBox)
         }
     }
 

@@ -31,6 +31,36 @@ object Render3DUtils {
         return BlockEntityRenderDispatcher.INSTANCE.camera.pos
     }
 
+    fun drawSolid(bb: Box) {
+        GL11.glBegin(GL11.GL_QUADS)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
+        GL11.glEnd()
+    }
+
+
     fun drawOutlined(bb: Box) {
         GL11.glBegin(GL11.GL_LINES)
         GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
@@ -71,7 +101,7 @@ object Render3DUtils {
         GL11.glEnd()
     }
 
-    fun drawOutlinedBox(entity: Entity, extraSize: Double, tickDelta: Float, color: Color, list: Int) {
+    fun drawBox(entity: Entity, extraSize: Double, tickDelta: Float, color: Color, list: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(
             entity.prevX + (entity.x - entity.prevX) * tickDelta,
@@ -88,7 +118,7 @@ object Render3DUtils {
         GL11.glPopMatrix()
     }
 
-    fun drawOutlinedBox(box: Box, color: Color, list: Int) {
+    fun drawBox(box: Box, color: Color, list: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(box.minX, box.minY, box.minZ)
         GL11.glScaled(box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ)

@@ -42,7 +42,7 @@ class ESPFunc : Func("ESP", 0, Category.RENDER) {
 
     fun on(render3DEvent: Render3DEvent) {
         for (entity in getTargets()) {
-            Render3DUtils.drawOutlinedBox(entity, 0.5, render3DEvent.tickDelta, Color.CYAN, espBox)
+            Render3DUtils.drawBox(entity, 0.5, render3DEvent.tickDelta, Color.CYAN, espBox)
         }
     }
 
