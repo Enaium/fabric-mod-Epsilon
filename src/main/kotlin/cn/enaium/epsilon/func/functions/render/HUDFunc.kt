@@ -7,6 +7,7 @@ import cn.enaium.epsilon.Epsilon.NAME
 import cn.enaium.epsilon.Epsilon.VERSION
 import cn.enaium.epsilon.IMC
 import cn.enaium.epsilon.event.events.KeyboardEvent
+import cn.enaium.epsilon.event.events.MotionEvent
 import cn.enaium.epsilon.event.events.Render2DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -21,6 +22,7 @@ import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
 import net.minecraft.util.Formatting
+import net.minecraft.util.math.MathHelper
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -62,6 +64,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private val ping = EnableSetting(this, "Ping", false)
 
+    private var yaw = 0.0F
+    private var pitch = 0.0F
+
     init {
         categoryValues = ArrayList()
         currentCategoryIndex = 0
@@ -92,6 +97,11 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
     }
 
+    fun motion(motionEvent: MotionEvent) {
+        yaw = Utils.valueFix(motionEvent.yaw)
+        pitch = Utils.valueFix(motionEvent.pitch)
+    }
+
     fun infoList(render2DEvent: Render2DEvent) {
         var infoY = 54 + categoryValues.size * (fontHeight + 2) + 10
         val infoList: ArrayList<String> = ArrayList()
@@ -105,7 +115,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
 
         if (direction.enable) {
-            infoList.add("Face:${Formatting.BLUE}${MC.cameraEntity!!.horizontalFacing}")
+            infoList.add("Face:${Formatting.BLUE}${MC.cameraEntity!!.horizontalFacing}[$yaw/$pitch]")
         }
 
         if (fps.enable) {
