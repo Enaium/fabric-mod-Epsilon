@@ -23,12 +23,14 @@ class ClickGUIConfig : Config("ClickGUI") {
             val categoryPanelObject = JSONObject.parseObject(FileUtils.read(getPath()))
             for (category in Category.values()) {
                 val categoryPanelClassObject = JSONObject.parseObject(categoryPanelObject.getString(category.name))
+                val categoryPanel = CategoryPanel(
+                    category,
+                    categoryPanelClassObject.getDouble("x"),
+                    categoryPanelClassObject.getDouble("y")
+                )
+                categoryPanel.displayFuncPanel = categoryPanelClassObject.getBoolean("displayFuncPanel")
                 ClickGUI.categoryPanels.add(
-                    CategoryPanel(
-                        category,
-                        categoryPanelClassObject.getDouble("x"),
-                        categoryPanelClassObject.getDouble("y")
-                    )
+                    categoryPanel
                 )
             }
         } catch (throwable: Throwable) {
@@ -38,6 +40,7 @@ class ClickGUIConfig : Config("ClickGUI") {
 
     fun init() {
         var y = 5.0
+        ClickGUI.categoryPanels.clear()
         for (category in Category.values()) {
             ClickGUI.categoryPanels.add(CategoryPanel(category, 5.0, y))
             y += 30
@@ -51,6 +54,7 @@ class ClickGUIConfig : Config("ClickGUI") {
             val categoryPanelClassObject = JSONObject(true)
             categoryPanelClassObject["x"] = categoryPanel.x
             categoryPanelClassObject["y"] = categoryPanel.y
+            categoryPanelClassObject["displayFuncPanel"] = categoryPanel.displayFuncPanel
             categoryObject[categoryPanel.category.name] = categoryPanelClassObject
         }
         FileUtils.write(getPath(), JSON.toJSONString(categoryObject, SerializerFeature.PrettyFormat))

@@ -25,6 +25,7 @@ class CategoryPanel(var category: Category, var x: Double, var y: Double) {
     private var height = 0.0
 
     private var funcPanels: ArrayList<FuncPanel> = ArrayList()
+    var displayFuncPanel = false
 
     init {
         width = getWidestCategory() + 50
@@ -42,18 +43,25 @@ class CategoryPanel(var category: Category, var x: Double, var y: Double) {
         hovering = Render2DUtils.isHovered(mouseX.toDouble(), mouseY.toDouble(), x, y, width, height)
         Render2DUtils.drawRect(matrices, x, y, x + width, y + height, if (hovering) Color.BLUE.rgb else Color.RED.rgb)
         FontUtils.drawHVCenteredString(matrices, category.name, (x + (x + width)) / 2, (y + (y + height)) / 2, 0xFFFFFF)
-        var funcY = y + height
-        for (funcPanel in funcPanels) {
-            funcPanel.render(matrices, mouseX, mouseY, delta, x, funcY)
-            funcY += height
+
+        if (displayFuncPanel) {
+            var funcY = y + height
+            for (funcPanel in funcPanels) {
+                funcPanel.render(matrices, mouseX, mouseY, delta, x, funcY)
+                funcY += height
+            }
         }
     }
 
     fun mouseClicked(mouseX: Double, mouseY: Double, button: Int) {
-        if (hovering && button == 0) {
-            dragging = true
-            tempX = x - mouseX
-            tempY = y - mouseY
+        if (hovering) {
+            if (button == 0) {
+                dragging = true
+                tempX = x - mouseX
+                tempY = y - mouseY
+            } else if (button == 1) {
+                displayFuncPanel = !displayFuncPanel
+            }
         }
         for (funcPanel in funcPanels) {
             funcPanel.mouseClicked(mouseX, mouseY, button)
@@ -80,5 +88,4 @@ class CategoryPanel(var category: Category, var x: Double, var y: Double) {
         }
         return width
     }
-
 }
