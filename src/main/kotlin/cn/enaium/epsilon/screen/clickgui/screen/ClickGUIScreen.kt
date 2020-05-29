@@ -1,6 +1,6 @@
-package cn.enaium.epsilon.screen.clickgui
+package cn.enaium.epsilon.screen.clickgui.screen
 
-import cn.enaium.epsilon.func.Category
+import cn.enaium.epsilon.screen.clickgui.panel.CategoryPanel
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.LiteralText
@@ -10,7 +10,7 @@ import net.minecraft.text.LiteralText
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-object ClickGUI : Screen(LiteralText("")) {
+object ClickGUIScreen : Screen(LiteralText("")) {
 
     var categoryPanels: ArrayList<CategoryPanel> = ArrayList()
 
@@ -19,6 +19,7 @@ object ClickGUI : Screen(LiteralText("")) {
     }
 
     override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
+        renderBackground(matrices)
         for (categoryPanel in categoryPanels) {
             categoryPanel.render(matrices, mouseX, mouseY, delta)
         }

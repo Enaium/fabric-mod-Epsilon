@@ -1,8 +1,7 @@
-package cn.enaium.epsilon.screen.clickgui
+package cn.enaium.epsilon.screen.clickgui.panel
 
 import cn.enaium.epsilon.Epsilon
 import cn.enaium.epsilon.func.Category
-import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.utils.FontUtils
 import cn.enaium.epsilon.utils.Render2DUtils
 import net.minecraft.client.util.math.MatrixStack

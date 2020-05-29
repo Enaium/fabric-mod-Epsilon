@@ -2,13 +2,12 @@ package cn.enaium.epsilon.config.configs
 
 import cn.enaium.epsilon.config.Config
 import cn.enaium.epsilon.func.Category
-import cn.enaium.epsilon.screen.clickgui.CategoryPanel
-import cn.enaium.epsilon.screen.clickgui.ClickGUI
+import cn.enaium.epsilon.screen.clickgui.panel.CategoryPanel
+import cn.enaium.epsilon.screen.clickgui.screen.ClickGUIScreen
 import cn.enaium.epsilon.utils.FileUtils
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.serializer.SerializerFeature
-import java.io.File
 
 /**
  * Project: Epsilon
@@ -29,7 +28,7 @@ class ClickGUIConfig : Config("ClickGUI") {
                     categoryPanelClassObject.getDouble("y")
                 )
                 categoryPanel.displayFuncPanel = categoryPanelClassObject.getBoolean("displayFuncPanel")
-                ClickGUI.categoryPanels.add(
+                ClickGUIScreen.categoryPanels.add(
                     categoryPanel
                 )
             }
@@ -40,9 +39,15 @@ class ClickGUIConfig : Config("ClickGUI") {
 
     fun init() {
         var y = 5.0
-        ClickGUI.categoryPanels.clear()
+        ClickGUIScreen.categoryPanels.clear()
         for (category in Category.values()) {
-            ClickGUI.categoryPanels.add(CategoryPanel(category, 5.0, y))
+            ClickGUIScreen.categoryPanels.add(
+                CategoryPanel(
+                    category,
+                    5.0,
+                    y
+                )
+            )
             y += 30
         }
     }
@@ -50,7 +55,7 @@ class ClickGUIConfig : Config("ClickGUI") {
     override fun save() {
         super.save()
         val categoryObject = JSONObject(true)
-        for (categoryPanel in ClickGUI.categoryPanels) {
+        for (categoryPanel in ClickGUIScreen.categoryPanels) {
             val categoryPanelClassObject = JSONObject(true)
             categoryPanelClassObject["x"] = categoryPanel.x
             categoryPanelClassObject["y"] = categoryPanel.y
