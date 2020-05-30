@@ -2,75 +2,85 @@
 
 ## Func
 
-### Combat
-
-#### Aura
+### Aura
 
 Automatically attack the target
 
-#### BulletAura
+### BulletAura
 
 Automatically attack the target bullet
 
-### Movement
+### Critical
 
-#### Flight
+Every attack will crit
+
+### Flight
 
 Can fly
 
-#### NoFall
+### NoFall
 
 No fall damage
 
-#### Sprint
+### Sprint
 
 Automatically sprint
 
-#### AutoWalk
+### Walk
 
 Automatically walk
 
-### Other
-
-#### AutoRespawn
+### AutoRespawn
 
 Automatically Respawn
 
-### Render
-
-#### BlockEntityESP
+### BlockEntityESP
 
 Block entity rendering perspective box
 
-#### Bright
+### BlockOverlay
+
+Highlight selection box
+
+### ClickGUI
+
+ClickGUI
+
+### Bright
 
 Maximum brightness
 
-#### ESP
+### ESP
 
 Rendering the specified entity a perspective block
 
-#### Glow
+### Glow
 
 Glow all entities
 
-#### HUD
+### HUD
 
 HUD
 
-#### StorageESP
+### LockAngle
+
+Lock yaw and pitch
+
+### StorageESP
 
 Specify the storage rendering perspective box
 
-#### XrayFunc
+### XrayFunc
 
 X-ray
 
-### World
-
-#### FastPlace
+### FastPlace
 
 Quick placement
+
+### Scaffold
+
+Automatically place blocks under your feet
 
 ## Command
 

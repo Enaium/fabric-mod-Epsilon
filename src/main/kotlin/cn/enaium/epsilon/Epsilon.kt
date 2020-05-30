@@ -18,12 +18,11 @@ import java.io.File
  */
 object Epsilon {
     var NAME = "Epsilon"
-    var VERSION = "pre1"
-    var GAME = "20w21a"
+    var VERSION = "pre2"
+    var GAME = "20w22a"
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()
-    var IMC: IMinecraftClientMixin = MC as IMinecraftClientMixin
 
     lateinit var eventManager: EventManager
     lateinit var funcManager: FuncManager

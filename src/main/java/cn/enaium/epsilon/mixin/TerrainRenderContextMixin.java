@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(TerrainRenderContext.class)
 public class TerrainRenderContextMixin {
-    @Inject(at = {@At("HEAD")}, method = {"tesselateBlock"}, cancellable = true, remap = false)
+    @Inject(at = @At("HEAD"), method = "tesselateBlock", cancellable = true, remap = false)
     private void tessellateBlock(BlockState blockState, BlockPos blockPos, final BakedModel model, MatrixStack matrixStack, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         TessellateBlockEvent event = new TessellateBlockEvent(blockState);
         event.call();

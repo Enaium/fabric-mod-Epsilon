@@ -12,11 +12,13 @@
     "IMinecraftClientMixin",
     "TitleScreenMixin",
     "GameRendererMixin",
+    "IGameRendererMixin",
     "MouseMixin",
     "BlockEntityRenderDispatcherMixin",
     "TerrainRenderContextMixin",
     "BlockModelRendererMixin",
-    "BlockMixin"
+    "BlockMixin",
+    "IClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

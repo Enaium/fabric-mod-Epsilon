@@ -2,75 +2,85 @@
 
 ## 功能
 
-### Combat
-
-#### Aura
+### Aura
 
 自动攻击目标
 
-#### BulletAura
+### BulletAura
 
 自动攻击目标子弹
 
-### Movement
+### Critical
 
-#### Flight
+每次攻击都会暴击
+
+### Flight
 
 可以飞
 
-#### NoFall
+### NoFall
 
 无摔落伤害
 
-#### Sprint
+### Sprint
 
 自动疾跑
 
-#### AutoWalk
+### Walk
 
 自动行走
 
-### Other
-
-#### AutoRespawn
+### AutoRespawn
 
 自动重生
 
-### Render
-
-#### BlockEntityESP
+### BlockEntityESP
 
 方块实体渲染透视框
 
-#### Bright
+### BlockOverlay
+
+高亮选择方框
+
+### ClickGUI
+
+ClickGUI
+
+### Bright
 
 最大亮度
 
-#### ESP
+### ESP
 
 渲染指定实体的透视框
 
-#### Glow
+### Glow
 
 发光所有实体
 
-#### HUD
+### HUD
 
 HUD
 
-#### StorageESP
+### LockAngle
+
+锁定yaw和pitch
+
+### StorageESP
 
 指定存储渲染透视框
 
-#### XrayFunc
+### XrayFunc
 
 X-ray
 
-### World
-
-#### FastPlace
+### FastPlace
 
 快速置放
+
+### Scaffold
+
+自动在脚下放置方块
 
 ## 命令
 

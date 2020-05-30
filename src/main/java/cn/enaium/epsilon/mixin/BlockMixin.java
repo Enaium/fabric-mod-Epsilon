@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(Block.class)
 public class BlockMixin {
-    @Inject(at = {@At("HEAD")}, method = {"shouldDrawSide(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z"}, cancellable = true)
+    @Inject(at = @At("HEAD"), method = "shouldDrawSide(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z", cancellable = true)
     private static void shouldDrawSide(BlockState state, BlockView blockView, BlockPos blockPos, Direction side, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         ShouldDrawSideEvent event = new ShouldDrawSideEvent(state);
         event.call();

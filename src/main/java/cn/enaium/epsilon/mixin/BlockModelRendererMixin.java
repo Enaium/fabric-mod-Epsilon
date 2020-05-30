@@ -24,7 +24,7 @@ import java.util.Random;
  */
 @Mixin(BlockModelRenderer.class)
 public class BlockModelRendererMixin {
-    @Inject(at = {@At("HEAD")}, method = {"renderSmooth"}, cancellable = true)
+    @Inject(at = @At("HEAD"), method = "renderSmooth", cancellable = true)
     private void renderSmooth(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack buffer, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         TessellateBlockEvent tessellateBlockEvent = new TessellateBlockEvent(state);
         tessellateBlockEvent.call();

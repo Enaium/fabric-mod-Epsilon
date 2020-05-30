@@ -35,7 +35,11 @@ class EventManager {
     }
 
     private fun isMethodBad(method: Method): Boolean {
-        return method.parameterTypes.size != 1 || !method.isAnnotationPresent(EventAT::class.java)
+        var isEvent = false
+        for (parameter in method.parameters) {
+            isEvent = parameter.type.superclass == Event::class.java
+        }
+        return method.parameterTypes.size != 1 || !isEvent
     }
 
     operator fun get(clazz: Class<Event>): CopyOnWriteArrayList<Data>? {
