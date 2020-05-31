@@ -18,7 +18,9 @@
     "TerrainRenderContextMixin",
     "BlockModelRendererMixin",
     "BlockMixin",
-    "IClientPlayerInteractionManagerMixin"
+    "IClientPlayerInteractionManagerMixin",
+    "ItemEntityRendererMixin",
+    "LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
