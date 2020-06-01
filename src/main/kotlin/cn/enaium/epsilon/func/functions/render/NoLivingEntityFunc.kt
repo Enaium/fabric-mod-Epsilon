@@ -1,6 +1,5 @@
 package cn.enaium.epsilon.func.functions.render
 
-import cn.enaium.epsilon.event.events.RenderItemEntityEvent
 import cn.enaium.epsilon.event.events.RenderLivingEntityEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
