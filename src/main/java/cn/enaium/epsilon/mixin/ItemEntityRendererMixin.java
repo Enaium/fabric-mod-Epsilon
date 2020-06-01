@@ -22,7 +22,7 @@ public class ItemEntityRendererMixin {
 
     @Inject(at = @At(value = "HEAD"), method = "render", cancellable = true)
     private void render(ItemEntity itemEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo callbackInfo) {
-        RenderItemEntityEvent event = new RenderItemEntityEvent();
+        RenderItemEntityEvent event = new RenderItemEntityEvent(itemEntity, f, g, matrixStack, vertexConsumerProvider, i);
         event.call();
         if (event.getCancelled()) {
             callbackInfo.cancel();
