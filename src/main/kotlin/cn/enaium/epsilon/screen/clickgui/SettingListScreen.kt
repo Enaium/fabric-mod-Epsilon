@@ -39,7 +39,6 @@ class SettingListScreen(val func: Func) : UI() {
                 })
             } else if (setting is IntegerSetting || setting is FloatSetting || setting is DoubleSetting || setting is LongSetting) {
                 val textField = TextField(x, y, 50)
-                scrollPanel.addElement(textField)
                 when (setting) {
                     is IntegerSetting -> {
                         textField.setText(setting.current.toString())
@@ -78,6 +77,7 @@ class SettingListScreen(val func: Func) : UI() {
                         })
                     }
                 }
+                scrollPanel.addElement(textField)
             } else if (setting is ModeSetting) {
                 scrollPanel.addElement(object : ModeButton(x, y, setting.modes, setting.getCurrentIndex()) {
                     override fun onLeftClicked() {
