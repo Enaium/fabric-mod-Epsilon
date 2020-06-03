@@ -58,11 +58,11 @@ class SettingManager {
         return null
     }
 
-    fun getSettingsForFunc(m: Func): ArrayList<Setting>? {
+    fun getSettingsForFunc(m: Func): ArrayList<Setting> {
         val settings = ArrayList<Setting>()
         for (s in this.settings) {
             if (s.func == m) settings.add(s)
         }
-        return if (settings.isEmpty()) null else settings
+        return settings
     }
 }
