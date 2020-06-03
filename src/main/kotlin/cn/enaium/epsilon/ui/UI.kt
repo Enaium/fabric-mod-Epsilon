@@ -1,10 +1,7 @@
 package cn.enaium.epsilon.ui
 
 import cn.enaium.epsilon.ui.elements.Element
-import cn.enaium.epsilon.ui.elements.ScrollPanel
-import cn.enaium.epsilon.utils.Render2DUtils
 import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormats
@@ -17,17 +14,15 @@ import net.minecraft.util.Identifier
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-open class UI(val prevScreen: Screen) : Screen(LiteralText("")) {
+open class UI : Screen(LiteralText("")) {
     val elements: ArrayList<Element> = ArrayList()
-    val pauseScreen = true
-    val currentScreen = 0
+    var EEE: Screen? = null
 
     val BACKGROUND_STONE = Identifier("textures/gui/advancements/backgrounds/stone.png")
     val BACKGROUND_NETHER = Identifier("textures/gui/advancements/backgrounds/nether.png")
     val BACKGROUND_HUSBANDRY = Identifier("textures/gui/advancements/backgrounds/husbandry.png")
     val BACKGROUND_END = Identifier("textures/gui/advancements/backgrounds/end.png")
     val BACKGROUND_ADVENTURE = Identifier("textures/gui/advancements/backgrounds/adventure.png")
-
 
     override fun tick() {
         for (element in elements) {
@@ -36,9 +31,8 @@ open class UI(val prevScreen: Screen) : Screen(LiteralText("")) {
         super.tick()
     }
 
-
     override fun isPauseScreen(): Boolean {
-        return pauseScreen
+        return true
     }
 
     protected fun addElement(element: Element) {
