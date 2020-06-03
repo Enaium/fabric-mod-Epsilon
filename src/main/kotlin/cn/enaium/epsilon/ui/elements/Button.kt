@@ -3,7 +3,6 @@ package cn.enaium.epsilon.ui.elements
 import cn.enaium.epsilon.ui.Color
 import cn.enaium.epsilon.utils.FontUtils
 import cn.enaium.epsilon.utils.Render2DUtils
-import cn.enaium.epsilon.utils.Utils
 import net.minecraft.client.util.math.MatrixStack
 
 /**
@@ -15,10 +14,6 @@ open class Button : Element {
 
     private var title: String
     private var icon: String? = null
-
-    open fun action() {
-
-    }
 
     constructor(x: Int, y: Int, width: Int, height: Int, title: String) : super(x, y, width, height) {
         this.title = title
@@ -56,8 +51,20 @@ open class Button : Element {
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        action()
+        if (button == 0) {
+            onLeftClicked()
+        } else if (button == 1) {
+            onRightClicked()
+        }
         return super.mouseClicked(mouseX, mouseY, button)
+    }
+
+    open fun onLeftClicked() {
+
+    }
+
+    open fun onRightClicked() {
+
     }
 
 }
