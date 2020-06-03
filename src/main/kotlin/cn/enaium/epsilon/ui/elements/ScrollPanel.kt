@@ -11,9 +11,9 @@ import kotlin.math.max
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class ScrollPanel(tempX: Int, tempY: Int, width: Int, height: Int) : Element(
-    tempX,
-    tempY,
+class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
+    x,
+    y,
     width,
     height
 ) {
@@ -60,9 +60,9 @@ class ScrollPanel(tempX: Int, tempY: Int, width: Int, height: Int) : Element(
         for (element in elements) {
             if (element.visible && element.enabled || (element is ScrollPanel && element.hovered))
                 if (shiftPress) {
-                    element.scrollOffsetX += amount.toInt() * 2
+                    element.scrollOffsetX += amount.toInt() * 5
                 } else {
-                    element.scrollOffsetY += amount.toInt() * 2
+                    element.scrollOffsetY += amount.toInt() * 5
                 }
             element.mouseScrolled(mouseX, mouseY, amount)
         }
