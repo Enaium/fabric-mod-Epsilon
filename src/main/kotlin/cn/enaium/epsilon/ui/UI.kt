@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier
  */
 open class UI : Screen(LiteralText("")) {
     val elements: ArrayList<Element> = ArrayList()
-    var EEE: Screen? = null
 
     val BACKGROUND_STONE = Identifier("textures/gui/advancements/backgrounds/stone.png")
     val BACKGROUND_NETHER = Identifier("textures/gui/advancements/backgrounds/nether.png")
