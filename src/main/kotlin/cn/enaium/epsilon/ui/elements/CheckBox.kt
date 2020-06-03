@@ -18,9 +18,19 @@ open class CheckBox : Element {
         this.title = title
     }
 
-    constructor(x: Int, y: Int, title: String) : super(x, y, 100, 20) {
-        this.title = title
+    constructor(x: Int, y: Int, width: Int, height: Int, title: String, checked: Boolean) : this(
+        x,
+        y,
+        width,
+        height,
+        title
+    ) {
+        this.checked = checked
     }
+
+    constructor(x: Int, y: Int, title: String) : this(x, y, 100, 20, title)
+
+    constructor(x: Int, y: Int, title: String, checked: Boolean) : this(x, y, 100, 20, title, checked)
 
     override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
         val boxSize = height - 4
@@ -39,16 +49,28 @@ open class CheckBox : Element {
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         this.checked = !this.checked
-        if (checked) enableAction() else disableAction()
+        if (checked) onEnable() else onDisable()
+        if (button == 0) {
+            onLeftClicked()
+        } else if (button == 1) {
+            onRightClicked()
+        }
         return super.mouseClicked(mouseX, mouseY, button)
     }
 
-
-    open fun enableAction() {
+    open fun onLeftClicked() {
 
     }
 
-    open fun disableAction() {
+    open fun onRightClicked() {
+
+    }
+
+    open fun onEnable() {
+
+    }
+
+    open fun onDisable() {
 
     }
 }
