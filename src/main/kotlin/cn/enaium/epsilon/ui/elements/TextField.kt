@@ -390,7 +390,7 @@ class TextField : Element {
             false
         } else if (SharedConstants.isValidChar(chr)) {
             if (editable) {
-                write(Character.toString(chr))
+                write(chr.toString())
             }
             true
         } else {
