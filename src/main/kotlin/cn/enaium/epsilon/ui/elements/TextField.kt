@@ -550,7 +550,7 @@ class TextField : Element {
         this.focusUnlocked = focusUnlocked
     }
 
-    fun setSuggestion(suggestion: String?) {
+    fun setSuggestion(suggestion: String) {
         this.suggestion = suggestion
     }
 
