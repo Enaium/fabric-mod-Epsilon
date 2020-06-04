@@ -2,6 +2,7 @@ package cn.enaium.epsilon.ui.elements
 
 import cn.enaium.epsilon.ui.Color
 import cn.enaium.epsilon.utils.FontUtils
+import cn.enaium.epsilon.utils.Render2DUtils
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.SharedConstants
@@ -30,7 +31,7 @@ class TextField : Element {
     private var text: String = ""
     private var maxLength = 0
     private var focusedTicks = 0
-    private var focused = false
+    private var focus = false
     private var focusUnlocked = false
     private var editable = false
     private var selecting = false
@@ -53,112 +54,31 @@ class TextField : Element {
         textRenderer = FontUtils.tr
         text = ""
         maxLength = 32
-        focused = true
+        focus = true
         focusUnlocked = true
         editable = true
         editableColor = 14737632
         uneditableColor = 7368816
         textPredicate =
-            Predicate { obj: String -> Objects.nonNull(obj) }
+            Predicate { obj: String? -> Objects.nonNull(obj) }
         renderTextProvider =
             BiFunction { string: String, _: Int -> string }
     }
 
     constructor(x: Int, y: Int, width: Int) : this(x, y, width, 20)
 
-    override fun tick() {
-        ++focusedTicks
-        super.tick()
+    fun setChangedListener(changedListener: Consumer<String>) {
+        this.changedListener = changedListener
     }
 
-    override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
-        var j: Int
-        if (this.focused) {
-            j = -1
-            DrawableHelper.fill(
-                matrices,
-                x - 1,
-                y - 1,
-                x + width + 1,
-                y + height + 1,
-                j
-            )
-            DrawableHelper.fill(matrices, x, y, x + width, y + height, Color.TextField.background)
-        }
-        j = if (editable) editableColor else uneditableColor
-        val k = selectionStart - firstCharacterIndex
-        var l = selectionEnd - firstCharacterIndex
-        val string: String =
-            this.textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), this.getInnerWidth())
-        val bl = k >= 0 && k <= string.length
-        val bl2 = focusedTicks / 6 % 2 == 0 && bl
-        val m = if (focused) x + 4 else x
-        val n = if (focused) y + (height - 8) / 2 else y
-        var o = m
-        if (l > string.length) {
-            l = string.length
-        }
-        if (string.isNotEmpty()) {
-            val string2 = if (bl) string.substring(0, k) else string
-            o = this.textRenderer!!.drawWithShadow(
-                matrices,
-                renderTextProvider!!.apply(string2, firstCharacterIndex),
-                m.toFloat(),
-                n.toFloat(),
-                j
-            )
-        }
-        val bl3 = selectionStart < text.length || text.length >= this.getMaxLength()
-        var p = o
-        if (!bl) {
-            p = if (k > 0) m + width else m
-        } else if (bl3) {
-            p = o - 1
-            --o
-        }
-        if (string.isNotEmpty() && bl && k < string.length) {
-            this.textRenderer!!.drawWithShadow(
-                matrices,
-                renderTextProvider!!.apply(string.substring(k), selectionStart),
-                o.toFloat(),
-                n.toFloat(),
-                j
-            )
-        }
-        if (!bl3 && suggestion != null) {
-            this.textRenderer!!.drawWithShadow(
-                matrices,
-                suggestion,
-                (p - 1).toFloat(),
-                n.toFloat(),
-                -8355712
-            )
-        }
-        var var10002: Int
-        var var10003: Int
-        var var10004: Int
-        if (bl2) {
-            if (bl3) {
-                var10002 = n - 1
-                var10003 = p + 1
-                var10004 = n + 1
-                this.textRenderer!!.javaClass
-                DrawableHelper.fill(matrices, p, var10002, var10003, var10004 + 9, Color.TextField.focused)
-            } else {
-                this.textRenderer!!.drawWithShadow(matrices, "_", p.toFloat(), n.toFloat(), j)
-            }
-        }
-        if (l != k) {
-            val q: Int = m + this.textRenderer!!.getWidth(string.substring(0, l))
-            var10002 = n - 1
-            var10003 = q - 1
-            var10004 = n + 1
-            this.textRenderer!!.javaClass
-            this.drawSelectionHighlight(p, var10002, var10003, var10004 + 9)
-        }
-
+    fun setRenderTextProvider(renderTextProvider: BiFunction<String, Int, String>) {
+        this.renderTextProvider = renderTextProvider
     }
 
+//    fun getNarrationMessage(): MutableText {
+//        val text: Text = this.getMessage()
+//        return TranslatableText("gui.narrate.editBox", *arrayOf(text, this.text))
+//    }
 
     fun setText(text: String) {
         if (textPredicate!!.test(text)) {
@@ -183,7 +103,11 @@ class TextField : Element {
         return text.substring(i, j)
     }
 
-    fun write(string: String) {
+    fun setTextPredicate(textPredicate: Predicate<String>) {
+        this.textPredicate = textPredicate
+    }
+
+    fun write(string: String?) {
         val i = if (selectionStart < selectionEnd) selectionStart else selectionEnd
         val j = if (selectionStart < selectionEnd) selectionEnd else selectionStart
         val k = maxLength - text.length - (i - j)
@@ -212,33 +136,33 @@ class TextField : Element {
         if (Screen.hasControlDown()) {
             eraseWords(offset)
         } else {
-            this.eraseCharacters(offset)
+            eraseCharacters(offset)
         }
     }
 
     fun eraseWords(wordOffset: Int) {
-        if (text.isNotEmpty()) {
+        if (!text.isEmpty()) {
             if (selectionEnd != selectionStart) {
                 write("")
             } else {
-                this.eraseCharacters(this.getWordSkipPosition(wordOffset) - selectionStart)
+                eraseCharacters(this.getWordSkipPosition(wordOffset) - selectionStart)
             }
         }
     }
 
     fun eraseCharacters(characterOffset: Int) {
-        if (text.isNotEmpty()) {
+        if (!text.isEmpty()) {
             if (selectionEnd != selectionStart) {
                 write("")
             } else {
-                val i = method_27537(characterOffset)
+                val i: Int = this.method_27537(characterOffset)
                 val j = Math.min(i, selectionStart)
                 val k = Math.max(i, selectionStart)
                 if (j != k) {
-                    val string = java.lang.StringBuilder(text).delete(j, k).toString()
+                    val string = StringBuilder(text).delete(j, k).toString()
                     if (textPredicate!!.test(string)) {
                         text = string
-                        setCursor(j)
+                        this.setCursor(j)
                     }
                 }
             }
@@ -246,7 +170,7 @@ class TextField : Element {
     }
 
     fun getWordSkipPosition(wordOffset: Int): Int {
-        return this.getWordSkipPosition(wordOffset, this.selectionStart)
+        return this.getWordSkipPosition(wordOffset, this.getCursor())
     }
 
     private fun getWordSkipPosition(wordOffset: Int, cursorPosition: Int): Int {
@@ -309,8 +233,7 @@ class TextField : Element {
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-
-        return if (!this.isActive()) {
+        return if (!isActive()) {
             false
         } else {
             selecting = Screen.hasShiftDown()
@@ -382,7 +305,7 @@ class TextField : Element {
     }
 
     fun isActive(): Boolean {
-        return this.visible && this.enabled
+        return this.visible && this.isFocused() && this.isEditable()
     }
 
     override fun charTyped(chr: Char, keyCode: Int): Boolean {
@@ -390,7 +313,7 @@ class TextField : Element {
             false
         } else if (SharedConstants.isValidChar(chr)) {
             if (editable) {
-                write(Character.toString(chr))
+                write(chr.toString())
             }
             true
         } else {
@@ -402,19 +325,18 @@ class TextField : Element {
         return if (!this.visible) {
             false
         } else {
-            val bl =
-                mouseX >= x.toDouble() && mouseX < (x + width).toDouble() && mouseY >= y.toDouble() && mouseY < (y + height).toDouble()
+            val bl = hovered
             if (focusUnlocked) {
-                this.focused = bl
+                setSelected(bl)
             }
-            if (bl && button == 0) {
+            if (this.isFocused() && bl && button == 0) {
                 var i = MathHelper.floor(mouseX) - x
-                if (this.focused) {
+                if (focus) {
                     i -= 4
                 }
-                val string: String =
-                    this.textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), this.getInnerWidth())
-                setCursor(this.textRenderer!!.trimToWidth(string, i).length + firstCharacterIndex)
+                val string =
+                    textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), getInnerWidth())
+                setCursor(textRenderer!!.trimToWidth(string, i).length + firstCharacterIndex)
                 true
             } else {
                 false
@@ -422,6 +344,89 @@ class TextField : Element {
         }
     }
 
+    fun setSelected(selected: Boolean) {
+        this.setFocused(selected)
+    }
+
+    override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
+        ++focusedTicks
+        this.hovered = Render2DUtils.isHovered(mouseX, mouseY, x, y, width, height)
+        var j: Int
+        if (hasBorder()) {
+            j = if (this.isFocused()) Color.TextField.getFocus else Color.TextField.lostFocus
+            DrawableHelper.fill(matrices, x, y, x + width, y + height, j)
+            DrawableHelper.fill(matrices, x + 1, y + 1, x + width - 1, y + height - 1, Color.TextField.background)
+        }
+        j = if (editable) editableColor else uneditableColor
+        val k = selectionStart - firstCharacterIndex
+        var l = selectionEnd - firstCharacterIndex
+        val string =
+            textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), getInnerWidth())
+        val bl = k >= 0 && k <= string.length
+        val bl2 = this.isFocused() && focusedTicks / 6 % 2 == 0 && bl
+        val m = if (focus) x + 4 else x
+        val n = if (focus) y + (height - 8) / 2 else y
+        var o = m
+        if (l > string.length) {
+            l = string.length
+        }
+        if (string.isNotEmpty()) {
+            val string2 = if (bl) string.substring(0, k) else string
+            o = textRenderer!!.drawWithShadow(
+                matrices,
+                renderTextProvider!!.apply(string2, firstCharacterIndex),
+                m.toFloat(),
+                n.toFloat(),
+                j
+            )
+        }
+        val bl3 = selectionStart < text.length || text.length >= getMaxLength()
+        var p = o
+        if (!bl) {
+            p = if (k > 0) m + width else m
+        } else if (bl3) {
+            p = o - 1
+            --o
+        }
+        if (string.isNotEmpty() && bl && k < string.length) {
+            textRenderer!!.drawWithShadow(
+                matrices,
+                renderTextProvider!!.apply(string.substring(k), selectionStart),
+                o.toFloat(),
+                n.toFloat(),
+                j
+            )
+        }
+        if (!bl3 && suggestion != null) {
+            textRenderer!!.drawWithShadow(
+                matrices,
+                suggestion,
+                (p - 1).toFloat(),
+                n.toFloat(),
+                -8355712
+            )
+        }
+        var var10002: Int
+        var var10003: Int
+        var var10004: Int
+        if (bl2) {
+            if (bl3) {
+                var10002 = n - 1
+                var10003 = p - 1
+                var10004 = n + 1
+                DrawableHelper.fill(matrices, p, var10002, var10003, var10004 + 9, Color.TextField.cursor)
+            } else {
+                textRenderer!!.drawWithShadow(matrices, "_", p.toFloat(), n.toFloat(), j)
+            }
+        }
+        if (l != k) {
+            val q = m + textRenderer!!.getWidth(string.substring(0, l))
+            var10002 = n - 1
+            var10003 = q - 1
+            var10004 = n + 1
+            drawSelectionHighlight(p, var10002, var10003, var10004 + 9)
+        }
+    }
 
     private fun drawSelectionHighlight(x1: Int, y1: Int, x2: Int, y2: Int) {
         var x1 = x1
@@ -473,6 +478,26 @@ class TextField : Element {
         return maxLength
     }
 
+    fun getCursor(): Int {
+        return selectionStart
+    }
+
+    private fun hasBorder(): Boolean {
+        return focus
+    }
+
+    fun setHasBorder(hasBorder: Boolean) {
+        focus = hasBorder
+    }
+
+    fun setEditableColor(color: Int) {
+        editableColor = color
+    }
+
+    fun setUneditableColor(color: Int) {
+        uneditableColor = color
+    }
+
     override fun changeFocus(lookForwards: Boolean): Boolean {
         return if (visible && editable) super.changeFocus(lookForwards) else false
     }
@@ -487,23 +512,30 @@ class TextField : Element {
         }
     }
 
+    private fun isEditable(): Boolean {
+        return editable
+    }
+
+    fun setEditable(editable: Boolean) {
+        this.editable = editable
+    }
 
     fun getInnerWidth(): Int {
-        return if (this.focused) width - 8 else width
+        return if (hasBorder()) width - 8 else width
     }
 
     fun setSelectionEnd(i: Int) {
         val j = text.length
         selectionEnd = MathHelper.clamp(i, 0, j)
-        if (this.textRenderer != null) {
+        if (textRenderer != null) {
             if (firstCharacterIndex > j) {
                 firstCharacterIndex = j
             }
             val k = getInnerWidth()
-            val string: String = this.textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), k)
+            val string = textRenderer!!.trimToWidth(text.substring(firstCharacterIndex), k)
             val l = string.length + firstCharacterIndex
             if (selectionEnd == firstCharacterIndex) {
-                firstCharacterIndex -= this.textRenderer!!.trimToWidth(text, k, true).length
+                firstCharacterIndex -= textRenderer!!.trimToWidth(text, k, true).length
             }
             if (selectionEnd > l) {
                 firstCharacterIndex += selectionEnd - l
@@ -514,20 +546,20 @@ class TextField : Element {
         }
     }
 
+    fun setFocusUnlocked(focusUnlocked: Boolean) {
+        this.focusUnlocked = focusUnlocked
+    }
+
+    fun setSuggestion(suggestion: String?) {
+        this.suggestion = suggestion
+    }
+
     fun getCharacterX(index: Int): Int {
-        return if (index > text.length) x else x + this.textRenderer!!.getWidth(
+        return if (index > text.length) x else x + textRenderer!!.getWidth(
             text.substring(
                 0,
                 index
             )
         )
-    }
-
-    fun setFocused(focused: Boolean) {
-        this.focused = focused
-    }
-
-    fun isFocused(): Boolean {
-        return this.focused
     }
 }

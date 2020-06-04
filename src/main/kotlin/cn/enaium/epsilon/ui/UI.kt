@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.ui
 
 import cn.enaium.epsilon.ui.elements.Element
+import cn.enaium.epsilon.ui.elements.TextField
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.render.Tessellator
@@ -52,7 +53,7 @@ open class UI : Screen(LiteralText("")) {
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         for (element in elements) {
-            if (element.visible && element.enabled && element.hovered)
+            if (element.visible && element.enabled && element.hovered || element is TextField)
                 element.mouseClicked(mouseX, mouseY, button)
         }
         return super.mouseClicked(mouseX, mouseY, button)

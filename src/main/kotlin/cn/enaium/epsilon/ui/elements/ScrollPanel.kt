@@ -42,7 +42,7 @@ class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         for (element in elements) {
-            if (element.visible && element.enabled && element.hovered)
+            if (element.visible && element.enabled && element.hovered || element is TextField)
                 element.mouseClicked(mouseX, mouseY, button)
         }
         return super.mouseClicked(mouseX, mouseY, button)
