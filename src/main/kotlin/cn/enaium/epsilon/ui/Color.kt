@@ -24,6 +24,8 @@ object Color {
 
     object TextField {
         val background = Color(192, 216, 217).rgb
-        val focused = Color(192, 216, 200).rgb
+        val cursor = Color.BLACK.rgb
+        val getFocus = Color.WHITE.rgb
+        val lostFocus = Color.GRAY.rgb
     }
 }
