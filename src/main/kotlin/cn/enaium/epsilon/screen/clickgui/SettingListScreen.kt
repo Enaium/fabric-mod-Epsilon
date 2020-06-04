@@ -28,17 +28,9 @@ class SettingListScreen(val func: Func) : UI() {
                         super.onLeftClicked()
                     }
                 })
-            } else if (setting is IntegerSetting) {
-                val textField = TextField(x, y, 50)
-                textField.setText(setting.current.toString())
-                scrollPanel.addElementAll(textField, object : Button(x + 50, y, 50, 20, "SET") {
-                    override fun onLeftClicked() {
-                        setting.current = textField.getText().toInt()
-                        super.onLeftClicked()
-                    }
-                })
             } else if (setting is IntegerSetting || setting is FloatSetting || setting is DoubleSetting || setting is LongSetting) {
                 val textField = TextField(x, y, 50)
+                textField.setSuggestion(setting.name)
                 when (setting) {
                     is IntegerSetting -> {
                         textField.setText(setting.current.toString())
