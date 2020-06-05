@@ -28,4 +28,8 @@ object Color {
         val getFocus = Color.WHITE.rgb
         val lostFocus = Color.GRAY.rgb
     }
+
+    object Label {
+        val background = Color(192, 216, 217).rgb
+    }
 }
