@@ -16,7 +16,8 @@ import org.lwjgl.glfw.GLFW
  */
 class FuncListScreen(val category: Category) : UI() {
 
-    init {
+    override fun initUI() {
+        super.initUI()
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
         var y = 50
         for (func in Epsilon.funcManager.getFuncForCategory(category)) {

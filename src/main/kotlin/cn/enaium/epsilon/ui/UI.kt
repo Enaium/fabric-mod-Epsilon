@@ -24,6 +24,15 @@ open class UI : Screen(LiteralText("")) {
     val BACKGROUND_END = Identifier("textures/gui/advancements/backgrounds/end.png")
     val BACKGROUND_ADVENTURE = Identifier("textures/gui/advancements/backgrounds/adventure.png")
 
+    override fun init() {
+        initUI()
+        super.init()
+    }
+
+    open fun initUI() {
+        elements.clear()
+    }
+
     override fun tick() {
         for (element in elements) {
             element.tick()

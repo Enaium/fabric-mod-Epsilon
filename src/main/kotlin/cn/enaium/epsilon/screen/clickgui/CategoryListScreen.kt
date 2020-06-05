@@ -12,7 +12,8 @@ import cn.enaium.epsilon.utils.Render2DUtils
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class CategoryListScreen : UI() {
-    init {
+    override fun initUI() {
+        super.initUI()
         var y = 50
         for (category in Category.values()) {
             addElement(object : Button(
