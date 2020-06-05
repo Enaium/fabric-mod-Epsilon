@@ -31,10 +31,6 @@ open class UI : Screen(LiteralText("")) {
         super.tick()
     }
 
-    override fun isPauseScreen(): Boolean {
-        return true
-    }
-
     protected fun addElement(element: Element) {
         elements.add(element)
     }
