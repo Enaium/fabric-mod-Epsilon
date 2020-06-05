@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.screen.clickgui
 
 import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.func.Func
 import cn.enaium.epsilon.setting.settings.*
 import cn.enaium.epsilon.ui.UI
@@ -94,7 +95,12 @@ class SettingListScreen(val func: Func) : UI() {
                     }
                 })
             } else if (setting is BlockListSetting) {
-                scrollPanel.addElement(Button(x, y, "Set:${setting.name}"))
+                scrollPanel.addElement(object : Button(x, y, "Set:${setting.name}") {
+                    override fun onLeftClicked() {
+                        MC.openScreen(EditBlockListSettingScreen(setting))
+                        super.onLeftClicked()
+                    }
+                })
             }
             y += 30
         }
