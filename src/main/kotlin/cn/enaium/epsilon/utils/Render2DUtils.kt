@@ -64,6 +64,19 @@ object Render2DUtils {
         GL11.glEnable(GL11.GL_DEPTH_TEST)
     }
 
+    fun drawImage(image: Identifier, x: Double, y: Double, width: Double, height: Double) {
+        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glDepthMask(false)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+        MC.textureManager.bindTexture(image)
+        blit(x, y, 0.0f, 0.0f, width, height, width, height)
+        GL11.glDepthMask(true)
+        GL11.glDisable(GL11.GL_BLEND)
+        GL11.glEnable(GL11.GL_DEPTH_TEST)
+    }
+
     fun drawItemStack(itemStack: ItemStack, x: Double, y: Double) {
         GL11.glPushMatrix()
         GL11.glTranslated(x, y, 0.0)
@@ -143,10 +156,38 @@ object Render2DUtils {
         drawCircle(x + round / 2.0f, y2 - round / 2.0f, round, color)
         drawCircle(x + round / 2.0f, y + round / 2.0f, round, color)
         drawCircle(x2 - round / 2.0f, y2 - round / 2.0f, round, color)
-        drawRect(matrixStack, (x - round / 2.0f - 0.5f).toInt(), (y + round / 2.0f).toInt(), x2.toInt(), (y2 - round / 2.0f).toInt(), color)
-        drawRect(matrixStack, x.toInt(), (y + round / 2.0f).toInt(), (x2 + round / 2.0f + 0.5f).toInt(), (y2 - round / 2.0f).toInt(), color)
-        drawRect(matrixStack, (x + round / 2.0f).toInt(), (y - round / 2.0f - 0.5f).toInt(), (x2 - round / 2.0f).toInt(), (y2 - round / 2.0f).toInt(), color)
-        drawRect(matrixStack, (x + round / 2.0f).toInt(), y.toInt(), (x2 - round / 2.0f).toInt(), (y2 + round / 2.0f + 0.5f).toInt(), color)
+        drawRect(
+            matrixStack,
+            (x - round / 2.0f - 0.5f).toInt(),
+            (y + round / 2.0f).toInt(),
+            x2.toInt(),
+            (y2 - round / 2.0f).toInt(),
+            color
+        )
+        drawRect(
+            matrixStack,
+            x.toInt(),
+            (y + round / 2.0f).toInt(),
+            (x2 + round / 2.0f + 0.5f).toInt(),
+            (y2 - round / 2.0f).toInt(),
+            color
+        )
+        drawRect(
+            matrixStack,
+            (x + round / 2.0f).toInt(),
+            (y - round / 2.0f - 0.5f).toInt(),
+            (x2 - round / 2.0f).toInt(),
+            (y2 - round / 2.0f).toInt(),
+            color
+        )
+        drawRect(
+            matrixStack,
+            (x + round / 2.0f).toInt(),
+            y.toInt(),
+            (x2 - round / 2.0f).toInt(),
+            (y2 + round / 2.0f + 0.5f).toInt(),
+            color
+        )
     }
 
     fun drawHorizontalLine(matrixStack: MatrixStack, i: Int, j: Int, k: Int, l: Int) {
@@ -206,19 +247,71 @@ object Render2DUtils {
         RenderSystem.disableBlend()
     }
 
-    private fun blit(x: Double, y: Double, u: Float, v: Float, width: Double, height: Double, texWidth: Double, texHeight: Double) {
+    private fun blit(
+        x: Double,
+        y: Double,
+        u: Float,
+        v: Float,
+        width: Double,
+        height: Double,
+        texWidth: Double,
+        texHeight: Double
+    ) {
         blit(x, y, width, height, u, v, width, height, texWidth, texHeight)
     }
 
-    private fun blit(x: Double, y: Double, width: Double, height: Double, u: Float, v: Float, uWidth: Double, vHeight: Double, texWidth: Double, texHeight: Double) {
+    private fun blit(
+        x: Double,
+        y: Double,
+        width: Double,
+        height: Double,
+        u: Float,
+        v: Float,
+        uWidth: Double,
+        vHeight: Double,
+        texWidth: Double,
+        texHeight: Double
+    ) {
         innerBlit(x, x + width, y, y + height, 0.0, uWidth, vHeight, u, v, texWidth, texHeight)
     }
 
-    private fun innerBlit(xStart: Double, xEnd: Double, yStart: Double, yEnd: Double, z: Double, width: Double, height: Double, u: Float, v: Float, texWidth: Double, texHeight: Double) {
-        innerBlit(xStart, xEnd, yStart, yEnd, z, (u + 0.0f) / texWidth.toFloat(), (u + width.toFloat()) / texWidth.toFloat(), (v + 0.0f) / texHeight.toFloat(), (v + height.toFloat()) / texHeight.toFloat())
+    private fun innerBlit(
+        xStart: Double,
+        xEnd: Double,
+        yStart: Double,
+        yEnd: Double,
+        z: Double,
+        width: Double,
+        height: Double,
+        u: Float,
+        v: Float,
+        texWidth: Double,
+        texHeight: Double
+    ) {
+        innerBlit(
+            xStart,
+            xEnd,
+            yStart,
+            yEnd,
+            z,
+            (u + 0.0f) / texWidth.toFloat(),
+            (u + width.toFloat()) / texWidth.toFloat(),
+            (v + 0.0f) / texHeight.toFloat(),
+            (v + height.toFloat()) / texHeight.toFloat()
+        )
     }
 
-    private fun innerBlit(xStart: Double, xEnd: Double, yStart: Double, yEnd: Double, z: Double, uStart: Float, uEnd: Float, vStart: Float, vEnd: Float) {
+    private fun innerBlit(
+        xStart: Double,
+        xEnd: Double,
+        yStart: Double,
+        yEnd: Double,
+        z: Double,
+        uStart: Float,
+        uEnd: Float,
+        vStart: Float,
+        vEnd: Float
+    ) {
         val bufferBuilder = Tessellator.getInstance().buffer
         bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE)
         bufferBuilder.vertex(xStart, yEnd, z).texture(uStart, vEnd).next()

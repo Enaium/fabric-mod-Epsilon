@@ -26,7 +26,7 @@ class FuncConfig : Config("Functions") {
                     if (funcClassObject.getBoolean("enable")) func.enable()
                     func.keyCode = funcClassObject.getInteger("keyCode")
                     val settings = Epsilon.settingManager.getSettingsForFunc(func)
-                    if (settings != null) {
+                    if (settings.isNotEmpty()) {
                         val settingObject = JSON.parseObject(funcClassObject.getString("settings"))
                         for (setting in settings) {
                             if (settingObject != null) {
@@ -75,7 +75,7 @@ class FuncConfig : Config("Functions") {
             funcClassObject["enable"] = func.enable
             funcClassObject["keyCode"] = func.keyCode
             val settings = Epsilon.settingManager.getSettingsForFunc(func)
-            if (settings != null) {
+            if (settings.isNotEmpty()) {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
                     when (s) {
