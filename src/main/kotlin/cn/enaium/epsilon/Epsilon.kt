@@ -18,8 +18,8 @@ import java.io.File
  */
 object Epsilon {
     var NAME = "Epsilon"
-    var VERSION = "pre2"
-    var GAME = "20w22a"
+    var VERSION = "pre3"
+    var GAME = "1.16-pre1"
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()
