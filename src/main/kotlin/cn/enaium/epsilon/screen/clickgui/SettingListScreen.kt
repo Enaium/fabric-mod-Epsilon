@@ -15,7 +15,8 @@ import org.lwjgl.glfw.GLFW
  */
 class SettingListScreen(val func: Func) : UI() {
 
-    init {
+    override fun initUI() {
+        super.initUI()
         val x = Render2DUtils.scaledWidth / 2 - 50
         var y = 50
         val scrollPanel = ScrollPanel(x, 50, 100, 120)
@@ -92,6 +93,8 @@ class SettingListScreen(val func: Func) : UI() {
                         super.onRightClicked()
                     }
                 })
+            } else if (setting is BlockListSetting) {
+                scrollPanel.addElement(Button(x, y, "Set:${setting.name}"))
             }
             y += 30
         }
