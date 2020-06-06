@@ -11,15 +11,16 @@ import kotlin.math.max
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
+open class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
     x,
     y,
     width,
     height
 ) {
 
-    val elements: ArrayList<Element> = ArrayList()
-    var shiftPress = false
+    private val elements: ArrayList<Element> = ArrayList()
+    private var shiftPress = false
+    var scrollDistance = 10
 
     fun addElement(element: Element) {
         this.elements.add(element)
@@ -29,10 +30,15 @@ class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
         this.elements.addAll(element)
     }
 
+    open fun renderBackground() {
+
+    }
+
     override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
         GL11.glEnable(GL11.GL_SCISSOR_TEST)
         hovered = Render2DUtils.isHovered(mouseX, mouseY, x, y, width, height)
         Render2DUtils.scissorBox(x, y, width, height)
+        renderBackground()
         for (element in elements) {
             if (element.visible)
                 element.render(matrices, mouseX, mouseY, delta)
@@ -60,9 +66,9 @@ class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
         for (element in elements) {
             if (element.visible && element.enabled || (element is ScrollPanel && element.hovered))
                 if (shiftPress) {
-                    element.scrollOffsetX += amount.toInt() * 5
+                    element.scrollOffsetX += amount.toInt() * scrollDistance
                 } else {
-                    element.scrollOffsetY += amount.toInt() * 5
+                    element.scrollOffsetY += amount.toInt() * scrollDistance
                 }
             element.mouseScrolled(mouseX, mouseY, amount)
         }
