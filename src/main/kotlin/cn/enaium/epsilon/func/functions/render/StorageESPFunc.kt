@@ -19,7 +19,6 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
-
     private val chest = EnableSetting(this, "Chest", true)
 
     private val trappedChest = EnableSetting(this, "TrappedChest", true)
@@ -84,5 +83,4 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
         }
         return blocks
     }
-
 }

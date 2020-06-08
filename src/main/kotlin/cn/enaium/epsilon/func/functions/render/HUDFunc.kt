@@ -519,6 +519,4 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
         return width
     }
-
-
 }

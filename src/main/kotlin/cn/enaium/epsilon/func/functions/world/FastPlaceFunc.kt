@@ -12,9 +12,7 @@ import org.lwjgl.glfw.GLFW
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class FastPlaceFunc : Func("FastPlace", GLFW.GLFW_KEY_B, Category.WORLD) {
-
     fun on(updateEvent: UpdateEvent) {
         IMC.mc.itemUseCooldown = 0
     }
-
 }

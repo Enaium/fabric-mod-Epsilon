@@ -17,7 +17,6 @@ import net.minecraft.util.hit.HitResult
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
-
     private val mode = ModeSetting(this, "Mode", "Packet", arrayListOf("Packet", "LowJump", "Jump"))
 
     fun on(updateEvent: UpdateEvent) {

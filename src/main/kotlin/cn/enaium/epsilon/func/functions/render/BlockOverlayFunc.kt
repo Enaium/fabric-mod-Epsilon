@@ -20,7 +20,6 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class BlockOverlayFunc : Func("BlockOverlay", 0, Category.RENDER) {
-
     private var block = 0
 
     override fun onEnable() {

@@ -18,7 +18,6 @@ import java.util.*
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
-
     private val blocks = BlockListSetting(this, "NoXray", arrayListOf("Ores", "",
             "minecraft:anvil", "minecraft:beacon", "minecraft:bone_block",
             "minecraft:bookshelf", "minecraft:brewing_stand",

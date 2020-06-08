@@ -17,7 +17,6 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
-
     private var blockEntityBox = 0
 
     override fun onEnable() {
