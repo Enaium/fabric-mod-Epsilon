@@ -4,7 +4,6 @@ import cn.enaium.epsilon.utils.Render2DUtils
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
-import kotlin.math.max
 
 /**
  * Project: Epsilon
@@ -20,14 +19,19 @@ open class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
 
     private val elements: ArrayList<Element> = ArrayList()
     private var shiftPress = false
-    var scrollDistance = 10
 
     fun addElement(element: Element) {
+        element.scrollOffsetX = this.x
+        element.scrollOffsetY = this.y
         this.elements.add(element)
     }
 
     fun addElementAll(vararg element: Element) {
-        this.elements.addAll(element)
+        for (e in element) {
+            e.scrollOffsetX = this.x
+            e.scrollOffsetY = this.y
+            this.elements.add(e)
+        }
     }
 
     open fun renderBackground() {
@@ -66,13 +70,17 @@ open class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
         for (element in elements) {
             if (element.visible && element.enabled || (element is ScrollPanel && element.hovered))
                 if (shiftPress) {
-                    element.scrollOffsetX += amount.toInt() * scrollDistance
+                    element.scrollOffsetX += amount.toInt() * getScrollAmount()
                 } else {
-                    element.scrollOffsetY += amount.toInt() * scrollDistance
+                    element.scrollOffsetY += amount.toInt() * getScrollAmount()
                 }
             element.mouseScrolled(mouseX, mouseY, amount)
         }
         return super.mouseScrolled(mouseX, mouseY, amount)
+    }
+
+    protected open fun getScrollAmount(): Int {
+        return 15
     }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {

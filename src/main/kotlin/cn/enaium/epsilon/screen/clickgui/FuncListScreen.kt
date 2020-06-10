@@ -19,10 +19,10 @@ class FuncListScreen(val category: Category) : UI() {
     override fun initUI() {
         super.initUI()
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
-        var y = 50
+        var y = 0
         for (func in Epsilon.funcManager.getFuncForCategory(category)) {
             scrollPanel.addElement(object : Button(
-                Render2DUtils.scaledWidth / 2 - 50,
+                0,
                 y,
                 func.name
             ) {

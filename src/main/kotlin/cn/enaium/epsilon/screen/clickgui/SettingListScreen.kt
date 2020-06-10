@@ -18,25 +18,24 @@ class SettingListScreen(val func: Func) : UI() {
 
     override fun initUI() {
         super.initUI()
-        val x = Render2DUtils.scaledWidth / 2 - 50
-        var y = 50
-        val scrollPanel = ScrollPanel(x, 50, 100, 120)
+        var y = 0
+        val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
         for (setting in Epsilon.settingManager.getSettingsForFunc(func)) {
             if (setting is EnableSetting) {
                 scrollPanel.addElement(object :
-                    CheckBox(Render2DUtils.scaledWidth / 2 - 50, y, setting.name, setting.enable) {
+                    CheckBox(0, y, setting.name, setting.enable) {
                     override fun onLeftClicked() {
                         setting.enable = this.checked
                         super.onLeftClicked()
                     }
                 })
             } else if (setting is IntegerSetting || setting is FloatSetting || setting is DoubleSetting || setting is LongSetting) {
-                val textField = TextField(x, y, 50)
+                val textField = TextField(0, y, 50)
                 textField.setSuggestion(setting.name)
                 when (setting) {
                     is IntegerSetting -> {
                         textField.setText(setting.current.toString())
-                        scrollPanel.addElement(object : Button(x + 60, y, 40, 20, "SET") {
+                        scrollPanel.addElement(object : Button(60, y, 40, 20, "SET") {
                             override fun onLeftClicked() {
                                 setting.current = textField.getText().toInt()
                                 super.onLeftClicked()
@@ -45,7 +44,7 @@ class SettingListScreen(val func: Func) : UI() {
                     }
                     is FloatSetting -> {
                         textField.setText(setting.current.toString())
-                        scrollPanel.addElement(object : Button(x + 60, y, 40, 20, "SET") {
+                        scrollPanel.addElement(object : Button(60, y, 40, 20, "SET") {
                             override fun onLeftClicked() {
                                 setting.current = textField.getText().toFloat()
                                 super.onLeftClicked()
@@ -54,7 +53,7 @@ class SettingListScreen(val func: Func) : UI() {
                     }
                     is DoubleSetting -> {
                         textField.setText(setting.current.toString())
-                        scrollPanel.addElement(object : Button(x + 60, y, 40, 20, "SET") {
+                        scrollPanel.addElement(object : Button(60, y, 40, 20, "SET") {
                             override fun onLeftClicked() {
                                 setting.current = textField.getText().toDouble()
                                 super.onLeftClicked()
@@ -63,7 +62,7 @@ class SettingListScreen(val func: Func) : UI() {
                     }
                     is LongSetting -> {
                         textField.setText(setting.current.toString())
-                        scrollPanel.addElement(object : Button(x + 60, y, 40, 20, "SET") {
+                        scrollPanel.addElement(object : Button(60, y, 40, 20, "SET") {
                             override fun onLeftClicked() {
                                 setting.current = textField.getText().toLong()
                                 super.onLeftClicked()
@@ -73,7 +72,7 @@ class SettingListScreen(val func: Func) : UI() {
                 }
                 scrollPanel.addElement(textField)
             } else if (setting is ModeSetting) {
-                scrollPanel.addElement(object : ModeButton(x, y, setting.modes, setting.getCurrentIndex()) {
+                scrollPanel.addElement(object : ModeButton(0, y, setting.modes, setting.getCurrentIndex()) {
                     override fun onLeftClicked() {
                         try {
                             setting.current = setting.modes[setting.getCurrentIndex() + 1]
@@ -95,7 +94,7 @@ class SettingListScreen(val func: Func) : UI() {
                     }
                 })
             } else if (setting is BlockListSetting) {
-                scrollPanel.addElement(object : Button(x, y, "Set:${setting.name}") {
+                scrollPanel.addElement(object : Button(0, y, "Set:${setting.name}") {
                     override fun onLeftClicked() {
                         MC.openScreen(EditBlockListSettingScreen(setting))
                         super.onLeftClicked()
