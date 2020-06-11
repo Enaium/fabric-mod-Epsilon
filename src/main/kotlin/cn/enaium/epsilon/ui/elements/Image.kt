@@ -40,7 +40,7 @@ class Image : Element {
         }
 
         if (itemStack != null) {
-            MC.itemRenderer.renderGuiItem(itemStack!!, x, y)
+            MC.itemRenderer.renderGuiItemIcon(itemStack!!, x, y)
         }
     }
 }
