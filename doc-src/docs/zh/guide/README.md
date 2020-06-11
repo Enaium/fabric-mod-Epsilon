@@ -62,9 +62,21 @@ ClickGUI
 
 HUD
 
+### ItemPhysics
+
+物品物理掉落
+
 ### LockAngle
 
 锁定yaw和pitch
+
+### NoItem
+
+不渲染物品实体
+
+### NoLivingEntity
+
+不渲染存活实体
 
 ### StorageESP
 

@@ -18,6 +18,7 @@
     "TerrainRenderContextMixin",
     "BlockModelRendererMixin",
     "BlockMixin",
+    "ClientPlayerInteractionManagerMixin",
     "IClientPlayerInteractionManagerMixin",
     "ItemEntityRendererMixin",
     "LivingEntityRendererMixin"

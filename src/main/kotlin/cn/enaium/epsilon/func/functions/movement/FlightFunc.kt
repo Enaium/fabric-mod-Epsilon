@@ -15,8 +15,7 @@ import org.lwjgl.glfw.GLFW
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
-
-    private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0);
+    private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0)
 
     fun on(updateEvent: UpdateEvent) {
 
@@ -35,5 +34,4 @@ class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
 
         super.onEnable()
     }
-
 }

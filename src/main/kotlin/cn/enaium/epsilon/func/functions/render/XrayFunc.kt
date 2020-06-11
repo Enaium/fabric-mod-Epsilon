@@ -18,8 +18,9 @@ import java.util.*
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
-
-    private val blocks = BlockListSetting(this, "NoXray", arrayListOf("Ores", "",
+    private val blocks = BlockListSetting(
+        this, "NoXray", arrayListOf(
+            "Ores", "",
             "minecraft:anvil", "minecraft:beacon", "minecraft:bone_block",
             "minecraft:bookshelf", "minecraft:brewing_stand",
             "minecraft:chain_command_block", "minecraft:chest", "minecraft:clay",
@@ -37,7 +38,9 @@ class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
             "minecraft:redstone_block", "minecraft:redstone_ore",
             "minecraft:repeating_command_block", "minecraft:spawner",
             "minecraft:tnt", "minecraft:torch", "minecraft:trapped_chest",
-            "minecraft:water", "minecraft:ancient_debris"))
+            "minecraft:water", "minecraft:ancient_debris"
+        )
+    )
 
     override fun onEnable() {
         super.onEnable()
@@ -66,6 +69,6 @@ class XrayFunc : Func("Xray", GLFW.GLFW_KEY_X, Category.RENDER) {
     }
 
     private fun isXray(block: Block): Boolean {
-        return Collections.binarySearch(blocks.blockList, BlockUtils.getName(block)) >= 0
+        return blocks.blockList.contains(BlockUtils.getName(block))
     }
 }

@@ -11,7 +11,6 @@ import net.minecraft.util.Util
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 abstract class Element(val tempX: Int, val tempY: Int, val width: Int, val height: Int) : Element {
-    val WIDGETS_LOCATION = Identifier("textures/gui/widgets.png")
     val id = 0
     var hovered = false
     var visible = true

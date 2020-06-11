@@ -11,7 +11,6 @@ import cn.enaium.epsilon.func.Func
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class GlowFunc : Func("Glow", 0, Category.RENDER) {
-
     fun onUpdate(updateEvent: UpdateEvent) {
         for (e in Epsilon.MC.world!!.entities) {
             e.isGlowing = true

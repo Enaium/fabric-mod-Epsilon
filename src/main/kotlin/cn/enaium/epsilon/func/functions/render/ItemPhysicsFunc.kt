@@ -22,7 +22,6 @@ import java.util.*
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class ItemPhysicsFunc : Func("ItemPhysics", 0, Category.RENDER) {
-
     private val itemRenderer: ItemRenderer = MC.itemRenderer
     private val random = Random()
 

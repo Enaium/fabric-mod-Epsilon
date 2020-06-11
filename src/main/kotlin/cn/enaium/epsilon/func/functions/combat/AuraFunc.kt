@@ -26,7 +26,6 @@ import java.util.stream.StreamSupport
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
-
     private val range = FloatSetting(this, "Range", 4.1f, 0.1f, 7.0f)
 
     private val priority = ModeSetting(this, "Priority", "Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))

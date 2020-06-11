@@ -62,9 +62,21 @@ Glow all entities
 
 HUD
 
+### ItemPhysics
+
+Item physical drop
+
 ### LockAngle
 
 Lock yaw and pitch
+
+### NoItem
+
+No render item entity
+
+### NoLivingEntity
+
+No render living entity
 
 ### StorageESP
 

@@ -1,5 +1,6 @@
 package cn.enaium.epsilon.screen.clickgui
 
+import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.setting.settings.BlockListSetting
 import cn.enaium.epsilon.ui.UI
 import cn.enaium.epsilon.ui.elements.Button
@@ -28,17 +29,18 @@ class EditBlockListSettingScreen(val blockListSetting: BlockListSetting) : UI() 
                 super.renderBackground()
             }
         }
-        var y = scrollPanel.y
+        var y = 0
         for (block in blockListSetting.blockList) {
             var itemStack = ItemStack(BlockUtils.getBlockFromName(block))
             if (itemStack.isEmpty) {
                 itemStack = ItemStack(Blocks.GRASS)
             }
             scrollPanel.addElementAll(
-                Image(scrollPanel.x, y, itemStack),
-                object : Button(scrollPanel.x + 24, y, 40, 16, "Remove") {
+                Image(0, y, itemStack),
+                object : Button(24, y, 40, 16, "Remove") {
                     override fun onLeftClicked() {
                         blockListSetting.blockList.remove(block)
+                        MC.openScreen(EditBlockListSettingScreen(blockListSetting))
                         super.onLeftClicked()
                     }
                 })
@@ -53,6 +55,7 @@ class EditBlockListSettingScreen(val blockListSetting: BlockListSetting) : UI() 
                 } else {
                     blockListSetting.blockList.add("minecraft:${textField.getText()}")
                 }
+                MC.openScreen(EditBlockListSettingScreen(blockListSetting))
                 super.onLeftClicked()
             }
         })

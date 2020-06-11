@@ -63,41 +63,41 @@ object Render3DUtils {
 
     fun drawOutlined(bb: Box) {
         GL11.glBegin(GL11.GL_LINES)
-        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
 
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
 
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
 
-        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
 
-        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
 
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
 
-        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
 
-        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
 
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
 
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ)
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
 
-        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
 
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ)
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ)
         GL11.glEnd()
     }
 
