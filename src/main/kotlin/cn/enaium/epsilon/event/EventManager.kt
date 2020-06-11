@@ -21,9 +21,9 @@ class EventManager {
                 methodData.target.isAccessible = true
                 if (hashMap.containsKey(clazz)) {
                     if (!hashMap[clazz]!!.contains(methodData))
-                        hashMap[clazz]!!.add(methodData);
+                        hashMap[clazz]!!.add(methodData)
                 } else {
-                    hashMap[clazz] = CopyOnWriteArrayList<Data>(Collections.singletonList(methodData));
+                    hashMap[clazz] = CopyOnWriteArrayList<Data>(Collections.singletonList(methodData))
                 }
             }
         }

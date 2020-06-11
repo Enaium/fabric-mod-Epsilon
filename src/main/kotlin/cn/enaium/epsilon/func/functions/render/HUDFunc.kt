@@ -74,7 +74,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         currentSettingIndex = 0
         editMode = false
         screen = 0
-        this.categoryValues.addAll(Category.values());
+        this.categoryValues.addAll(Category.values())
     }
 
     fun entityList(render2DEvent: Render2DEvent) {
@@ -175,7 +175,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             return
 
         GL11.glScaled(2.0, 2.0, 2.0)
-        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 2, 2, Color.WHITE.rgb);
+        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 2, 2, Color.WHITE.rgb)
         GL11.glScaled(0.5, 0.5, 0.5)
 
         drawStringWithShadow(render2DEvent.matrixStack, VERSION, i * 2, 2, Color.ORANGE.rgb)

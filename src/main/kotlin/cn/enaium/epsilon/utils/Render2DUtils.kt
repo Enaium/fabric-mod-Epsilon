@@ -86,7 +86,7 @@ object Render2DUtils {
         MC.itemRenderer.renderGuiItemIcon(itemStack, 0, 0)
         DiffuseLighting.disable()
 
-        GL11.glPopMatrix();
+        GL11.glPopMatrix()
     }
 
     fun drawCircle(xx: Float, yy: Float, radius: Float, color: Int) {

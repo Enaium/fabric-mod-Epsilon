@@ -42,7 +42,7 @@ class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
                 sendPos(posX, posY, posZ, false)
             }
             "LowJump" -> {
-                MC.player!!.addVelocity(0.0, 0.1, 0.0);
+                MC.player!!.addVelocity(0.0, 0.1, 0.0)
                 MC.player!!.fallDistance = 0.1F
                 MC.player!!.isOnGround = false
             }

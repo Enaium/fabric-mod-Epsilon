@@ -45,8 +45,8 @@ class AltScreen : Screen(LiteralText("")) {
         renderBackground(matrixStack)
         drawCenteredString(matrixStack, textRenderer, "Username:", 35, 5, -1)
         drawCenteredString(matrixStack, textRenderer, "Password:", 35, 35, -1)
-        usernameField.render(matrixStack, mouseX, mouseY, delta);
-        passwordField.render(matrixStack, mouseX, mouseY, delta);
+        usernameField.render(matrixStack, mouseX, mouseY, delta)
+        passwordField.render(matrixStack, mouseX, mouseY, delta)
         super.render(matrixStack, mouseX, mouseY, delta)
     }
 
