@@ -11,7 +11,6 @@ import net.minecraft.client.util.math.MatrixStack
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 open class Button : Element {
-
     private var title: String
     private var icon: String? = null
 
@@ -51,10 +50,16 @@ open class Button : Element {
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if (button == 0) {
-            onLeftClicked()
-        } else if (button == 1) {
-            onRightClicked()
+        when (button) {
+            0 -> {
+                onLeftClicked()
+            }
+            1 -> {
+                onRightClicked()
+            }
+            2 -> {
+                onMiddleClicked()
+            }
         }
         return super.mouseClicked(mouseX, mouseY, button)
     }
@@ -67,4 +72,7 @@ open class Button : Element {
 
     }
 
+    open fun onMiddleClicked() {
+
+    }
 }
