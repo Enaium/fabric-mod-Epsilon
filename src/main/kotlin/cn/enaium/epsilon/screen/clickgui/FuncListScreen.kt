@@ -35,6 +35,11 @@ class FuncListScreen(val category: Category) : UI() {
                     MC.openScreen(SettingListScreen(func))
                     super.onRightClicked()
                 }
+
+                override fun onMiddleClicked() {
+                    MC.openScreen(EditKeyboardScreen(func))
+                    super.onMiddleClicked()
+                }
             })
             y += 30
         }
