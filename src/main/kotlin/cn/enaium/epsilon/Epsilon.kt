@@ -17,9 +17,10 @@ import java.io.File
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 object Epsilon {
+
     var NAME = "Epsilon"
-    var VERSION = "pre8"
-    var GAME = "1.16-pre7"
+    var VERSION = "pre9"
+    var GAME = "1.16-pre8"
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
     var MC: MinecraftClient = MinecraftClient.getInstance()
@@ -30,7 +31,6 @@ object Epsilon {
     lateinit var commandManager: CommandManager
     lateinit var pluginManager: PluginManager
     lateinit var configManager: ConfigManager
-
 
     fun run() {
         File(DIR).mkdir()
@@ -46,4 +46,5 @@ object Epsilon {
     fun stop() {
         configManager.save()
     }
+
 }
