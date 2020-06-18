@@ -22,7 +22,6 @@ import cn.enaium.epsilon.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.utils.Utils
 import net.minecraft.util.Formatting
-import net.minecraft.util.math.MathHelper
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -37,6 +36,7 @@ import kotlin.collections.ArrayList
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
+
     private var categoryValues: ArrayList<Category> = ArrayList()
     private var currentCategoryIndex = 0
     private var currentModIndex = 0
@@ -160,7 +160,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                 functions.add(m)
             }
         }
-
+        
         val mods: ArrayList<Func> = functions
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
         for (func in mods) {
@@ -519,4 +519,5 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         }
         return width
     }
+
 }
