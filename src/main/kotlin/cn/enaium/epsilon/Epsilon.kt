@@ -4,8 +4,6 @@ import cn.enaium.epsilon.command.CommandManager
 import cn.enaium.epsilon.config.ConfigManager
 import cn.enaium.epsilon.event.EventManager
 import cn.enaium.epsilon.func.FuncManager
-import cn.enaium.epsilon.mixin.IMinecraftClientMixin
-import cn.enaium.epsilon.plugin.PluginManager
 import cn.enaium.epsilon.setting.SettingManager
 import net.minecraft.client.MinecraftClient
 import java.io.File
@@ -29,7 +27,6 @@ object Epsilon {
     lateinit var funcManager: FuncManager
     lateinit var settingManager: SettingManager
     lateinit var commandManager: CommandManager
-    lateinit var pluginManager: PluginManager
     lateinit var configManager: ConfigManager
 
     fun run() {
@@ -38,7 +35,6 @@ object Epsilon {
         funcManager = FuncManager()
         settingManager = SettingManager()
         commandManager = CommandManager()
-        pluginManager = PluginManager()
         configManager = ConfigManager()
         configManager.load()
     }
