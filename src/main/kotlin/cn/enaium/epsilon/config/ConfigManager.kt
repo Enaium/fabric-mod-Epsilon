@@ -19,7 +19,9 @@ class ConfigManager {
 
     fun load() {
         for (c in configs) {
-            c.load()
+            if(File(c.getPath()).exists()) {
+                c.load()
+            }
         }
     }
 
