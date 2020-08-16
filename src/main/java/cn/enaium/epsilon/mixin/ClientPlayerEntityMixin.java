@@ -34,7 +34,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Shadow
     private boolean lastOnGround;
     @Shadow
-    private boolean lastIsHoldingSneakKey;
+    private boolean lastSneaking;
     @Shadow
     @Final
     public ClientPlayNetworkHandler networkHandler;
@@ -96,10 +96,10 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         }
 
         boolean bl2 = this.isSneaking();
-        if (bl2 != this.lastIsHoldingSneakKey) {
+        if (bl2 != this.lastSneaking) {
             ClientCommandC2SPacket.Mode mode2 = bl2 ? ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY : ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY;
             this.networkHandler.sendPacket(new ClientCommandC2SPacket(this, mode2));
-            this.lastIsHoldingSneakKey = bl2;
+            this.lastSneaking = bl2;
         }
         if (this.isCamera()) {
 
