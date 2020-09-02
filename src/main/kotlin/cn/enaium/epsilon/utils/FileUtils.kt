@@ -18,7 +18,7 @@ object FileUtils {
      * @return Text Content
      */
     fun read(path: String): String {
-        return FileUtils.readFileToString(File(path))
+        return FileUtils.readFileToString(File(path),"UTF-8")
     }
 
     /**
