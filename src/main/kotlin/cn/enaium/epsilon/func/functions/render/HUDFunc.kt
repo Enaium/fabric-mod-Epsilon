@@ -64,6 +64,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
     private val ping = EnableSetting(this, "Ping", false)
 
+    private val titleInfo = EnableSetting(this, "TitleInfo", false)
+
+
     private var yaw = 0.0F
     private var pitch = 0.0F
 
@@ -108,9 +111,9 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
 
         if (coords.enable) {
             infoList.add(
-                "XYZ:" + Formatting.AQUA + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(
-                    MC.player!!.z
-                )
+                    "XYZ:" + Formatting.AQUA + Utils.valueFix(MC.player!!.x) + "/" + Utils.valueFix(MC.player!!.y) + "/" + Utils.valueFix(
+                            MC.player!!.z
+                    )
             )
         }
 
@@ -146,6 +149,10 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             infoY += fontHeight + 4
         }
 
+        if (titleInfo.enable) {
+            IMC.mc.window.setTitle(Utils.clearFormat(infoList.toString()))
+        }
+
     }
 
     fun list(render2DEvent: Render2DEvent) {
@@ -160,7 +167,7 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
                 functions.add(m)
             }
         }
-        
+
         val mods: ArrayList<Func> = functions
         mods.sortByDescending { getWidth(it.getDisplayTag()) }
         for (func in mods) {
@@ -184,31 +191,31 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
         val startX = 5
         var startY = 5 + 9 + 40
         Render2DUtils.drawRect(
-            render2DEvent.matrixStack,
-            startX,
-            startY,
-            startX + this.getWidestCategory() + 5,
-            startY + categoryValues.size * (fontHeight + 2),
-            ColorUtils.BG
+                render2DEvent.matrixStack,
+                startX,
+                startY,
+                startX + this.getWidestCategory() + 5,
+                startY + categoryValues.size * (fontHeight + 2),
+                ColorUtils.BG
         )
         for (c in categoryValues) {
             if (getCurrentCategory() == c) {
                 Render2DUtils.drawRect(
-                    render2DEvent.matrixStack,
-                    startX + 1,
-                    startY,
-                    startX + this.getWidestCategory() + 5 - 1,
-                    startY + fontHeight + 2,
-                    ColorUtils.SELECT
+                        render2DEvent.matrixStack,
+                        startX + 1,
+                        startY,
+                        startX + this.getWidestCategory() + 5 - 1,
+                        startY + fontHeight + 2,
+                        ColorUtils.SELECT
                 )
             }
             val name: String = c.name
             drawStringWithShadow(
-                render2DEvent.matrixStack,
-                name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(),
-                startX + 2 + if (getCurrentCategory() == c) 2 else 0,
-                startY + 2,
-                -1
+                    render2DEvent.matrixStack,
+                    name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(),
+                    startX + 2 + if (getCurrentCategory() == c) 2 else 0,
+                    startY + 2,
+                    -1
             )
             startY += fontHeight + 2
         }
@@ -217,30 +224,30 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             val startModsX: Int = startX + this.getWidestCategory() + 6
             var startModsY = 5 + 9 + 40 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(
-                render2DEvent.matrixStack,
-                startModsX,
-                startModsY,
-                startModsX + this.getWidestMod() + 5,
-                startModsY + getModsForCurrentCategory().size * (fontHeight + 2),
-                ColorUtils.BG
+                    render2DEvent.matrixStack,
+                    startModsX,
+                    startModsY,
+                    startModsX + this.getWidestMod() + 5,
+                    startModsY + getModsForCurrentCategory().size * (fontHeight + 2),
+                    ColorUtils.BG
             )
             for (f in getModsForCurrentCategory()) {
                 if (getCurrentFunc() == f) {
                     Render2DUtils.drawRect(
-                        render2DEvent.matrixStack,
-                        startModsX + 1,
-                        startModsY,
-                        startModsX + this.getWidestMod() + 5 - 1,
-                        startModsY + fontHeight + 2,
-                        ColorUtils.SELECT
+                            render2DEvent.matrixStack,
+                            startModsX + 1,
+                            startModsY,
+                            startModsX + this.getWidestMod() + 5 - 1,
+                            startModsY + fontHeight + 2,
+                            ColorUtils.SELECT
                     )
                 }
                 drawStringWithShadow(
-                    render2DEvent.matrixStack,
-                    f.name + if (getSettingsForFunc(f) != null) ">" else "",
-                    startModsX + 2 + if (getCurrentFunc() == f) 2 else 0,
-                    startModsY + 2,
-                    if (f.enable) -1 else Color.GRAY.rgb
+                        render2DEvent.matrixStack,
+                        f.name + if (getSettingsForFunc(f) != null) ">" else "",
+                        startModsX + 2 + if (getCurrentFunc() == f) 2 else 0,
+                        startModsY + 2,
+                        if (f.enable) -1 else Color.GRAY.rgb
                 )
                 startModsY += fontHeight + 2
             }
@@ -249,77 +256,77 @@ class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
             val startSettingX: Int = startX + getWidestCategory() + 6 + getWidestCategory() + 8
             var startSettingY = 5 + 9 + 40 + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
             Render2DUtils.drawRect(
-                render2DEvent.matrixStack,
-                startSettingX,
-                startSettingY,
-                startSettingX + getWidestSetting() + 5,
-                startSettingY + getSettingForCurrentMod()!!.size * (fontHeight + 2),
-                ColorUtils.BG
+                    render2DEvent.matrixStack,
+                    startSettingX,
+                    startSettingY,
+                    startSettingX + getWidestSetting() + 5,
+                    startSettingY + getSettingForCurrentMod()!!.size * (fontHeight + 2),
+                    ColorUtils.BG
             )
             for (s in getSettingForCurrentMod()!!) {
                 if (getCurrentSetting() == s) {
                     Render2DUtils.drawRect(
-                        render2DEvent.matrixStack,
-                        startSettingX + 1,
-                        startSettingY,
-                        startSettingX + this.getWidestSetting() + 5 - 1,
-                        startSettingY + fontHeight + 2,
-                        ColorUtils.SELECT
+                            render2DEvent.matrixStack,
+                            startSettingX + 1,
+                            startSettingY,
+                            startSettingX + this.getWidestSetting() + 5 - 1,
+                            startSettingY + fontHeight + 2,
+                            ColorUtils.SELECT
                     )
                 }
                 when (s) {
                     is EnableSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.enable,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.enable,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                     is IntegerSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.current,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.current,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                     is DoubleSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.current,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.current,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                     is FloatSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.current,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.current,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                     is LongSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.current,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.current,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                     is ModeSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
-                            s.name + ": " + s.current,
-                            startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
-                            startSettingY + 2,
-                            if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
+                                render2DEvent.matrixStack,
+                                s.name + ": " + s.current,
+                                startSettingX + 2 + if (getCurrentSetting() == s) 2 else 0,
+                                startSettingY + 2,
+                                if (editMode && getCurrentSetting() == s) -1 else Color.GRAY.rgb
                         )
                     }
                 }

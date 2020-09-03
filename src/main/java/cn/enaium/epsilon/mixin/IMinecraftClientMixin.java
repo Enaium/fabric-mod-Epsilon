@@ -2,6 +2,7 @@ package cn.enaium.epsilon.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Session;
+import net.minecraft.client.util.Window;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -29,4 +30,7 @@ public interface IMinecraftClientMixin {
 
     @Accessor("itemUseCooldown")
     void setItemUseCooldown(int itemUseCooldown);
+
+    @Accessor("window")
+    Window getWindow();
 }
