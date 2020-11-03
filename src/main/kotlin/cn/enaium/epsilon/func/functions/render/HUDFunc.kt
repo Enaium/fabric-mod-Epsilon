@@ -35,7 +35,7 @@ import kotlin.collections.ArrayList
  * -----------------------------------------------------------
  * Copyright © 2020 | Enaium | All rights reserved.
  */
-class HUDFunc : Func("HUD", GLFW.GLFW_KEY_P, Category.RENDER) {
+class HUDFunc : Func("HUD", GLFW.GLFW_KEY_O, Category.RENDER) {
 
     private var categoryValues: ArrayList<Category> = ArrayList()
     private var currentCategoryIndex = 0
