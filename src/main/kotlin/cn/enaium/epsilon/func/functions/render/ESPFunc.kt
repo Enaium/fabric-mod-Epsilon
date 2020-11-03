@@ -19,7 +19,7 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 class ESPFunc : Func("ESP", 0, Category.RENDER) {
-    private val witherSkeleton = EnableSetting(this, "witherSkeleton", true)
+    private val witherSkeleton = EnableSetting(this, "WitherSkeleton", true)
     private val slime = EnableSetting(this, "Slime", true)
 
     private var espBox = 0
