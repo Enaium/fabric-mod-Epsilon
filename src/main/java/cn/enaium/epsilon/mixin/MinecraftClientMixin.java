@@ -34,7 +34,7 @@ class MinecraftClientMixin {
     }
 
     @Shadow
-    private Screen currentScreen;
+    public Screen currentScreen;
 
     //    @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", shift = At.Shift.AFTER), method = "openScreen")
     //    private void openScreen(Screen screen, CallbackInfo callbackInfo) {
