@@ -26,7 +26,9 @@ class ConfigManager {
     }
 
     fun save() {
+
         for (c in configs) {
+            File(c.getPath()).createNewFile()
             if(File(c.getPath()).exists()) {
                 c.save()
             }

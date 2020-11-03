@@ -15,7 +15,7 @@ open class Config(var name: String) {
     }
 
     open fun save() {
-        File(getPath()).createNewFile()
+
     }
 
     fun getPath(): String {
