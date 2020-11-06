@@ -1,5 +1,6 @@
 package cn.enaium.epsilon.utils
 
+import cn.enaium.epsilon.Epsilon
 import net.minecraft.client.render.Camera
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher
 import net.minecraft.entity.Entity
@@ -15,6 +16,7 @@ import java.awt.Color
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 object Render3DUtils {
+
     fun applyRenderOffset() {
         applyCameraRotationOnly()
         val camPos = getCameraPos()
@@ -22,13 +24,13 @@ object Render3DUtils {
     }
 
     fun applyCameraRotationOnly() {
-        val camera: Camera = BlockEntityRenderDispatcher.INSTANCE.camera
+        val camera: Camera = Epsilon.MC.method_31975().camera
         GL11.glRotated(MathHelper.wrapDegrees(camera.pitch).toDouble(), 1.0, 0.0, 0.0)
         GL11.glRotated(MathHelper.wrapDegrees(camera.yaw + 180.0), 0.0, 1.0, 0.0)
     }
 
     fun getCameraPos(): Vec3d {
-        return BlockEntityRenderDispatcher.INSTANCE.camera.pos
+        return Epsilon.MC.method_31975().camera.pos
     }
 
     fun drawSolid(bb: Box) {

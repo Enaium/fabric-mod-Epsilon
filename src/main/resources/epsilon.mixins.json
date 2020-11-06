@@ -21,7 +21,8 @@
     "ClientPlayerInteractionManagerMixin",
     "IClientPlayerInteractionManagerMixin",
     "ItemEntityRendererMixin",
-    "LivingEntityRendererMixin"
+    "LivingEntityRendererMixin",
+    "IClientWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -19,7 +19,7 @@ class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
 
     fun on(updateEvent: UpdateEvent) {
 
-        MC.player!!.abilities.flying = false
+        MC.player!!.method_31549().flying = false
         MC.player!!.flyingSpeed = speed.current.toFloat()
 
         MC.player!!.setVelocity(0.0, 0.0, 0.0)

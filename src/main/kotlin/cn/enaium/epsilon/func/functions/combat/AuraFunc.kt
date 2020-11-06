@@ -139,6 +139,6 @@ class AuraFunc : Func("Aura", GLFW.GLFW_KEY_R, Category.COMBAT) {
     }
 
     private fun isTarget(e: LivingEntity): Boolean {
-        return e != MC.player && !e.removed && e.health > 0 && MC.player!!.squaredDistanceTo(e) <= (range.current * range.current)
+        return e != MC.player && !e.isRemoved && e.health > 0 && MC.player!!.squaredDistanceTo(e) <= (range.current * range.current)
     }
 }

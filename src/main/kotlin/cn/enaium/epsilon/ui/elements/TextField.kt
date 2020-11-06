@@ -11,6 +11,7 @@ import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.render.Tessellator
+import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Util
@@ -456,7 +457,7 @@ class TextField : Element {
         RenderSystem.disableTexture()
         RenderSystem.enableColorLogicOp()
         RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE)
-        bufferBuilder.begin(7, VertexFormats.POSITION)
+        bufferBuilder.begin(VertexFormat.class_5596.field_27382, VertexFormats.POSITION)
         bufferBuilder.vertex(x1.toDouble(), y2.toDouble(), 0.0).next()
         bufferBuilder.vertex(x2.toDouble(), y2.toDouble(), 0.0).next()
         bufferBuilder.vertex(x2.toDouble(), y1.toDouble(), 0.0).next()

@@ -1,6 +1,7 @@
 package cn.enaium.epsilon
 
 import cn.enaium.epsilon.mixin.IClientPlayerInteractionManagerMixin
+import cn.enaium.epsilon.mixin.IClientWorldMixin
 import cn.enaium.epsilon.mixin.IGameRendererMixin
 import cn.enaium.epsilon.mixin.IMinecraftClientMixin
 import net.minecraft.client.MinecraftClient
@@ -19,4 +20,7 @@ object IMC {
 
     val interactionManager
         get() = Epsilon.MC.interactionManager as IClientPlayerInteractionManagerMixin
+
+    val world
+        get() = Epsilon.MC.world as IClientWorldMixin
 }
