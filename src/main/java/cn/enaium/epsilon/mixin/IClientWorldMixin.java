@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  */
 @Mixin(ClientWorld.class)
 public interface IClientWorldMixin {
-    @Accessor("entityList")
-    EntityList getEntityList();
+    @Accessor("field_27734")
+    class_5582<Entity> getBlockEntities();
 }

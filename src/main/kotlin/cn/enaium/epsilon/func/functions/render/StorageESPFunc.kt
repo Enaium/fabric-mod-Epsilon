@@ -67,19 +67,19 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     private fun getTargets(): ArrayList<BlockEntity> {
         val blocks: ArrayList<BlockEntity> = ArrayList()
-        IMC.world.entityList.forEachEntity {
-            when (it) {
-                is ChestBlockEntity -> if (chest.enable) blocks.add(it)
-                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(it)
-                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(it)
-                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(it)
-                is HopperBlockEntity -> if (hopper.enable) blocks.add(it)
-                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(it)
-                is DropperBlockEntity -> if (dropper.enable) blocks.add(it)
-                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(it)
-                is BarrelBlockEntity -> if (barrel.enable) blocks.add(it)
-                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(it)
-                is SmokerBlockEntity -> if (smoker.enable) blocks.add(it)
+        for (be in IMC.world.blockEntities.method_31866().method_31803()) {
+            when (be) {
+                is ChestBlockEntity -> if (chest.enable) blocks.add(be)
+                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(be)
+                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(be)
+                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(be)
+                is HopperBlockEntity -> if (hopper.enable) blocks.add(be)
+                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(be)
+                is DropperBlockEntity -> if (dropper.enable) blocks.add(be)
+                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(be)
+                is BarrelBlockEntity -> if (barrel.enable) blocks.add(be)
+                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(be)
+                is SmokerBlockEntity -> if (smoker.enable) blocks.add(be)
             }
         }
         return blocks
