@@ -46,7 +46,7 @@ class ScaffoldFunc : Func("Scaffold", 0, Category.WORLD) {
                 if (currentPos != null) {
                     var newSlot = -1
                     for (i in 0..9) {
-                        val itemStack = MC.player!!.method_31548().getStack(i)
+                        val itemStack = MC.player!!.inventory.getStack(i)
                         if (itemStack.isEmpty || itemStack.item !is BlockItem)
                             continue
                         newSlot = i

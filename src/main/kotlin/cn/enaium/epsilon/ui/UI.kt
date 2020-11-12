@@ -116,7 +116,7 @@ open class UI : Screen(LiteralText("")) {
         client!!.textureManager.bindTexture(background)
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         val f = 32.0f
-        bufferBuilder.begin(VertexFormat.class_5596.field_27382, VertexFormats.POSITION_TEXTURE_COLOR)
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR)
         bufferBuilder.vertex(0.0, height.toDouble(), 0.0)
             .texture(0.0f, height.toFloat() / 32.0f + 0.toFloat()).color(64, 64, 64, 255).next()
         bufferBuilder.vertex(width.toDouble(), height.toDouble(), 0.0)

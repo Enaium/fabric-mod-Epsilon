@@ -457,7 +457,7 @@ class TextField : Element {
         RenderSystem.disableTexture()
         RenderSystem.enableColorLogicOp()
         RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE)
-        bufferBuilder.begin(VertexFormat.class_5596.field_27382, VertexFormats.POSITION)
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION)
         bufferBuilder.vertex(x1.toDouble(), y2.toDouble(), 0.0).next()
         bufferBuilder.vertex(x2.toDouble(), y2.toDouble(), 0.0).next()
         bufferBuilder.vertex(x2.toDouble(), y1.toDouble(), 0.0).next()
