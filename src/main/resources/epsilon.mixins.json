@@ -5,24 +5,24 @@
   "mixins": [
   ],
   "client": [
-    "ClientPlayerEntityMixin",
-    "InGameHudMixin",
-    "KeyboardMixin",
-    "MinecraftClientMixin",
-    "IMinecraftClientMixin",
-    "TitleScreenMixin",
-    "GameRendererMixin",
-    "IGameRendererMixin",
-    "MouseMixin",
     "BlockEntityRenderDispatcherMixin",
-    "TerrainRenderContextMixin",
-    "BlockModelRendererMixin",
     "BlockMixin",
+    "BlockModelRendererMixin",
+    "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
+    "GameRendererMixin",
     "IClientPlayerInteractionManagerMixin",
+    "IGameRendererMixin",
+    "IMinecraftClientMixin",
+    "InGameHudMixin",
     "ItemEntityRendererMixin",
+    "KeyboardMixin",
     "LivingEntityRendererMixin",
-    "IClientWorldMixin"
+    "MinecraftClientMixin",
+    "MouseMixin",
+    "TerrainRenderContextMixin",
+    "TitleScreenMixin",
+    "IWorld"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -37,8 +37,8 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
     }
 
     fun onRender(render3DEvent: Render3DEvent) {
-        for (be in IMC.world.blockEntities.method_31866().method_31803()) {
-            Render3DUtils.drawBox(BlockUtils.getBoundingBox(be.blockPos), Color.DARK_GRAY, blockEntityBox)
+        for (be in IMC.world.blockEntityTickers) {
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY, blockEntityBox)
         }
     }
 }

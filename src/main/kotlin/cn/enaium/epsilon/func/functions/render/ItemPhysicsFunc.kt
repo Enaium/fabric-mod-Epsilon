@@ -29,7 +29,7 @@ class ItemPhysicsFunc : Func("ItemPhysics", 0, Category.RENDER) {
 
         renderItemEntityEvent.cancel()
 
-        if(funcManager.getFunc("NoItem")!!.enable)
+        if (funcManager.getFunc("NoItem")!!.enable)
             return
 
         val itemStack: ItemStack = renderItemEntityEvent.itemEntity.stack
@@ -39,7 +39,12 @@ class ItemPhysicsFunc : Func("ItemPhysics", 0, Category.RENDER) {
         random.setSeed(seed.toLong())
 
         renderItemEntityEvent.matrixStack.push()
-        val bakedModel = itemRenderer.getHeldItemModel(itemStack, renderItemEntityEvent.itemEntity.world, null)
+        val bakedModel = itemRenderer.getHeldItemModel(
+            itemStack,
+            renderItemEntityEvent.itemEntity.world,
+            null,
+            renderItemEntityEvent.light
+        )
         val hasDepthInGui = bakedModel.hasDepth()
 
         val renderCount = getRenderedAmount(itemStack)

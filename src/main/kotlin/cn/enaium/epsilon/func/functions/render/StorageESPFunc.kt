@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.IMC
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
@@ -11,6 +12,7 @@ import cn.enaium.epsilon.utils.Render3DUtils
 import net.minecraft.block.entity.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
+import net.minecraft.world.chunk.BlockEntityTickInvoker
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
@@ -65,10 +67,10 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
         }
     }
 
-    private fun getTargets(): ArrayList<BlockEntity> {
-        val blocks: ArrayList<BlockEntity> = ArrayList()
-        for (be in IMC.world.blockEntities.method_31866().method_31803()) {
-            when (be) {
+    private fun getTargets(): ArrayList<BlockEntityTickInvoker> {
+        val blocks: ArrayList<BlockEntityTickInvoker> = ArrayList()
+        for (be in IMC.world.blockEntityTickers) {
+            when (MC.world!!.getBlockEntity(be.pos)) {
                 is ChestBlockEntity -> if (chest.enable) blocks.add(be)
                 is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(be)
                 is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(be)
