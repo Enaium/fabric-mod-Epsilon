@@ -8,11 +8,11 @@ import cn.enaium.epsilon.func.Func
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.item.ItemRenderer
 import net.minecraft.client.render.model.json.ModelTransformation
-import net.minecraft.client.util.math.Vector3f
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Vec3d
+import net.minecraft.util.math.Vec3f
 import java.util.*
 
 
@@ -49,16 +49,16 @@ class ItemPhysicsFunc : Func("ItemPhysics", 0, Category.RENDER) {
 
         val renderCount = getRenderedAmount(itemStack)
 
-        renderItemEntityEvent.matrixStack.multiply(Vector3f.POSITIVE_X.getRadialQuaternion(1.571f))
+        renderItemEntityEvent.matrixStack.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(1.571f))
 
         val rotator = Rotation()
         if (!renderItemEntityEvent.itemEntity.isOnGround && !renderItemEntityEvent.itemEntity.isSubmergedInWater) {
             val rotation =
                 (renderItemEntityEvent.itemEntity.age + renderItemEntityEvent.delta) / 20.0F + renderItemEntityEvent.itemEntity.hoverHeight
-            renderItemEntityEvent.matrixStack.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(rotation))
+            renderItemEntityEvent.matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(rotation))
             rotator.setRotation(Vec3d(0.0, 0.0, rotation.toDouble()))
         } else {
-            renderItemEntityEvent.matrixStack.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(rotator.getRotation().z.toFloat()))
+            renderItemEntityEvent.matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(rotator.getRotation().z.toFloat()))
         }
 
         renderItemEntityEvent.matrixStack.translate(0.0, 0.0, -0.01)
@@ -92,7 +92,7 @@ class ItemPhysicsFunc : Func("ItemPhysics", 0, Category.RENDER) {
                     x = (random.nextFloat() * 2.0 - 1.0) * 0.15 * 0.5
                     y = (random.nextFloat() * 2.0 - 1.0) * 0.15 * 0.5
                     renderItemEntityEvent.matrixStack.translate(x, y, 0.0)
-                    renderItemEntityEvent.matrixStack.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(random.nextFloat()))
+                    renderItemEntityEvent.matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(random.nextFloat()))
                 }
             }
 
