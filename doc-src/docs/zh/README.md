@@ -3,7 +3,7 @@ home: true
 heroText: Epsilon
 tagline: Fabric作弊Mod 
 actionText: 快速上手 →
-actionLink: zh/guide/
+actionLink: /zh/guide/
 features:
 - title: 最新
   details: 支持最新快照版本.
