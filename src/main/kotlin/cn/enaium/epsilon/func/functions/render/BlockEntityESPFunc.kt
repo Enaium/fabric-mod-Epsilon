@@ -1,6 +1,5 @@
 package cn.enaium.epsilon.func.functions.render
 
-import cn.enaium.epsilon.Epsilon.MC
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -35,8 +34,8 @@ class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
     }
 
     fun onRender(render3DEvent: Render3DEvent) {
-        for (be in MC.world!!.blockEntities) {
-            Render3DUtils.drawBox(BlockUtils.getBoundingBox(be.pos), Color.DARK_GRAY, blockEntityBox)
+        for (blockEntity in BlockUtils.blockEntities) {
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(blockEntity.value.pos), Color.DARK_GRAY, blockEntityBox)
         }
     }
 }

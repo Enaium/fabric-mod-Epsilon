@@ -5,6 +5,7 @@ import cn.enaium.epsilon.ui.elements.TextField
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.render.Tessellator
+import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.LiteralText
@@ -115,7 +116,7 @@ open class UI : Screen(LiteralText("")) {
         client!!.textureManager.bindTexture(background)
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         val f = 32.0f
-        bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR)
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR)
         bufferBuilder.vertex(0.0, height.toDouble(), 0.0)
             .texture(0.0f, height.toFloat() / 32.0f + 0.toFloat()).color(64, 64, 64, 255).next()
         bufferBuilder.vertex(width.toDouble(), height.toDouble(), 0.0)

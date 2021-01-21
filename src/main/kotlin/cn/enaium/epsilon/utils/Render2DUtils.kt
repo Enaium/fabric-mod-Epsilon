@@ -2,13 +2,9 @@ package cn.enaium.epsilon.utils
 
 import cn.enaium.epsilon.Epsilon.MC
 import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.block.Blocks
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawableHelper
-import net.minecraft.client.render.BufferRenderer
-import net.minecraft.client.render.DiffuseLighting
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormats
+import net.minecraft.client.render.*
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
@@ -236,7 +232,7 @@ object Render2DUtils {
         RenderSystem.enableBlend()
         RenderSystem.disableTexture()
         RenderSystem.defaultBlendFunc()
-        bufferBuilder.begin(7, VertexFormats.POSITION_COLOR)
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
         bufferBuilder.vertex(matrix4f, x1.toFloat(), y2.toFloat(), 0.0f).color(g, h, k, f).next()
         bufferBuilder.vertex(matrix4f, x2.toFloat(), y2.toFloat(), 0.0f).color(g, h, k, f).next()
         bufferBuilder.vertex(matrix4f, x2.toFloat(), y1.toFloat(), 0.0f).color(g, h, k, f).next()
@@ -313,7 +309,7 @@ object Render2DUtils {
         vEnd: Float
     ) {
         val bufferBuilder = Tessellator.getInstance().buffer
-        bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE)
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE)
         bufferBuilder.vertex(xStart, yEnd, z).texture(uStart, vEnd).next()
         bufferBuilder.vertex(xEnd, yEnd, z).texture(uEnd, vEnd).next()
         bufferBuilder.vertex(xEnd, yStart, z).texture(uEnd, vStart).next()

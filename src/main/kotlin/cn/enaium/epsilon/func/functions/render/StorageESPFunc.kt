@@ -1,6 +1,8 @@
 package cn.enaium.epsilon.func.functions.render
 
 import cn.enaium.epsilon.Epsilon
+import cn.enaium.epsilon.Epsilon.MC
+import cn.enaium.epsilon.IMC
 import cn.enaium.epsilon.event.events.Render3DEvent
 import cn.enaium.epsilon.func.Category
 import cn.enaium.epsilon.func.Func
@@ -10,6 +12,7 @@ import cn.enaium.epsilon.utils.Render3DUtils
 import net.minecraft.block.entity.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
+import net.minecraft.world.chunk.BlockEntityTickInvoker
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
@@ -60,25 +63,25 @@ class StorageESPFunc : Func("StorageESP", 0, Category.RENDER) {
 
     fun onRender(render3DEvent: Render3DEvent) {
         for (t in getTargets()) {
-            Render3DUtils.drawBox(BlockUtils.getBoundingBox(t.pos), Color.GREEN, storageBox)
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(t), Color.GREEN, storageBox)
         }
     }
 
-    private fun getTargets(): ArrayList<BlockEntity> {
-        val blocks: ArrayList<BlockEntity> = ArrayList()
-        for (be in Epsilon.MC.world!!.blockEntities) {
-            when (be) {
-                is ChestBlockEntity -> if (chest.enable) blocks.add(be)
-                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(be)
-                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(be)
-                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(be)
-                is HopperBlockEntity -> if (hopper.enable) blocks.add(be)
-                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(be)
-                is DropperBlockEntity -> if (dropper.enable) blocks.add(be)
-                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(be)
-                is BarrelBlockEntity -> if (barrel.enable) blocks.add(be)
-                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(be)
-                is SmokerBlockEntity -> if (smoker.enable) blocks.add(be)
+    private fun getTargets(): ArrayList<BlockPos> {
+        val blocks: ArrayList<BlockPos> = ArrayList()
+        for (blockEntity in BlockUtils.blockEntities.values) {
+            when (blockEntity) {
+                is ChestBlockEntity -> if (chest.enable) blocks.add(blockEntity.pos)
+                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(blockEntity.pos)
+                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(blockEntity.pos)
+                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(blockEntity.pos)
+                is HopperBlockEntity -> if (hopper.enable) blocks.add(blockEntity.pos)
+                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(blockEntity.pos)
+                is DropperBlockEntity -> if (dropper.enable) blocks.add(blockEntity.pos)
+                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(blockEntity.pos)
+                is BarrelBlockEntity -> if (barrel.enable) blocks.add(blockEntity.pos)
+                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(blockEntity.pos)
+                is SmokerBlockEntity -> if (smoker.enable) blocks.add(blockEntity.pos)
             }
         }
         return blocks
