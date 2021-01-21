@@ -3,8 +3,6 @@
   "package": "cn.enaium.epsilon.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "client": [
     "BlockEntityRenderDispatcherMixin",
     "BlockMixin",
     "BlockModelRendererMixin",
@@ -16,13 +14,14 @@
     "IMinecraftClientMixin",
     "InGameHudMixin",
     "ItemEntityRendererMixin",
+    "IWorld",
     "KeyboardMixin",
     "LivingEntityRendererMixin",
     "MinecraftClientMixin",
     "MouseMixin",
     "TerrainRenderContextMixin",
     "TitleScreenMixin",
-    "IWorld"
+    "WorldChunkMixin"
   ],
   "injectors": {
     "defaultRequire": 1

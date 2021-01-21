@@ -1,9 +1,11 @@
 package cn.enaium.epsilon.utils
 
 import cn.enaium.epsilon.Epsilon.MC
+import com.google.common.collect.Maps
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.Identifier
 import net.minecraft.util.InvalidIdentifierException
 import net.minecraft.util.math.BlockPos
@@ -11,6 +13,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
+import java.util.ArrayList
 
 
 /**
@@ -19,6 +22,8 @@ import net.minecraft.util.shape.VoxelShapes
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 object BlockUtils {
+    
+    var blockEntities: Map<BlockPos, BlockEntity> = Maps.newHashMap()
 
     fun getState(pos: BlockPos): BlockState {
         return MC.world!!.getBlockState(pos)
