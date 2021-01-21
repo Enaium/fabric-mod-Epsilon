@@ -24,13 +24,13 @@ object Render3DUtils {
     }
 
     fun applyCameraRotationOnly() {
-        val camera: Camera = Epsilon.MC.method_31975().camera
+        val camera: Camera = Epsilon.MC.gameRenderer.camera
         GL11.glRotated(MathHelper.wrapDegrees(camera.pitch).toDouble(), 1.0, 0.0, 0.0)
         GL11.glRotated(MathHelper.wrapDegrees(camera.yaw + 180.0), 0.0, 1.0, 0.0)
     }
 
     fun getCameraPos(): Vec3d {
-        return Epsilon.MC.method_31975().camera.pos
+        return Epsilon.MC.gameRenderer.camera.pos
     }
 
     fun drawSolid(bb: Box) {
