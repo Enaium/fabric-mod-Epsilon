@@ -17,7 +17,7 @@ import java.io.File
 object Epsilon {
 
     var NAME = "Epsilon"
-    var VERSION = "1.0.3"
+    var VERSION = "1.0.4"
     var GAME = "21w03a"
     var AUTHOR = "Enaium"
     var DIR = MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME + "/"
