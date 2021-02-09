@@ -13,8 +13,9 @@ import net.minecraft.util.hit.HitResult
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class CriticalFunc : Func("Critical", 0, Category.COMBAT) {
     private val mode = ModeSetting(this, "Mode", "Packet", arrayListOf("Packet", "LowJump", "Jump"))

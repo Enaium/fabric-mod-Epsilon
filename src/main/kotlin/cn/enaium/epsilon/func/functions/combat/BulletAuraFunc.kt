@@ -15,8 +15,9 @@ import net.minecraft.util.Hand
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class BulletAuraFunc : Func("BulletAura", 0, Category.COMBAT) {
     private var target: Entity? = null

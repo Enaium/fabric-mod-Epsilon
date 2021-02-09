@@ -8,8 +8,9 @@ import net.minecraft.client.gui.screen.DeathScreen
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class RespawnFunc : Func("AutoRespawn", 0, Category.OTHER) {
     fun on(updateEvent: UpdateEvent) {

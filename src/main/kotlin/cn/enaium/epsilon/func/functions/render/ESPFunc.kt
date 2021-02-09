@@ -15,8 +15,9 @@ import java.awt.Color
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class ESPFunc : Func("ESP", 0, Category.RENDER) {
     private val witherSkeleton = EnableSetting(this, "WitherSkeleton", true)

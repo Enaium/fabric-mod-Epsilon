@@ -8,8 +8,9 @@ import cn.enaium.epsilon.utils.Render2DUtils
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class CategoryListScreen : UI() {
     override fun initUI() {

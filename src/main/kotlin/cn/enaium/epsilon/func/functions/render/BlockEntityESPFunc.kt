@@ -12,8 +12,9 @@ import java.awt.Color
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class BlockEntityESPFunc : Func("BlockEntityESP", 0, Category.RENDER) {
     private var blockEntityBox = 0

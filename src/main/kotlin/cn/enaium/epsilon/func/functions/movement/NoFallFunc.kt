@@ -9,8 +9,9 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class NoFallFunc : Func("NoFall", 0, Category.MOVEMENT) {
     fun on(updateEvent: UpdateEvent) {

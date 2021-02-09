@@ -5,6 +5,11 @@ import cn.enaium.epsilon.command.Command
 import cn.enaium.epsilon.command.CommandAT
 import cn.enaium.epsilon.utils.ChatUtils
 
+/**
+ * Project: Epsilon
+ * -----------------------------------------------------------
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
+ */
 @CommandAT(["help", "h"])
 class HelpCommand : Command {
     override fun run(args: Array<String>): Boolean {

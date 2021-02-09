@@ -11,8 +11,9 @@ import net.minecraft.entity.effect.StatusEffects
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class BrightFunc : Func("Bright", 0, Category.RENDER) {
     private val mode = ModeSetting(this, "Mode", "Gamma", arrayListOf("Gamma", "NightVision"))

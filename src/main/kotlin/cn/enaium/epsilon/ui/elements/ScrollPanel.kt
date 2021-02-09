@@ -7,8 +7,9 @@ import org.lwjgl.opengl.GL11
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 open class ScrollPanel(x: Int, y: Int, width: Int, height: Int) : Element(
     x,
