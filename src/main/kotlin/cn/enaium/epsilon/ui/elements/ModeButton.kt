@@ -7,8 +7,9 @@ import net.minecraft.client.util.math.MatrixStack
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 open class ModeButton : Element {
 

@@ -10,8 +10,9 @@ import org.lwjgl.glfw.GLFW
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class EditKeyboardScreen(val func: Func) : UI() {
     override fun initUI() {

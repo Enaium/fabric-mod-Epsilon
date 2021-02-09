@@ -8,8 +8,9 @@ import org.lwjgl.glfw.GLFW
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class SprintFunc : Func("Sprint", GLFW.GLFW_KEY_V, Category.MOVEMENT) {
     fun onUpdate(updateEvent: UpdateEvent) {

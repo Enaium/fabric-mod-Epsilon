@@ -7,8 +7,9 @@ import cn.enaium.epsilon.func.Func
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class GlowFunc : Func("Glow", 0, Category.RENDER) {
     fun onUpdate(updateEvent: UpdateEvent) {

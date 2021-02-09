@@ -4,7 +4,11 @@ import net.minecraft.util.Formatting
 import java.text.DecimalFormat
 import java.util.*
 
-
+/**
+ * Project: Epsilon
+ * -----------------------------------------------------------
+ * Copyright © 2020 | Enaium | All rights reserved.
+ */
 object Utils {
 
     fun valueFix(value: Float): Float {

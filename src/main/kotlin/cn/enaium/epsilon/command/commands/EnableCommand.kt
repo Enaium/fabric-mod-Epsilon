@@ -6,6 +6,11 @@ import cn.enaium.epsilon.command.CommandAT
 import cn.enaium.epsilon.utils.ChatUtils.error
 import cn.enaium.epsilon.utils.ChatUtils.message
 
+/**
+ * Project: Epsilon
+ * -----------------------------------------------------------
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
+ */
 @CommandAT(["enable", "e"])
 class EnableCommand : Command {
     override fun run(args: Array<String>): Boolean {

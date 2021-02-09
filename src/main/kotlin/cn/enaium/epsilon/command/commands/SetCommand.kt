@@ -10,7 +10,12 @@ import cn.enaium.epsilon.utils.ChatUtils
 import net.minecraft.util.Formatting
 import java.util.*
 
-
+/**
+ * Project: Epsilon
+ * License: GPL-3.0
+ * -----------------------------------------------------------
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
+ */
 @CommandAT(["set", "s"])
 class SetCommand : Command {
     override fun run(args: Array<String>): Boolean {

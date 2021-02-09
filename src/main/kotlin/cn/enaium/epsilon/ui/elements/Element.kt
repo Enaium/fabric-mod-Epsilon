@@ -7,8 +7,9 @@ import net.minecraft.util.Util
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 abstract class Element(val tempX: Int, val tempY: Int, val width: Int, val height: Int) : Element {
     val id = 0

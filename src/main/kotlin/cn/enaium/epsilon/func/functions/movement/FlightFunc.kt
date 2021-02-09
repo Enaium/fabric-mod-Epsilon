@@ -11,8 +11,9 @@ import org.lwjgl.glfw.GLFW
 
 /**
  * Project: Epsilon
+ * License: GPL-3.0
  * -----------------------------------------------------------
- * Copyright © 2020 | Enaium | All rights reserved.
+ * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 class FlightFunc : Func("Flight", GLFW.GLFW_KEY_G, Category.MOVEMENT) {
     private var speed = DoubleSetting(this, "Speed", 3.0, 1.0, 10.0)
