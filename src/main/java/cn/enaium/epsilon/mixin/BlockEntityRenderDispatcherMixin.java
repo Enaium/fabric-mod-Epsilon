@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.RenderBlockEntityEvent;
+import cn.enaium.epsilon.client.events.RenderBlockEntityEvent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -21,7 +21,7 @@ public class BlockEntityRenderDispatcherMixin {
     private <E extends BlockEntity> void render(E blockEntity, float tickDelta, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, CallbackInfo callbackInfo) {
         RenderBlockEntityEvent event = new RenderBlockEntityEvent(blockEntity);
         event.call();
-        if (event.getCancelled()) {
+        if (event.isCancelled()) {
             callbackInfo.cancel();
         }
     }

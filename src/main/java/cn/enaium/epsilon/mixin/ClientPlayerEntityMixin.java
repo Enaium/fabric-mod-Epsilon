@@ -1,9 +1,9 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.Epsilon;
-import cn.enaium.epsilon.event.Event;
-import cn.enaium.epsilon.event.events.MotionEvent;
-import cn.enaium.epsilon.event.events.UpdateEvent;
+import cn.enaium.cf4m.CF4M;
+import cn.enaium.cf4m.event.EventBase;
+import cn.enaium.cf4m.event.events.UpdateEvent;
+import cn.enaium.epsilon.client.events.MotionEvent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -66,7 +66,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(at = @At("HEAD"), method = "sendChatMessage", cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo info) {
-        if (Epsilon.commandManager.processCommand(message)) {
+        if (CF4M.getInstance().command.isCommand(message)) {
             info.cancel();
         }
     }
@@ -78,7 +78,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(at = @At("RETURN"), method = "tick()V")
     private void preTick(CallbackInfo ci) {
-        new MotionEvent(Event.Type.PRE, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
+        new MotionEvent(EventBase.Type.PRE, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
      */
     @Overwrite
     private void sendMovementPackets() {
-        MotionEvent motionEvent = new MotionEvent(Event.Type.POST, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
+        MotionEvent motionEvent = new MotionEvent(EventBase.Type.POST, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
         motionEvent.call();
         boolean bl = this.isSprinting();
         if (bl != this.lastSprinting) {

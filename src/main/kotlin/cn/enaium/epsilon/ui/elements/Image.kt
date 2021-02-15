@@ -1,8 +1,7 @@
 package cn.enaium.epsilon.ui.elements
 
-import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.utils.Render2DUtils
-import net.minecraft.block.Blocks
+import cn.enaium.epsilon.client.MC
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier

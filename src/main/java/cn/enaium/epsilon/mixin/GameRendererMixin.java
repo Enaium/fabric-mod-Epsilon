@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.Render3DEvent;
-import cn.enaium.epsilon.utils.Render3DUtils;
+import cn.enaium.epsilon.client.events.Render3DEvent;
+import cn.enaium.epsilon.client.utils.Render3DUtils;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;

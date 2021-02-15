@@ -1,7 +1,8 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.Epsilon;
+import cn.enaium.epsilon.client.Epsilon;
 import cn.enaium.epsilon.screen.AltScreen;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -27,7 +28,7 @@ public class TitleScreenMixin extends Screen {
     @Inject(at = @At("RETURN"), method = "init()V")
     private void init(CallbackInfo callbackInfo) {
 
-        addButton(new ButtonWidget(5, 5, 20, 20, new LiteralText("Alt"), button -> Epsilon.INSTANCE.getMC().openScreen(new AltScreen())));
+        addButton(new ButtonWidget(5, 5, 20, 20, new LiteralText("Alt"), button -> MinecraftClient.getInstance().openScreen(new AltScreen())));
 
     }
 

@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.ShouldDrawSideEvent;
+import cn.enaium.epsilon.client.events.ShouldDrawSideEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

@@ -1,12 +1,13 @@
 package cn.enaium.epsilon.screen.clickgui
 
-import cn.enaium.epsilon.Epsilon
-import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.func.Category
+import cn.enaium.cf4m.module.Category
+import cn.enaium.epsilon.client.Epsilon
+import cn.enaium.epsilon.client.MC
+import cn.enaium.cf4m.CF4M
 import cn.enaium.epsilon.ui.UI
 import cn.enaium.epsilon.ui.elements.Button
 import cn.enaium.epsilon.ui.elements.ScrollPanel
-import cn.enaium.epsilon.utils.Render2DUtils
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import org.lwjgl.glfw.GLFW
 
 /**
@@ -21,14 +22,14 @@ class FuncListScreen(val category: Category) : UI() {
         super.initUI()
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
         var y = 0
-        for (func in Epsilon.funcManager.getFuncForCategory(category)) {
+        for (func in getFuncForCategory(category)) {
             scrollPanel.addElement(object : Button(
                 0,
                 y,
-                func.name
+                CF4M.getInstance().module.getName(func)
             ) {
                 override fun onLeftClicked() {
-                    func.enable()
+                    CF4M.getInstance().module.enable(func)
                     super.onLeftClicked()
                 }
 
@@ -45,6 +46,16 @@ class FuncListScreen(val category: Category) : UI() {
             y += 30
         }
         addElement(scrollPanel)
+    }
+
+    private fun getFuncForCategory(category: Category): ArrayList<Any> {
+        var list: ArrayList<Any> = ArrayList();
+        for (module in CF4M.getInstance().module.modules) {
+            if (CF4M.getInstance().module.getCategory(module).equals(category)) {
+                list.add(module)
+            }
+        }
+        return list;
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {

@@ -1,5 +1,7 @@
 package cn.enaium.epsilon
 
+import cn.enaium.epsilon.client.MC
+import cn.enaium.epsilon.mixin.ItemEntityRendererMixin
 import cn.enaium.epsilon.mixin.IClientPlayerInteractionManagerMixin
 import cn.enaium.epsilon.mixin.IGameRendererMixin
 import cn.enaium.epsilon.mixin.IMinecraftClientMixin
@@ -17,11 +19,11 @@ object IMC {
         get() = MinecraftClient.getInstance() as IMinecraftClientMixin
 
     val gameRenderer
-        get() = Epsilon.MC.gameRenderer as IGameRendererMixin
+        get() = MC.gameRenderer as IGameRendererMixin
 
     val interactionManager
-        get() = Epsilon.MC.interactionManager as IClientPlayerInteractionManagerMixin
+        get() = MC.interactionManager as IClientPlayerInteractionManagerMixin
 
     val world
-        get() = Epsilon.MC.world as IWorld
+        get() = MC.world as IWorld
 }

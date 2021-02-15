@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.ShouldDrawSideEvent;
-import cn.enaium.epsilon.event.events.TessellateBlockEvent;
+import cn.enaium.epsilon.client.events.ShouldDrawSideEvent;
+import cn.enaium.epsilon.client.events.TessellateBlockEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.BlockModelRenderer;
@@ -29,7 +29,7 @@ public class BlockModelRendererMixin {
         TessellateBlockEvent tessellateBlockEvent = new TessellateBlockEvent(state);
         tessellateBlockEvent.call();
 
-        if (tessellateBlockEvent.getCancelled()) {
+        if (tessellateBlockEvent.isCancelled()) {
             callbackInfoReturnable.cancel();
             return;
         }

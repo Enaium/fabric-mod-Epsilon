@@ -1,8 +1,8 @@
 package cn.enaium.epsilon.ui.elements
 
 import cn.enaium.epsilon.ui.Color
-import cn.enaium.epsilon.utils.FontUtils
-import cn.enaium.epsilon.utils.Render2DUtils
+import cn.enaium.epsilon.client.utils.FontUtils
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.SharedConstants

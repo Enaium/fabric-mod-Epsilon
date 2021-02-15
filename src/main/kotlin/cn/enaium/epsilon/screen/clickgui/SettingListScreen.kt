@@ -1,12 +1,13 @@
 package cn.enaium.epsilon.screen.clickgui
 
-import cn.enaium.epsilon.Epsilon
-import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.func.Func
-import cn.enaium.epsilon.setting.settings.*
+import cn.enaium.cf4m.setting.settings.*
+import cn.enaium.epsilon.client.Epsilon
+import cn.enaium.epsilon.client.MC
+import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.ui.UI
 import cn.enaium.epsilon.ui.elements.*
-import cn.enaium.epsilon.utils.Render2DUtils
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import org.lwjgl.glfw.GLFW
 
 /**
@@ -15,18 +16,18 @@ import org.lwjgl.glfw.GLFW
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-class SettingListScreen(val func: Func) : UI() {
+class SettingListScreen(val func: Any) : UI() {
 
     override fun initUI() {
         super.initUI()
         var y = 0
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
-        for (setting in Epsilon.settingManager.getSettingsForFunc(func)) {
+        for (setting in CF4M.getInstance().module.getSettings(func)) {
             if (setting is EnableSetting) {
                 scrollPanel.addElement(object :
-                    CheckBox(0, y, setting.name, setting.enable) {
+                    CheckBox(0, y, setting.name, setting.isEnable) {
                     override fun onLeftClicked() {
-                        setting.enable = this.checked
+                        setting.isEnable = this.checked
                         super.onLeftClicked()
                     }
                 })
@@ -73,24 +74,24 @@ class SettingListScreen(val func: Func) : UI() {
                 }
                 scrollPanel.addElement(textField)
             } else if (setting is ModeSetting) {
-                scrollPanel.addElement(object : ModeButton(0, y, setting.modes, setting.getCurrentIndex()) {
+                scrollPanel.addElement(object : ModeButton(0, y, setting.modes as ArrayList<String>, getCurrentModeIndex(setting)) {
                     override fun onLeftClicked() {
                         try {
-                            setting.current = setting.modes[setting.getCurrentIndex() + 1]
+                            setting.current = setting.modes[getCurrentModeIndex(setting) + 1]
                         } catch (e: Exception) {
                             setting.current = setting.modes.first()
                         }
-                        this.current = setting.getCurrentIndex()
+                        this.current = getCurrentModeIndex(setting)
                         super.onLeftClicked()
                     }
 
                     override fun onRightClicked() {
                         try {
-                            setting.current = setting.modes[setting.getCurrentIndex() - 1]
+                            setting.current = setting.modes[getCurrentModeIndex(setting) - 1]
                         } catch (e: Exception) {
                             setting.current = setting.modes.last()
                         }
-                        this.current = setting.getCurrentIndex()
+                        this.current = getCurrentModeIndex(setting)
                         super.onRightClicked()
                     }
                 })
@@ -107,9 +108,20 @@ class SettingListScreen(val func: Func) : UI() {
         addElement(scrollPanel)
     }
 
+    private fun getCurrentModeIndex(modeSetting: ModeSetting): Int {
+        var index = 0
+        for (ms in modeSetting.modes) {
+            index++
+            if(modeSetting.current.equals(ms)) {
+                return index
+            }
+        }
+        return 0;
+    }
+
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE)
-            Epsilon.MC.openScreen(CategoryListScreen())
+            MC.openScreen(CategoryListScreen())
         return super.keyPressed(keyCode, scanCode, modifiers)
     }
 

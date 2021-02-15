@@ -26,6 +26,7 @@
   "depends": {
     "fabricloader": ">=0.8.7",
     "fabric": "*",
+    "cf4m": ">=1.4.2",
     "fabric-language-kotlin": "*"
   },
   "suggests": {

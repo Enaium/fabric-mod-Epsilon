@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.utils.BlockUtils;
+import cn.enaium.epsilon.client.utils.BlockUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.WorldChunk;

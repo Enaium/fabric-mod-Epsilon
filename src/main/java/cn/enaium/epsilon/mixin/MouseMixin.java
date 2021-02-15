@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.MouseScrollEvent;
+import cn.enaium.epsilon.client.events.MouseScrollEvent;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

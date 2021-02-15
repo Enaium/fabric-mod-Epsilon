@@ -1,13 +1,10 @@
 package cn.enaium.epsilon.screen.clickgui
 
-import cn.enaium.epsilon.Epsilon.MC
-import cn.enaium.epsilon.setting.settings.BlockListSetting
+import cn.enaium.epsilon.client.MC
+import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.ui.UI
 import cn.enaium.epsilon.ui.elements.*
-import cn.enaium.epsilon.utils.BlockUtils
-import cn.enaium.epsilon.utils.Render2DUtils
-import net.minecraft.block.Blocks
-import net.minecraft.client.util.math.MatrixStack
+import cn.enaium.epsilon.client.utils.BlockUtils
 import net.minecraft.item.ItemStack
 
 /**
