@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.client.Epsilon;
-import cn.enaium.epsilon.screen.AltScreen;
+import cn.enaium.epsilon.client.screen.AltScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
