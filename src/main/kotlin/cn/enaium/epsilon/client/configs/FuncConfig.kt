@@ -77,7 +77,7 @@ class FuncConfig {
         val funcObject = JSONObject(true)
         for (func in CF4M.INSTANCE.module.modules) {
             val funcClassObject = JSONObject(true)
-            funcClassObject["enable"] = CF4M.INSTANCE.module.enable(func)
+            funcClassObject["enable"] = CF4M.INSTANCE.module.getEnable(func)
             funcClassObject["key"] = CF4M.INSTANCE.module.getKey(func)
             val settings = CF4M.INSTANCE.module.getSettings(func)
             if (settings.isNotEmpty()) {
