@@ -1,8 +1,8 @@
-package cn.enaium.epsilon.screen.clickgui
+package cn.enaium.epsilon.client.screen.clickgui
 
 import cn.enaium.cf4m.CF4M
-import cn.enaium.epsilon.ui.UI
-import cn.enaium.epsilon.ui.elements.Label
+import cn.enaium.epsilon.client.ui.UI
+import cn.enaium.epsilon.client.ui.elements.Label
 import org.lwjgl.glfw.GLFW
 
 /**

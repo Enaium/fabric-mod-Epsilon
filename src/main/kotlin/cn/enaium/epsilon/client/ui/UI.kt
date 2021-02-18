@@ -1,7 +1,7 @@
-package cn.enaium.epsilon.ui
+package cn.enaium.epsilon.client.ui
 
-import cn.enaium.epsilon.ui.elements.Element
-import cn.enaium.epsilon.ui.elements.TextField
+import cn.enaium.epsilon.client.ui.elements.Element
+import cn.enaium.epsilon.client.ui.elements.TextField
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.render.Tessellator

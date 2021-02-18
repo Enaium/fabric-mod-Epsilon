@@ -1,7 +1,7 @@
-package cn.enaium.epsilon.screen
+package cn.enaium.epsilon.client.screen
 
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.IMC
+import cn.enaium.epsilon.client.IMC
 import com.mojang.authlib.Agent
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication

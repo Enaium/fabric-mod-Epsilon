@@ -4,7 +4,7 @@ import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
-import cn.enaium.epsilon.IMC
+import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.events.BlockBreakingProgressEvent
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.Action
 import net.minecraft.util.math.BlockPos

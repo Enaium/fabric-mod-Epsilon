@@ -5,7 +5,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
 import cn.enaium.cf4m.CF4M
-import cn.enaium.epsilon.screen.clickgui.CategoryListScreen
+import cn.enaium.epsilon.client.screen.clickgui.CategoryListScreen
 import org.lwjgl.glfw.GLFW
 
 /**

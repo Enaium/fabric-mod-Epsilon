@@ -1,9 +1,7 @@
-package cn.enaium.epsilon.ui.elements
+package cn.enaium.epsilon.client.ui.elements
 
 import net.minecraft.client.gui.Element
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
-import net.minecraft.util.Util
 
 /**
  * Project: Epsilon

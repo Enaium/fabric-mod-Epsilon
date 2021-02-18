@@ -1,12 +1,11 @@
-package cn.enaium.epsilon.screen.clickgui
+package cn.enaium.epsilon.client.screen.clickgui
 
 import cn.enaium.cf4m.setting.settings.*
-import cn.enaium.epsilon.client.Epsilon
 import cn.enaium.epsilon.client.MC
 import cn.enaium.cf4m.CF4M
 import cn.enaium.epsilon.client.setting.BlockListSetting
-import cn.enaium.epsilon.ui.UI
-import cn.enaium.epsilon.ui.elements.*
+import cn.enaium.epsilon.client.ui.UI
+import cn.enaium.epsilon.client.ui.elements.*
 import cn.enaium.epsilon.client.utils.Render2DUtils
 import org.lwjgl.glfw.GLFW
 

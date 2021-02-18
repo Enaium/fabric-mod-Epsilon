@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.ui
+package cn.enaium.epsilon.client.ui
 
 import java.awt.Color
 

@@ -1,6 +1,6 @@
-package cn.enaium.epsilon.ui.elements
+package cn.enaium.epsilon.client.ui.elements
 
-import cn.enaium.epsilon.ui.Color
+import cn.enaium.epsilon.client.ui.Color
 import cn.enaium.epsilon.client.utils.FontUtils
 import cn.enaium.epsilon.client.utils.Render2DUtils
 import com.mojang.blaze3d.platform.GlStateManager

@@ -1,4 +1,4 @@
-package cn.enaium.epsilon
+package cn.enaium.epsilon.client
 
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.mixin.ItemEntityRendererMixin

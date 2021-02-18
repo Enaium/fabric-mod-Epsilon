@@ -1,9 +1,9 @@
-package cn.enaium.epsilon.screen.clickgui
+package cn.enaium.epsilon.client.screen.clickgui
 
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.ui.UI
-import cn.enaium.epsilon.ui.elements.Button
+import cn.enaium.epsilon.client.ui.UI
+import cn.enaium.epsilon.client.ui.elements.Button
 import cn.enaium.epsilon.client.utils.Render2DUtils
 
 /**

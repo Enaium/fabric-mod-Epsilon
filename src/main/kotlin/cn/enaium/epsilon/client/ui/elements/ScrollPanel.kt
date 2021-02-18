@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.ui.elements
+package cn.enaium.epsilon.client.ui.elements
 
 import cn.enaium.epsilon.client.utils.Render2DUtils
 import net.minecraft.client.util.math.MatrixStack
