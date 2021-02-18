@@ -14,14 +14,14 @@ import org.lwjgl.glfw.GLFW
 class EditKeyboardScreen(val func: Any) : UI() {
     override fun initUI() {
         super.initUI()
-        addElement(Label(width / 2 - 50, height / 2 - 10, "Key:${CF4M.getInstance().module.getKey(func)}"))
+        addElement(Label(width / 2 - 50, height / 2 - 10, "Key:${CF4M.INSTANCE.module.getKey(func)}"))
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             onClose()
         } else {
-            CF4M.getInstance().module.setKey(func, keyCode)
+            CF4M.INSTANCE.module.setKey(func, keyCode)
             onClose()
         }
         return super.keyPressed(keyCode, scanCode, modifiers)

@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.combat
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.*
@@ -24,19 +23,14 @@ import net.minecraft.util.Hand
 class BulletAuraFunc {
     private var target: Entity? = null
 
-    @Setting
     private val range = FloatSetting(this, "Range", "Range", 4.1f, 0.1f, 7.0f)
 
-    @Setting
     private val delay = EnableSetting(this, "Delay", "Delay", false)
 
-    @Setting
     private val shulkerBullet = EnableSetting(this, "ShulkerBullet", "Attack ShulkerBullet", true)
 
-    @Setting
     private val fireball = EnableSetting(this, "Fireball", "Attack Fireball", true)
 
-    @Setting
     private val dragonFireball = EnableSetting(this, "DragonFireball", "Attack DragonFireball", true)
 
     @Event
@@ -44,7 +38,7 @@ class BulletAuraFunc {
         target = when (motionEvent.type) {
             Type.PRE -> {
 
-                if (delay.isEnable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
+                if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
             }
@@ -62,9 +56,9 @@ class BulletAuraFunc {
         for (entity in MC.world!!.entities) {
             if (MC.player!!.squaredDistanceTo(entity) <= (range.current * range.current)) {
                 when (entity) {
-                    is ShulkerBulletEntity -> if (shulkerBullet.isEnable) entityList.add(entity)
-                    is FireballEntity -> if (fireball.isEnable) entityList.add(entity)
-                    is DragonFireballEntity -> if (dragonFireball.isEnable) entityList.add(entity)
+                    is ShulkerBulletEntity -> if (shulkerBullet.enable) entityList.add(entity)
+                    is FireballEntity -> if (fireball.enable) entityList.add(entity)
+                    is DragonFireballEntity -> if (dragonFireball.enable) entityList.add(entity)
                 }
             }
         }

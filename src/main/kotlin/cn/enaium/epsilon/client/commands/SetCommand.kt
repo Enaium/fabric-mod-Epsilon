@@ -23,8 +23,8 @@ class SetCommand : ICommand {
     override fun run(args: Array<String>): Boolean {
         if (args.size in 2..5) {
 
-            val func = CF4M.getInstance().module.getModule(args[1])
-            val settings: ArrayList<SettingBase> = CF4M.getInstance().module.getSettings(func)
+            val func = CF4M.INSTANCE.module.getModule(args[1])
+            val settings: ArrayList<SettingBase> = CF4M.INSTANCE.module.getSettings(func)
 
             if (func == null) {
                 this.error("""The func with the name "${args[1]}" does not exist.""", "")
@@ -54,7 +54,7 @@ class SetCommand : ICommand {
                         if (s.name.equals(args[2], true)) {
                             when (s) {
                                 is EnableSetting -> {
-                                    message("[${s.name}]" + "Enable:", s.isEnable)
+                                    message("[${s.name}]" + "Enable:", s.enable)
                                 }
                                 is IntegerSetting -> {
                                     message("[${s.name}]" + "Current:", s.current)
@@ -77,8 +77,8 @@ class SetCommand : ICommand {
                         if (s.name.equals(args[2], true)) {
                             when (s) {
                                 is EnableSetting -> {
-                                    s.isEnable = args[3].toBoolean()
-                                    success("Enable:", s.isEnable)
+                                    s.enable = args[3].toBoolean()
+                                    success("Enable:", s.enable)
                                 }
                                 is IntegerSetting -> {
                                     s.current = args[3].toInt()
@@ -134,15 +134,15 @@ class SetCommand : ICommand {
     private val error: String = "[" + Formatting.RED + Epsilon.NAME + Formatting.WHITE + "] "
 
     private fun message(string: String, args: Any) {
-        CF4M.getInstance().configuration.message(message + string + Formatting.LIGHT_PURPLE + args)
+        CF4M.INSTANCE.configuration.message(message + string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun error(string: String, args: Any) {
-        CF4M.getInstance().configuration.message(error + string + Formatting.LIGHT_PURPLE + args)
+        CF4M.INSTANCE.configuration.message(error + string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun success(string: String, args: Any) {
-        CF4M.getInstance().configuration.message(success + string + Formatting.LIGHT_PURPLE + args)
+        CF4M.INSTANCE.configuration.message(success + string + Formatting.LIGHT_PURPLE + args)
     }
 
 }

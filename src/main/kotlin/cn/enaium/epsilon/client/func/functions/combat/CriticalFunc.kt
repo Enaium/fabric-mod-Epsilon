@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.combat
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
@@ -22,7 +21,6 @@ import net.minecraft.util.hit.HitResult
 @Module("Critical", category = Category.COMBAT)
 class CriticalFunc {
 
-    @Setting
     private val mode = ModeSetting(this, "Mode", "", "Packet", arrayListOf("Packet", "LowJump", "Jump"))
 
     @Event

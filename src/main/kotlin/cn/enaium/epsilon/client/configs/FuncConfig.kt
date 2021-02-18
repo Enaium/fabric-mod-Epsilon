@@ -22,15 +22,15 @@ class FuncConfig {
 
     @Load
     fun load() {
-        val funcObject = JSON.parseObject(FileUtils.read(CF4M.getInstance().config.getPath(this)))
-        for (func in CF4M.getInstance().module.modules) {
+        val funcObject = JSON.parseObject(FileUtils.read(CF4M.INSTANCE.config.getPath(this)))
+        for (func in CF4M.INSTANCE.module.modules) {
             if (funcObject != null) {
-                if (funcObject.containsKey(CF4M.getInstance().module.getName(func))) {
+                if (funcObject.containsKey(CF4M.INSTANCE.module.getName(func))) {
                     val funcClassObject =
-                        JSON.parseObject(funcObject.getString(CF4M.getInstance().module.getName(func)))
-                    if (funcClassObject.getBoolean("enable")) CF4M.getInstance().module.enable(func)
-                    CF4M.getInstance().module.setKey(func, funcClassObject.getInteger("key"))
-                    val settings = CF4M.getInstance().module.getSettings(func)
+                        JSON.parseObject(funcObject.getString(CF4M.INSTANCE.module.getName(func)))
+                    if (funcClassObject.getBoolean("enable")) CF4M.INSTANCE.module.enable(func)
+                    CF4M.INSTANCE.module.setKey(func, funcClassObject.getInteger("key"))
+                    val settings = CF4M.INSTANCE.module.getSettings(func)
                     if (settings.isNotEmpty()) {
                         val settingObject = JSON.parseObject(funcClassObject.getString("settings"))
                         for (setting in settings) {
@@ -38,7 +38,7 @@ class FuncConfig {
                                 if (settingObject.containsKey(setting.name)) {
                                     when (setting) {
                                         is EnableSetting -> {
-                                            setting.isEnable = settingObject.getBoolean(setting.name)
+                                            setting.enable = settingObject.getBoolean(setting.name)
                                         }
                                         is IntegerSetting -> {
                                             setting.current = settingObject.getInteger(setting.name)
@@ -75,17 +75,17 @@ class FuncConfig {
     @Save
     fun save() {
         val funcObject = JSONObject(true)
-        for (func in CF4M.getInstance().module.modules) {
+        for (func in CF4M.INSTANCE.module.modules) {
             val funcClassObject = JSONObject(true)
-            funcClassObject["enable"] = CF4M.getInstance().module.isEnable(func)
-            funcClassObject["key"] = CF4M.getInstance().module.getKey(func)
-            val settings = CF4M.getInstance().module.getSettings(func)
+            funcClassObject["enable"] = CF4M.INSTANCE.module.enable(func)
+            funcClassObject["key"] = CF4M.INSTANCE.module.getKey(func)
+            val settings = CF4M.INSTANCE.module.getSettings(func)
             if (settings.isNotEmpty()) {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
                     when (s) {
                         is EnableSetting -> {
-                            settingObject[s.name] = s.isEnable
+                            settingObject[s.name] = s.enable
                         }
                         is IntegerSetting -> {
                             settingObject[s.name] = s.current
@@ -109,10 +109,10 @@ class FuncConfig {
                 }
                 funcClassObject["settings"] = settingObject
             }
-            funcObject[CF4M.getInstance().module.getName(func)] = funcClassObject
+            funcObject[CF4M.INSTANCE.module.getName(func)] = funcClassObject
         }
         FileUtils.write(
-            CF4M.getInstance().config.getPath(this),
+            CF4M.INSTANCE.config.getPath(this),
             JSON.toJSONString(funcObject, SerializerFeature.PrettyFormat)
         )
     }

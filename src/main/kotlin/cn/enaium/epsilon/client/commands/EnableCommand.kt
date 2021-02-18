@@ -15,16 +15,16 @@ class EnableCommand : ICommand {
 
         if (args.size == 1 || args.size == 2) {
             if (args.size == 1) {
-                for (ms in CF4M.getInstance().module.modules)
-                    CF4M.getInstance().configuration.message(CF4M.getInstance().module.getName(ms))
+                for (ms in CF4M.INSTANCE.module.modules)
+                    CF4M.INSTANCE.configuration.message(CF4M.INSTANCE.module.getName(ms))
                 return true
             } else if (args.size == 2) {
-                val func = CF4M.getInstance().module.getModule(args[1])
+                val func = CF4M.INSTANCE.module.getModule(args[1])
                 if (func == null) {
                     error("The func with the name " + args[1] + " does not exist.")
                     return true
                 }
-                CF4M.getInstance().module.enable(func)
+                CF4M.INSTANCE.module.enable(func)
                 return true
             }
         }

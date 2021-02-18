@@ -36,8 +36,6 @@ class AltScreen : Screen(LiteralText("")) {
         addButton(ButtonWidget(width / 2 - 200 / 2, 40 * 3 + 25 * 2, 250, 20, LiteralText("Back"), PressAction {
             MC.openScreen(null)
         }))
-        usernameField.setSelected(true)
-        passwordField.setSelected(true)
         children.addAll(arrayOf(usernameField, passwordField))
     }
 

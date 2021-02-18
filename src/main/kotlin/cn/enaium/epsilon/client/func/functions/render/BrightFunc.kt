@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
@@ -21,7 +20,6 @@ import net.minecraft.entity.effect.StatusEffects
 @Module("Bright", category = Category.RENDER)
 class BrightFunc {
 
-    @Setting
     private val mode = ModeSetting(this, "Mode", "Mode", "Gamma", arrayListOf("Gamma", "NightVision"))
 
     @Event

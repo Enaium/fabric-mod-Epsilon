@@ -44,7 +44,7 @@ object Utils {
     }
 
     fun getSetting(m: Any, name: String): SettingBase? {
-        for (s in CF4M.getInstance().module.settings) {
+        for (s in CF4M.INSTANCE.module.settings) {
             if (s.module == m && s.name.equals(name, true)) {
                 return s
             }

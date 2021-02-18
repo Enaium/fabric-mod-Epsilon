@@ -13,10 +13,10 @@ import cn.enaium.epsilon.client.utils.EpsilonConfiguration
 @Command("h", "help")
 class HelpCommand : ICommand {
     override fun run(args: Array<String>): Boolean {
-        CF4M.getInstance().configuration.message("Here are the list of commands:")
-        for (c in CF4M.getInstance().command.commands.values) {
+        CF4M.INSTANCE.configuration.message("Here are the list of commands:")
+        for (c in CF4M.INSTANCE.command.commands.values) {
             for (s in c.usage()) {
-                CF4M.getInstance().configuration.message("USAGE: $s")
+                CF4M.INSTANCE.configuration.message("USAGE: $s")
             }
         }
         return true

@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
@@ -26,9 +25,7 @@ import java.awt.Color
 @Module("ESP", category = Category.RENDER)
 class ESPFunc {
 
-    @Setting
     private val witherSkeleton = EnableSetting(this, "WitherSkeleton", "Render WitherSkeleton", true)
-    @Setting
     private val slime = EnableSetting(this, "Slime", "Render Slime", true)
 
     private var espBox = 0
@@ -59,8 +56,8 @@ class ESPFunc {
         val entityList: ArrayList<Entity> = ArrayList()
         for (entity in MC.world!!.entities) {
             when (entity) {
-                is WitherSkeletonEntity -> if (witherSkeleton.isEnable) entityList.add(entity)
-                is SlimeEntity -> if (slime.isEnable) entityList.add(entity)
+                is WitherSkeletonEntity -> if (witherSkeleton.enable) entityList.add(entity)
+                is SlimeEntity -> if (slime.enable) entityList.add(entity)
             }
         }
         return entityList

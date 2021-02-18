@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.world
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.EventBase.Type
@@ -31,12 +30,11 @@ class ScaffoldFunc {
     private var currentPos: BlockPos? = null
     private var currentDirection: Direction? = null
 
-    @Setting
     private val eagle = EnableSetting(this, "Eagle", "Eagle", false)
 
     @Event
     fun on(motionEvent: MotionEvent) {
-        if (eagle.isEnable) {
+        if (eagle.enable) {
             MC.options.keySneak.isPressed = (currentPos != null)
         }
 

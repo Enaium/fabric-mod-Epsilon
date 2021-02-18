@@ -26,10 +26,10 @@ class FuncListScreen(val category: Category) : UI() {
             scrollPanel.addElement(object : Button(
                 0,
                 y,
-                CF4M.getInstance().module.getName(func)
+                CF4M.INSTANCE.module.getName(func)
             ) {
                 override fun onLeftClicked() {
-                    CF4M.getInstance().module.enable(func)
+                    CF4M.INSTANCE.module.enable(func)
                     super.onLeftClicked()
                 }
 
@@ -50,8 +50,8 @@ class FuncListScreen(val category: Category) : UI() {
 
     private fun getFuncForCategory(category: Category): ArrayList<Any> {
         var list: ArrayList<Any> = ArrayList();
-        for (module in CF4M.getInstance().module.modules) {
-            if (CF4M.getInstance().module.getCategory(module).equals(category)) {
+        for (module in CF4M.INSTANCE.module.modules) {
+            if (CF4M.INSTANCE.module.getCategory(module).equals(category)) {
                 list.add(module)
             }
         }

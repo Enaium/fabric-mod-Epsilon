@@ -22,12 +22,12 @@ class SettingListScreen(val func: Any) : UI() {
         super.initUI()
         var y = 0
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
-        for (setting in CF4M.getInstance().module.getSettings(func)) {
+        for (setting in CF4M.INSTANCE.module.getSettings(func)) {
             if (setting is EnableSetting) {
                 scrollPanel.addElement(object :
-                    CheckBox(0, y, setting.name, setting.isEnable) {
+                    CheckBox(0, y, setting.name, setting.enable) {
                     override fun onLeftClicked() {
-                        setting.isEnable = this.checked
+                        setting.enable = this.checked
                         super.onLeftClicked()
                     }
                 })

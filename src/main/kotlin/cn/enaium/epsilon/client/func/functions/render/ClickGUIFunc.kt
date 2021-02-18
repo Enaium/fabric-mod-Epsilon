@@ -19,6 +19,6 @@ class ClickGUIFunc {
     @Enable
     fun onEnable() {
         MC.openScreen(CategoryListScreen())
-        CF4M.getInstance().module.enable(this)
+        CF4M.INSTANCE.module.enable(this)
     }
 }

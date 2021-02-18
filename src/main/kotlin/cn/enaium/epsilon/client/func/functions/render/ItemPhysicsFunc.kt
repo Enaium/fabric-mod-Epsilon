@@ -30,7 +30,7 @@ class ItemPhysicsFunc {
 
         renderItemEntityEvent.isCancelled = true
 
-        if (CF4M.getInstance().module.isEnable(CF4M.getInstance().module.getModule("NoItem")))
+        if (CF4M.INSTANCE.module.getEnable(CF4M.INSTANCE.module.getModule("NoItem")))
             return
 
         val itemStack: ItemStack = renderItemEntityEvent.itemEntity.stack

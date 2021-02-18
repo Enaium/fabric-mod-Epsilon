@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
-import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
@@ -24,7 +23,6 @@ import org.lwjgl.glfw.GLFW
 @Module("Xray", key = GLFW.GLFW_KEY_X, category = Category.RENDER)
 class XrayFunc {
 
-    @Setting
     private val blocks = BlockListSetting(
         this, "NoXray", "block list", arrayListOf(
             "Ores", "",
