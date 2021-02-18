@@ -4,7 +4,7 @@ import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.screen.clickgui.CategoryListScreen
 import org.lwjgl.glfw.GLFW
 
@@ -19,6 +19,6 @@ class ClickGUIFunc {
     @Enable
     fun onEnable() {
         MC.openScreen(CategoryListScreen())
-        CF4M.INSTANCE.module.enable(this)
+        cf4m.module.enable(this)
     }
 }

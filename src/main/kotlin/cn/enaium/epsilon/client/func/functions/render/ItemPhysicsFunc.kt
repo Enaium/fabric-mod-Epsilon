@@ -5,7 +5,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.RenderItemEntityEvent
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.BlockItem
@@ -30,7 +30,7 @@ class ItemPhysicsFunc {
 
         renderItemEntityEvent.isCancelled = true
 
-        if (CF4M.INSTANCE.module.getEnable(CF4M.INSTANCE.module.getModule("NoItem")))
+        if (cf4m.module.getEnable(cf4m.module.getModule("NoItem")))
             return
 
         val itemStack: ItemStack = renderItemEntityEvent.itemEntity.stack

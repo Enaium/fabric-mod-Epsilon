@@ -2,7 +2,7 @@ package cn.enaium.epsilon.client.screen.clickgui
 
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.ui.UI
 import cn.enaium.epsilon.client.ui.elements.Button
 import cn.enaium.epsilon.client.ui.elements.ScrollPanel
@@ -25,10 +25,10 @@ class FuncListScreen(val category: Category) : UI() {
             scrollPanel.addElement(object : Button(
                 0,
                 y,
-                CF4M.INSTANCE.module.getName(func)
+                cf4m.module.getName(func)
             ) {
                 override fun onLeftClicked() {
-                    CF4M.INSTANCE.module.enable(func)
+                    cf4m.module.enable(func)
                     super.onLeftClicked()
                 }
 
@@ -49,8 +49,8 @@ class FuncListScreen(val category: Category) : UI() {
 
     private fun getFuncForCategory(category: Category): ArrayList<Any> {
         var list: ArrayList<Any> = ArrayList();
-        for (module in CF4M.INSTANCE.module.modules) {
-            if (CF4M.INSTANCE.module.getCategory(module).equals(category)) {
+        for (module in cf4m.module.modules) {
+            if (cf4m.module.getCategory(module).equals(category)) {
                 list.add(module)
             }
         }

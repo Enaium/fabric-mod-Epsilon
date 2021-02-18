@@ -4,7 +4,7 @@ import cn.enaium.cf4m.annotation.config.Config
 import cn.enaium.cf4m.annotation.config.Load
 import cn.enaium.cf4m.annotation.config.Save
 import cn.enaium.cf4m.setting.settings.*
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.client.utils.FileUtils
 import com.alibaba.fastjson.JSON
@@ -22,15 +22,15 @@ class FuncConfig {
 
     @Load
     fun load() {
-        val funcObject = JSON.parseObject(FileUtils.read(CF4M.INSTANCE.config.getPath(this)))
-        for (func in CF4M.INSTANCE.module.modules) {
+        val funcObject = JSON.parseObject(FileUtils.read(cf4m.config.getPath(this)))
+        for (func in cf4m.module.modules) {
             if (funcObject != null) {
-                if (funcObject.containsKey(CF4M.INSTANCE.module.getName(func))) {
+                if (funcObject.containsKey(cf4m.module.getName(func))) {
                     val funcClassObject =
-                        JSON.parseObject(funcObject.getString(CF4M.INSTANCE.module.getName(func)))
-                    if (funcClassObject.getBoolean("enable")) CF4M.INSTANCE.module.enable(func)
-                    CF4M.INSTANCE.module.setKey(func, funcClassObject.getInteger("key"))
-                    val settings = CF4M.INSTANCE.module.getSettings(func)
+                        JSON.parseObject(funcObject.getString(cf4m.module.getName(func)))
+                    if (funcClassObject.getBoolean("enable")) cf4m.module.enable(func)
+                    cf4m.module.setKey(func, funcClassObject.getInteger("key"))
+                    val settings = cf4m.module.getSettings(func)
                     if (settings.isNotEmpty()) {
                         val settingObject = JSON.parseObject(funcClassObject.getString("settings"))
                         for (setting in settings) {
@@ -75,11 +75,11 @@ class FuncConfig {
     @Save
     fun save() {
         val funcObject = JSONObject(true)
-        for (func in CF4M.INSTANCE.module.modules) {
+        for (func in cf4m.module.modules) {
             val funcClassObject = JSONObject(true)
-            funcClassObject["enable"] = CF4M.INSTANCE.module.getEnable(func)
-            funcClassObject["key"] = CF4M.INSTANCE.module.getKey(func)
-            val settings = CF4M.INSTANCE.module.getSettings(func)
+            funcClassObject["enable"] = cf4m.module.getEnable(func)
+            funcClassObject["key"] = cf4m.module.getKey(func)
+            val settings = cf4m.module.getSettings(func)
             if (settings.isNotEmpty()) {
                 val settingObject = JSONObject(true)
                 for (s in settings) {
@@ -109,10 +109,10 @@ class FuncConfig {
                 }
                 funcClassObject["settings"] = settingObject
             }
-            funcObject[CF4M.INSTANCE.module.getName(func)] = funcClassObject
+            funcObject[cf4m.module.getName(func)] = funcClassObject
         }
         FileUtils.write(
-            CF4M.INSTANCE.config.getPath(this),
+            cf4m.config.getPath(this),
             JSON.toJSONString(funcObject, SerializerFeature.PrettyFormat)
         )
     }

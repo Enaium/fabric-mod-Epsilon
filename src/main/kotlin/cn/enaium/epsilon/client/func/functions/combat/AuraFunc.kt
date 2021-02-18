@@ -5,7 +5,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.cf4m.event.EventBase.Type;
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.utils.RotationUtils
@@ -62,7 +62,7 @@ class AuraFunc {
 
     @Event
     fun onMotion(motionEvent: MotionEvent) {
-        CF4M.INSTANCE.module.setValue(this, "tag", priority.current)
+        cf4m.module.setValue(this, "tag", priority.current)
         when (motionEvent.type) {
             Type.PRE -> {
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return

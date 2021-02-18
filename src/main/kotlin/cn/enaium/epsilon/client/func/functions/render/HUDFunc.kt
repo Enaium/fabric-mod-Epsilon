@@ -6,7 +6,7 @@ import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.events.Render2DEvent
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
@@ -138,8 +138,8 @@ class HUDFunc {
         var yStart = 1
 
         val functions = ArrayList<Any>()
-        for (m in CF4M.INSTANCE.module.modules) {
-            if (CF4M.INSTANCE.module.getEnable(m)) {
+        for (m in cf4m.module.modules) {
+            if (cf4m.module.getEnable(m)) {
                 functions.add(m)
             }
         }
@@ -154,8 +154,8 @@ class HUDFunc {
     }
 
     private fun getDisplayName(module: Any): String {
-        val name = CF4M.INSTANCE.module.getName(module)
-        val tag = CF4M.INSTANCE.module.getValue<String>(module, "tag")
+        val name = cf4m.module.getName(module)
+        val tag = cf4m.module.getValue<String>(module, "tag")
         return if (tag == null) {
             name
         } else {

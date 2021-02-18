@@ -2,7 +2,7 @@ package cn.enaium.epsilon.client.commands
 
 import cn.enaium.cf4m.annotation.Command
 import cn.enaium.cf4m.command.ICommand
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 
 /**
  * Project: Epsilon
@@ -15,16 +15,16 @@ class EnableCommand : ICommand {
 
         if (args.size == 1 || args.size == 2) {
             if (args.size == 1) {
-                for (ms in CF4M.INSTANCE.module.modules)
-                    CF4M.INSTANCE.configuration.message(CF4M.INSTANCE.module.getName(ms))
+                for (ms in cf4m.module.modules)
+                    cf4m.configuration.message(cf4m.module.getName(ms))
                 return true
             } else if (args.size == 2) {
-                val func = CF4M.INSTANCE.module.getModule(args[1])
+                val func = cf4m.module.getModule(args[1])
                 if (func == null) {
                     error("The func with the name " + args[1] + " does not exist.")
                     return true
                 }
-                CF4M.INSTANCE.module.enable(func)
+                cf4m.module.enable(func)
                 return true
             }
         }

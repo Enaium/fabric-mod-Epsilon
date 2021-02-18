@@ -2,7 +2,7 @@ package cn.enaium.epsilon.client.screen.clickgui
 
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.client.ui.UI
 import cn.enaium.epsilon.client.ui.elements.*
@@ -21,7 +21,7 @@ class SettingListScreen(val func: Any) : UI() {
         super.initUI()
         var y = 0
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
-        for (setting in CF4M.INSTANCE.module.getSettings(func)) {
+        for (setting in cf4m.module.getSettings(func)) {
             if (setting is EnableSetting) {
                 scrollPanel.addElement(object :
                     CheckBox(0, y, setting.name, setting.enable) {

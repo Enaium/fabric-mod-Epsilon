@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.client.utils
 
 import cn.enaium.cf4m.setting.SettingBase
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import net.minecraft.util.Formatting
 import java.text.DecimalFormat
 import java.util.*
@@ -44,7 +44,7 @@ object Utils {
     }
 
     fun getSetting(m: Any, name: String): SettingBase? {
-        for (s in CF4M.INSTANCE.module.settings) {
+        for (s in cf4m.module.settings) {
             if (s.module == m && s.name.equals(name, true)) {
                 return s
             }

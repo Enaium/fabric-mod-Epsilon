@@ -5,7 +5,7 @@ import cn.enaium.cf4m.command.ICommand
 import cn.enaium.cf4m.setting.SettingBase
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.Epsilon
-import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.client.utils.EpsilonConfiguration
 import cn.enaium.epsilon.client.utils.Utils
@@ -23,8 +23,8 @@ class SetCommand : ICommand {
     override fun run(args: Array<String>): Boolean {
         if (args.size in 2..5) {
 
-            val func = CF4M.INSTANCE.module.getModule(args[1])
-            val settings: ArrayList<SettingBase> = CF4M.INSTANCE.module.getSettings(func)
+            val func = cf4m.module.getModule(args[1])
+            val settings: ArrayList<SettingBase> = cf4m.module.getSettings(func)
 
             if (func == null) {
                 this.error("""The func with the name "${args[1]}" does not exist.""", "")
@@ -134,15 +134,15 @@ class SetCommand : ICommand {
     private val error: String = "[" + Formatting.RED + Epsilon.NAME + Formatting.WHITE + "] "
 
     private fun message(string: String, args: Any) {
-        CF4M.INSTANCE.configuration.message(message + string + Formatting.LIGHT_PURPLE + args)
+        cf4m.configuration.message(message + string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun error(string: String, args: Any) {
-        CF4M.INSTANCE.configuration.message(error + string + Formatting.LIGHT_PURPLE + args)
+        cf4m.configuration.message(error + string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun success(string: String, args: Any) {
-        CF4M.INSTANCE.configuration.message(success + string + Formatting.LIGHT_PURPLE + args)
+        cf4m.configuration.message(success + string + Formatting.LIGHT_PURPLE + args)
     }
 
 }

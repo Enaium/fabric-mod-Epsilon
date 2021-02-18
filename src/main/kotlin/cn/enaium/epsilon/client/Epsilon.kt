@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.client
 
 import cn.enaium.cf4m.CF4M
+import cn.enaium.epsilon.client.cf4m
 import net.minecraft.client.MinecraftClient
 
 
@@ -11,6 +12,7 @@ import net.minecraft.client.MinecraftClient
  */
 
 val MC: MinecraftClient = MinecraftClient.getInstance()
+val cf4m = CF4M.INSTANCE
 
 object Epsilon {
 
@@ -21,11 +23,11 @@ object Epsilon {
 
 
     fun run() {
-        CF4M.INSTANCE.run(this, MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME)
+        cf4m.run(this, MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME)
     }
 
     fun stop() {
-        CF4M.INSTANCE.stop()
+        cf4m.stop()
     }
 
 }
