@@ -23,7 +23,7 @@ public class TerrainRenderContextMixin {
         TessellateBlockEvent event = new TessellateBlockEvent(blockState);
         event.call();
 
-        if (event.isCancelled())
+        if (event.getCancelled())
             callbackInfoReturnable.cancel();
     }
 }

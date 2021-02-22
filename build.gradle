@@ -17,7 +17,7 @@ minecraft {
 
 repositories {
     maven { url = "http://maven.fabricmc.net/" }
-    maven { url 'https://maven.enaium.cn' }
+    maven { url = 'https://maven.enaium.cn' }
 }
 
 dependencies {
@@ -28,7 +28,7 @@ dependencies {
 
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
-    modImplementation 'cn.enaium.cf4m:cf4m-fabric:1.4.6'
+    modImplementation 'cn.enaium.cf4m:cf4m-fabric:1.4.7'
 
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.68'
 }

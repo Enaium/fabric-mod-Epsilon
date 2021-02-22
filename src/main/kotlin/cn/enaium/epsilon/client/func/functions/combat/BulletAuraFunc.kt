@@ -5,7 +5,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.event.EventBase.Type
+import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.epsilon.client.events.MotionEvent
 import net.minecraft.entity.Entity
 import net.minecraft.entity.projectile.DragonFireballEntity
@@ -35,14 +35,14 @@ class BulletAuraFunc {
 
     @Event
     fun onMotion(motionEvent: MotionEvent) {
-        target = when (motionEvent.type) {
-            Type.PRE -> {
+        target = when (motionEvent.at) {
+            At.HEAD -> {
 
                 if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
             }
-            Type.POST -> {
+            At.TAIL -> {
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)

@@ -1,7 +1,7 @@
 package cn.enaium.epsilon.mixin;
 
 import cn.enaium.cf4m.CF4M;
-import cn.enaium.cf4m.event.EventBase;
+import cn.enaium.cf4m.event.Listener;
 import cn.enaium.cf4m.event.events.UpdateEvent;
 import cn.enaium.epsilon.client.events.MotionEvent;
 import com.mojang.authlib.GameProfile;
@@ -76,17 +76,12 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         new UpdateEvent().call();
     }
 
-    @Inject(at = @At("RETURN"), method = "tick()V")
-    private void preTick(CallbackInfo ci) {
-        new MotionEvent(EventBase.Type.PRE, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
-    }
-
     /**
      * @author Enaium
      */
     @Overwrite
     private void sendMovementPackets() {
-        MotionEvent motionEvent = new MotionEvent(EventBase.Type.POST, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
+        MotionEvent motionEvent = new MotionEvent(Listener.At.HEAD, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
         motionEvent.call();
         boolean bl = this.isSprinting();
         if (bl != this.lastSprinting) {
@@ -151,5 +146,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             this.lastOnGround = motionEvent.getGround();
             this.autoJumpEnabled = this.client.options.autoJump;
         }
+        new MotionEvent(Listener.At.TAIL, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
     }
 }

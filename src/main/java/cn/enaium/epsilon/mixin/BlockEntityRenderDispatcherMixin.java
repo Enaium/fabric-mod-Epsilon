@@ -21,7 +21,7 @@ public class BlockEntityRenderDispatcherMixin {
     private <E extends BlockEntity> void render(E blockEntity, float tickDelta, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, CallbackInfo callbackInfo) {
         RenderBlockEntityEvent event = new RenderBlockEntityEvent(blockEntity);
         event.call();
-        if (event.isCancelled()) {
+        if (event.getCancelled()) {
             callbackInfo.cancel();
         }
     }

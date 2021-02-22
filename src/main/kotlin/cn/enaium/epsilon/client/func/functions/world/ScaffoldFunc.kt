@@ -3,7 +3,7 @@ package cn.enaium.epsilon.client.func.functions.world
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.EventBase.Type
+import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.EnableSetting
 import cn.enaium.epsilon.client.IMC
@@ -38,8 +38,8 @@ class ScaffoldFunc {
             MC.options.keySneak.isPressed = (currentPos != null)
         }
 
-        when (motionEvent.type) {
-            Type.PRE -> {
+        when (motionEvent.at) {
+            At.HEAD -> {
                 currentPos = null
                 currentDirection = null
                 val pos = BlockPos(MC.player!!.pos.x, MC.player!!.pos.y - 1.0, MC.player!!.pos.z)
@@ -47,7 +47,7 @@ class ScaffoldFunc {
                     setBlockAndFacing(pos)
                 }
             }
-            Type.POST -> {
+            At.TAIL -> {
                 if (currentPos != null) {
                     var newSlot = -1
                     for (i in 0..9) {

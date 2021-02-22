@@ -6,7 +6,7 @@ import cn.enaium.cf4m.module.Category
 import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
-import cn.enaium.cf4m.event.EventBase.Type;
+import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.utils.RotationUtils
 import net.minecraft.entity.LivingEntity
@@ -63,8 +63,8 @@ class AuraFunc {
     @Event
     fun onMotion(motionEvent: MotionEvent) {
         cf4m.module.setValue(this, "tag", priority.current)
-        when (motionEvent.type) {
-            Type.PRE -> {
+        when (motionEvent.at) {
+            At.HEAD -> {
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
                 target = when (priority.current) {
@@ -79,7 +79,7 @@ class AuraFunc {
                     else -> getTargets().min(Comparator.comparingDouble { it.health.toDouble() }).orElse(null)
                 }
             }
-            Type.POST -> {
+            At.TAIL -> {
                 if (target == null) return
 
                 if (aim.enable) {

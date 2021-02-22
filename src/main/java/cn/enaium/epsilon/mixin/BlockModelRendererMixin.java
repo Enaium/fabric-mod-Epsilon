@@ -29,7 +29,7 @@ public class BlockModelRendererMixin {
         TessellateBlockEvent tessellateBlockEvent = new TessellateBlockEvent(state);
         tessellateBlockEvent.call();
 
-        if (tessellateBlockEvent.isCancelled()) {
+        if (tessellateBlockEvent.getCancelled()) {
             callbackInfoReturnable.cancel();
             return;
         }

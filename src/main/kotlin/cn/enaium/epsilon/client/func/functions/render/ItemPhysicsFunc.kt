@@ -28,7 +28,7 @@ class ItemPhysicsFunc {
     @Event
     fun on(renderItemEntityEvent: RenderItemEntityEvent) {
 
-        renderItemEntityEvent.isCancelled = true
+        renderItemEntityEvent.cancel()
 
         if (cf4m.module.getEnable(cf4m.module.getModule("NoItem")))
             return

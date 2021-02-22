@@ -21,7 +21,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity> {
     public void render(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo callbackInfo) {
         RenderLivingEntityEvent event = new RenderLivingEntityEvent();
         event.call();
-        if (event.isCancelled()) {
+        if (event.getCancelled()) {
             callbackInfo.cancel();
         }
     }

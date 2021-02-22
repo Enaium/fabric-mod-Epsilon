@@ -65,14 +65,14 @@ class XrayFunc {
     @Event
     fun tessellateBlockEvent(tessellateBlockEvent: TessellateBlockEvent) {
         if (!isXray(tessellateBlockEvent.blockState.block)) {
-            tessellateBlockEvent.isCancelled = true
+            tessellateBlockEvent.cancel()
         }
     }
 
     @Event
     fun renderBlockEntityEvent(renderBlockEntityEvent: RenderBlockEntityEvent) {
         if (!isXray(BlockUtils.getBlock(renderBlockEntityEvent.blockEntity.pos))) {
-            renderBlockEntityEvent.isCancelled = true
+            renderBlockEntityEvent.cancel()
         }
     }
 

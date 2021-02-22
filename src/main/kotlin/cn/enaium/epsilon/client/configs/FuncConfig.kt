@@ -19,7 +19,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature
  */
 @Config("Functions")
 class FuncConfig {
-
     @Load
     fun load() {
         val funcObject = JSON.parseObject(FileUtils.read(cf4m.config.getPath(this)))

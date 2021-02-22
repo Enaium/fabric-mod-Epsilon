@@ -16,18 +16,13 @@ val cf4m = CF4M.INSTANCE
 
 object Epsilon {
 
-    val NAME = "Epsilon"
-    val VERSION = "1.0.4"
-    val GAME = "21w07a"
-    val AUTHOR = "Enaium"
+    const val NAME = "Epsilon"
+    const val VERSION = "1.0.4"
+    const val GAME = "21w07a"
+    const val AUTHOR = "Enaium"
 
 
     fun run() {
         cf4m.run(this, MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME)
     }
-
-    fun stop() {
-        cf4m.stop()
-    }
-
 }
