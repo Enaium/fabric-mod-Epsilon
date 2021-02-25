@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
@@ -9,7 +10,7 @@ import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.RenderBlockEntityEvent
 import cn.enaium.epsilon.client.events.ShouldDrawSideEvent
 import cn.enaium.epsilon.client.events.TessellateBlockEvent
-import cn.enaium.epsilon.client.setting.BlockListSetting
+import cn.enaium.epsilon.client.settings.BlockListSetting
 import cn.enaium.epsilon.client.utils.BlockUtils
 import net.minecraft.block.Block
 import org.lwjgl.glfw.GLFW
@@ -23,8 +24,8 @@ import org.lwjgl.glfw.GLFW
 @Module("Xray", key = GLFW.GLFW_KEY_X, category = Category.RENDER)
 class XrayFunc {
 
-    private val blocks = BlockListSetting(
-        this, "NoXray", "block list", arrayListOf(
+    @Setting("NoXray")
+    private val blocks = BlockListSetting(arrayListOf(
             "Ores", "",
             "minecraft:anvil", "minecraft:beacon", "minecraft:bone_block",
             "minecraft:bookshelf", "minecraft:brewing_stand",
@@ -65,14 +66,14 @@ class XrayFunc {
     @Event
     fun tessellateBlockEvent(tessellateBlockEvent: TessellateBlockEvent) {
         if (!isXray(tessellateBlockEvent.blockState.block)) {
-            tessellateBlockEvent.cancel()
+            tessellateBlockEvent.cancel = true;
         }
     }
 
     @Event
     fun renderBlockEntityEvent(renderBlockEntityEvent: RenderBlockEntityEvent) {
         if (!isXray(BlockUtils.getBlock(renderBlockEntityEvent.blockEntity.pos))) {
-            renderBlockEntityEvent.cancel()
+            renderBlockEntityEvent.cancel = true;
         }
     }
 

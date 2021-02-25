@@ -1,12 +1,13 @@
 package cn.enaium.epsilon.client.func.functions.combat
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
 import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.epsilon.client.events.MotionEvent
+import cn.enaium.epsilon.client.settings.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.projectile.DragonFireballEntity
 import net.minecraft.entity.projectile.FireballEntity
@@ -23,30 +24,36 @@ import net.minecraft.util.Hand
 class BulletAuraFunc {
     private var target: Entity? = null
 
-    private val range = FloatSetting(this, "Range", "Range", 4.1f, 0.1f, 7.0f)
+    @Setting("Range")
+    private val range = FloatSetting(4.1f, 0.1f, 7.0f)
 
-    private val delay = EnableSetting(this, "Delay", "Delay", false)
+    @Setting("Delay")
+    private val delay = EnableSetting(false)
 
-    private val shulkerBullet = EnableSetting(this, "ShulkerBullet", "Attack ShulkerBullet", true)
+    @Setting("ShulkerBullet")
+    private val shulkerBullet = EnableSetting(true)
 
-    private val fireball = EnableSetting(this, "Fireball", "Attack Fireball", true)
+    @Setting("Fireball")
+    private val fireball = EnableSetting(true)
 
-    private val dragonFireball = EnableSetting(this, "DragonFireball", "Attack DragonFireball", true)
+    @Setting("DragonFireball")
+    private val dragonFireball = EnableSetting(true)
 
     @Event
     fun onMotion(motionEvent: MotionEvent) {
-        target = when (motionEvent.at) {
-            At.HEAD -> {
 
+        when (motionEvent.at) {
+            At.HEAD -> {
                 if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
+                target =
+                    if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
             }
             At.TAIL -> {
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
-                null
+                target = null
             }
         }
     }

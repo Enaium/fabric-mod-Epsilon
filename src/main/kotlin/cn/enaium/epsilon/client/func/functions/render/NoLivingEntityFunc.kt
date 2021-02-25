@@ -14,6 +14,6 @@ import cn.enaium.epsilon.client.events.RenderLivingEntityEvent
 class NoLivingEntityFunc {
     @Event
     fun on(renderLivingEntityEvent: RenderLivingEntityEvent) {
-        renderLivingEntityEvent.cancel()
+        renderLivingEntityEvent.cancel = true
     }
 }

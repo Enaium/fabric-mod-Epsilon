@@ -1,11 +1,12 @@
 package cn.enaium.epsilon.client.func.functions.movement
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.DoubleSetting
 import cn.enaium.epsilon.client.MC
+import cn.enaium.epsilon.client.settings.DoubleSetting
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 
@@ -19,7 +20,8 @@ import org.lwjgl.glfw.GLFW
 @Module("Flight", key = GLFW.GLFW_KEY_G, category = Category.MOVEMENT)
 class FlightFunc {
 
-    private var speed = DoubleSetting(this, "Speed", "Fly speed", 3.0, 1.0, 10.0)
+    @Setting("Speed")
+    private var speed = DoubleSetting(3.0, 1.0, 10.0)
 
     @Event
     fun on(updateEvent: UpdateEvent) {

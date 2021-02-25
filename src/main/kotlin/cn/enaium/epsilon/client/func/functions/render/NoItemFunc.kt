@@ -14,6 +14,6 @@ import cn.enaium.epsilon.client.events.RenderItemEntityEvent
 class NoItemFunc {
     @Event
     fun on(renderItemEntityEvent: RenderItemEntityEvent) {
-        renderItemEntityEvent.cancel()
+        renderItemEntityEvent.cancel = true
     }
 }

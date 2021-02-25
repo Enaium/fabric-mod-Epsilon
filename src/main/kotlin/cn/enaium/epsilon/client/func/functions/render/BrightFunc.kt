@@ -1,12 +1,13 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.ModeSetting
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.Render2DEvent
+import cn.enaium.epsilon.client.settings.ModeSetting
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 
@@ -20,7 +21,8 @@ import net.minecraft.entity.effect.StatusEffects
 @Module("Bright", category = Category.RENDER)
 class BrightFunc {
 
-    private val mode = ModeSetting(this, "Mode", "Mode", "Gamma", arrayListOf("Gamma", "NightVision"))
+    @Setting("Mode")
+    private val mode = ModeSetting("Gamma", arrayListOf("Gamma", "NightVision"))
 
     @Event
     fun on(render2DEvent: Render2DEvent) {

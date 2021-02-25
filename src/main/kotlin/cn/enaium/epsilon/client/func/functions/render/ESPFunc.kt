@@ -1,13 +1,14 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.EnableSetting
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.Render3DEvent
+import cn.enaium.epsilon.client.settings.EnableSetting
 import cn.enaium.epsilon.client.utils.Render3DUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.mob.SlimeEntity
@@ -25,8 +26,11 @@ import java.awt.Color
 @Module("ESP", category = Category.RENDER)
 class ESPFunc {
 
-    private val witherSkeleton = EnableSetting(this, "WitherSkeleton", "Render WitherSkeleton", true)
-    private val slime = EnableSetting(this, "Slime", "Render Slime", true)
+    @Setting("WitherSkeleton")
+    private val witherSkeleton = EnableSetting(true)
+
+    @Setting("Slime")
+    private val slime = EnableSetting(true)
 
     private var espBox = 0
 

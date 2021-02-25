@@ -1,12 +1,13 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.events.Render3DEvent
+import cn.enaium.epsilon.client.settings.EnableSetting
 import cn.enaium.epsilon.client.utils.BlockUtils
 import cn.enaium.epsilon.client.utils.Render3DUtils
 import net.minecraft.block.entity.*
@@ -23,27 +24,39 @@ import java.awt.Color
  */
 @Module("StorageESP", category = Category.RENDER)
 class StorageESPFunc {
-    private val chest = EnableSetting(this, "Chest", "Chest", true)
 
-    private val trappedChest = EnableSetting(this, "TrappedChest", "Render TrappedChest", true)
+    @Setting("Chest")
+    private val chest = EnableSetting(true)
 
-    private val enderChest = EnableSetting(this, "EnderChest", "Render EnderChest", true)
+    @Setting("TrappedChest")
+    private val trappedChest = EnableSetting(true)
 
-    private val shulkerBoxChest = EnableSetting(this, "ShulkerBoxChest", "Render ShulkerBoxChest", true)
+    @Setting("EnderChest")
+    private val enderChest = EnableSetting(true)
 
-    private val hopper = EnableSetting(this, "Hopper", "Render Hopper", true)
+    @Setting("ShulkerBoxChest")
+    private val shulkerBoxChest = EnableSetting(true)
 
-    private val furnace = EnableSetting(this, "Furnace", "Render Furnace", true)
+    @Setting("Hopper")
+    private val hopper = EnableSetting(true)
 
-    private val dispenser = EnableSetting(this, "Dispenser", "Render Dispenser", true)
+    @Setting("Furnace")
+    private val furnace = EnableSetting(true)
 
-    private val dropper = EnableSetting(this, "Dropper", "Render Dropper", true)
+    @Setting("Dispenser")
+    private val dispenser = EnableSetting(true)
 
-    private val barrel = EnableSetting(this, "Barrel", "Render Barrel", true)
+    @Setting("Dropper")
+    private val dropper = EnableSetting(true)
 
-    private val blastFurnace = EnableSetting(this, "BlastFurnace", "Render BlastFurnace", true)
+    @Setting("Barrel")
+    private val barrel = EnableSetting(true)
 
-    private val smoker = EnableSetting(this, "Smoker", "Render Smoker", true)
+    @Setting("BlastFurnace")
+    private val blastFurnace = EnableSetting(true)
+
+    @Setting("Smoker")
+    private val smoker = EnableSetting(true)
 
     private var storageBox = 0
 

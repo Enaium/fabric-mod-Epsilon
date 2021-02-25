@@ -2,12 +2,10 @@ package cn.enaium.epsilon.client.commands
 
 import cn.enaium.cf4m.annotation.Command
 import cn.enaium.cf4m.command.ICommand
-import cn.enaium.cf4m.setting.SettingBase
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.Epsilon
 import cn.enaium.epsilon.client.cf4m
-import cn.enaium.epsilon.client.setting.BlockListSetting
-import cn.enaium.epsilon.client.utils.EpsilonConfiguration
+import cn.enaium.epsilon.client.settings.BlockListSetting
+import cn.enaium.epsilon.client.settings.*
 import cn.enaium.epsilon.client.utils.Utils
 import net.minecraft.util.Formatting
 import java.util.*
@@ -24,20 +22,20 @@ class SetCommand : ICommand {
         if (args.size in 2..5) {
 
             val func = cf4m.module.getModule(args[1])
-            val settings: ArrayList<SettingBase> = cf4m.module.getSettings(func)
+            val settings = cf4m.setting.getSettings(func)
 
             if (func == null) {
                 this.error("""The func with the name "${args[1]}" does not exist.""", "")
                 return true
             }
 
-            if (settings.isEmpty()) {
+            if (settings == null) {
                 this.error("""The func with the name "${args[1]}" no setting exists.""", "")
                 return true
             }
 
             if (args.size in 3..5) {
-                if (Utils.getSetting(func, args[2]) == null) {
+                if (cf4m.setting.getSetting(func, args[2]) == null) {
                     this.error("""The setting with the name "${args[2]}" does not exist.""", "")
                     return true
                 }
@@ -46,35 +44,38 @@ class SetCommand : ICommand {
             if (args.size == 2) {
                 this.message("Here are the list of settings:", "")
                 for (s in settings) {
-                    message(s.name, "[" + s.javaClass.simpleName + "]")
+                    message(
+                        cf4m.setting.getName(func, s),
+                        "[" + s.javaClass.simpleName + "]" + cf4m.setting.getDescription(func, s)
+                    )
                 }
             } else if (args.size == 3 || args.size == 4) {
                 for (s in settings) {
                     if (args.size == 3) {
-                        if (s.name.equals(args[2], true)) {
+                        if (cf4m.setting.getName(func, s).equals(args[2], true)) {
                             when (s) {
                                 is EnableSetting -> {
-                                    message("[${s.name}]" + "Enable:", s.enable)
+                                    message("[${cf4m.setting.getName(func, s)}]" + "Enable:", s.enable)
                                 }
                                 is IntegerSetting -> {
-                                    message("[${s.name}]" + "Current:", s.current)
+                                    message("[${cf4m.setting.getName(func, s)}]" + "Current:", s.current)
                                 }
                                 is FloatSetting -> {
-                                    message("[${s.name}]" + "Current:", s.current)
+                                    message("[${cf4m.setting.getName(func, s)}]" + "Current:", s.current)
                                 }
                                 is DoubleSetting -> {
-                                    message("[${s.name}]" + "Current:", s.current)
+                                    message("[${cf4m.setting.getName(func, s)}]" + "Current:", s.current)
                                 }
                                 is LongSetting -> {
-                                    message("[${s.name}]" + "Current:", s.current)
+                                    message("[${cf4m.setting.getName(func, s)}]" + "Current:", s.current)
                                 }
                                 is BlockListSetting -> {
-                                    message("[${s.name}]", s.blockList.toString())
+                                    message("[${cf4m.setting.getName(func, s)}]", s.blockList.toString())
                                 }
                             }
                         }
                     } else if (args.size == 4) {
-                        if (s.name.equals(args[2], true)) {
+                        if (cf4m.setting.getName(func, s).equals(args[2], true)) {
                             when (s) {
                                 is EnableSetting -> {
                                     s.enable = args[3].toBoolean()
@@ -102,13 +103,13 @@ class SetCommand : ICommand {
                 }
             } else if (args.size == 5) {
                 if (args[3] == "add") {
-                    (Utils.getSetting(
+                    (cf4m.setting.getSetting(
                         func,
                         args[2]
                     ) as BlockListSetting).blockList.add("minecraft:" + args[4])
                     success("Added minecraft:", args[4])
                 } else if (args[3] == "remove") {
-                    (Utils.getSetting(
+                    (cf4m.setting.getSetting(
                         func,
                         args[2]
                     ) as BlockListSetting).blockList.remove("minecraft:" + args[4])

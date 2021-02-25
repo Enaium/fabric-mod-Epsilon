@@ -1,14 +1,15 @@
 package cn.enaium.epsilon.client.func.functions.world
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.EnableSetting
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.MotionEvent
+import cn.enaium.epsilon.client.settings.EnableSetting
 import net.minecraft.block.AirBlock
 import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
@@ -30,7 +31,8 @@ class ScaffoldFunc {
     private var currentPos: BlockPos? = null
     private var currentDirection: Direction? = null
 
-    private val eagle = EnableSetting(this, "Eagle", "Eagle", false)
+    @Setting("Eagle")
+    private val eagle = EnableSetting(false)
 
     @Event
     fun on(motionEvent: MotionEvent) {

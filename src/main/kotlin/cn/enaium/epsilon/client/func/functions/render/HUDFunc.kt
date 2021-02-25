@@ -1,14 +1,15 @@
 package cn.enaium.epsilon.client.func.functions.render
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.events.Render2DEvent
+import cn.enaium.epsilon.client.settings.EnableSetting
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.client.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.client.utils.FontUtils.getWidth
@@ -30,23 +31,36 @@ import kotlin.collections.ArrayList
  */
 @Module("HUD", key = GLFW.GLFW_KEY_O, category = Category.RENDER)
 class HUDFunc {
-    private val list = EnableSetting(this, "List", "", true)
 
-    private val entityList = EnableSetting(this, "EntityList", "", false)
+    @Setting("TabGUI")
+    private val tabGUI = EnableSetting(true)
 
-    private val coords = EnableSetting(this, "Coords", "", true)
+    @Setting("List")
+    private val list = EnableSetting(true)
 
-    private val direction = EnableSetting(this, "Direction", "", true)
+    @Setting("EntityList")
+    private val entityList = EnableSetting(false)
 
-    private val fps = EnableSetting(this, "FPS", "", true)
+    @Setting("Coords")
+    private val coords = EnableSetting(true)
 
-    private val gameTime = EnableSetting(this, "GameTime", "", false)
+    @Setting("Direction")
+    private val direction = EnableSetting(true)
 
-    private val realTime = EnableSetting(this, "RealTime", "", false)
+    @Setting("FPS")
+    private val fps = EnableSetting(true)
 
-    private val ping = EnableSetting(this, "Ping", "", false)
+    @Setting("GameTime")
+    private val gameTime = EnableSetting(false)
 
-    private val titleInfo = EnableSetting(this, "TitleInfo", "", false)
+    @Setting("RealTime")
+    private val realTime = EnableSetting(false)
+
+    @Setting("Ping")
+    private val ping = EnableSetting(false)
+
+    @Setting("TitleInfo")
+    private val titleInfo = EnableSetting(false)
 
 
     private var yaw = 0.0F
@@ -81,7 +95,7 @@ class HUDFunc {
 
     @Event
     fun infoList(render2DEvent: Render2DEvent) {
-        var infoY = 2
+        var infoY = 0
         val infoList: ArrayList<String> = ArrayList()
 
         if (coords.enable) {

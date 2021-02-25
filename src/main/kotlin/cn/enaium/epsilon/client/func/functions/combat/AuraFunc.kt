@@ -1,13 +1,14 @@
 package cn.enaium.epsilon.client.func.functions.combat
 
 import cn.enaium.cf4m.annotation.Event
+import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
 import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.epsilon.client.events.MotionEvent
+import cn.enaium.epsilon.client.settings.*
 import cn.enaium.epsilon.client.utils.RotationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
@@ -27,36 +28,51 @@ import java.util.stream.StreamSupport
  */
 @Module("Aura", key = GLFW.GLFW_KEY_R, category = Category.COMBAT)
 class AuraFunc {
-    private val range = FloatSetting(this, "Range", "", 4.1f, 0.1f, 7.0f)
+    @Setting("Range")
+    private val range = FloatSetting(4.1f, 0.1f, 7.0f)
 
+    @Setting("Priority")
     private val priority =
-        ModeSetting(this, "Priority", "", "Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))
+        ModeSetting("Distance", arrayListOf("Distance", "Fov", "Angle", "Health"))
 
-    private val aim = EnableSetting(this, "Aim", "Auto Aim", false)
+    @Setting("Aim", description = "Auto Aim")
+    private val aim = EnableSetting(false)
 
-    private val player = EnableSetting(this, "Player", "Attack player", true)
+    @Setting("Player")
+    private val player = EnableSetting(true)
 
-    private val animal = EnableSetting(this, "Animal", "Attack animal", false)
+    @Setting("Animal")
+    private val animal = EnableSetting(false)
 
-    private val wolf = EnableSetting(this, "Wolf", "Attack wolf", false)
+    @Setting("Wolf")
+    private val wolf = EnableSetting(false)
 
-    private val villager = EnableSetting(this, "Villager", "Attack villager", false)
+    @Setting("Villager")
+    private val villager = EnableSetting(false)
 
-    private val ironGolem = EnableSetting(this, "IronGolem", "Attack ironGolem", false)
+    @Setting("IronGolem")
+    private val ironGolem = EnableSetting(false)
 
-    private val llama = EnableSetting(this, "Llama", "Attack llama", false)
+    @Setting("Llama")
+    private val llama = EnableSetting(false)
 
-    private val fox = EnableSetting(this, "Fox", "Attack fox", false)
+    @Setting("Fox")
+    private val fox = EnableSetting(false)
 
-    private val strider = EnableSetting(this, "Strider", "Attack fox", false)
+    @Setting("Strider")
+    private val strider = EnableSetting(false)
 
-    private val enderman = EnableSetting(this, "Enderman", "Attack enderman", false)
+    @Setting("Enderman")
+    private val enderman = EnableSetting(false)
 
-    private val endermite = EnableSetting(this, "Endermite", "Attack endermite", false)
+    @Setting("Endermite")
+    private val endermite = EnableSetting(false)
 
-    private val zombieVillager = EnableSetting(this, "ZombieVillager", "Attack zombie villager", false)
+    @Setting("ZombieVillager")
+    private val zombieVillager = EnableSetting(false)
 
-    private val zombiePigman = EnableSetting(this, "ZombiePigman", "Attack zombie pigman", false)
+    @Setting("ZombiePigman")
+    private val zombiePigman = EnableSetting(false)
 
     private var target: LivingEntity? = null
 

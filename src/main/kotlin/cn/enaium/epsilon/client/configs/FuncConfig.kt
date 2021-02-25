@@ -3,9 +3,8 @@ package cn.enaium.epsilon.client.configs
 import cn.enaium.cf4m.annotation.config.Config
 import cn.enaium.cf4m.annotation.config.Load
 import cn.enaium.cf4m.annotation.config.Save
-import cn.enaium.cf4m.setting.settings.*
 import cn.enaium.epsilon.client.cf4m
-import cn.enaium.epsilon.client.setting.BlockListSetting
+import cn.enaium.epsilon.client.settings.*
 import cn.enaium.epsilon.client.utils.FileUtils
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
@@ -29,34 +28,34 @@ class FuncConfig {
                         JSON.parseObject(funcObject.getString(cf4m.module.getName(func)))
                     if (funcClassObject.getBoolean("enable")) cf4m.module.enable(func)
                     cf4m.module.setKey(func, funcClassObject.getInteger("key"))
-                    val settings = cf4m.module.getSettings(func)
-                    if (settings.isNotEmpty()) {
+                    val settings = cf4m.setting.getSettings(func)
+                    if (settings != null) {
                         val settingObject = JSON.parseObject(funcClassObject.getString("settings"))
                         for (setting in settings) {
                             if (settingObject != null) {
-                                if (settingObject.containsKey(setting.name)) {
+                                if (settingObject.containsKey(cf4m.setting.getName(func, setting))) {
                                     when (setting) {
                                         is EnableSetting -> {
-                                            setting.enable = settingObject.getBoolean(setting.name)
+                                            setting.enable = settingObject.getBoolean(cf4m.setting.getName(func, setting))
                                         }
                                         is IntegerSetting -> {
-                                            setting.current = settingObject.getInteger(setting.name)
+                                            setting.current = settingObject.getInteger(cf4m.setting.getName(func, setting))
                                         }
                                         is FloatSetting -> {
-                                            setting.current = settingObject.getFloat(setting.name)
+                                            setting.current = settingObject.getFloat(cf4m.setting.getName(func, setting))
                                         }
                                         is DoubleSetting -> {
-                                            setting.current = settingObject.getDouble(setting.name)
+                                            setting.current = settingObject.getDouble(cf4m.setting.getName(func, setting))
                                         }
                                         is LongSetting -> {
-                                            setting.current = settingObject.getLong(setting.name)
+                                            setting.current = settingObject.getLong(cf4m.setting.getName(func, setting))
                                         }
                                         is ModeSetting -> {
-                                            setting.current = settingObject.getString(setting.name)
+                                            setting.current = settingObject.getString(cf4m.setting.getName(func, setting))
                                         }
                                         is BlockListSetting -> {
                                             setting.blockList.clear()
-                                            val blockArray = JSON.parseArray(settingObject.getString(setting.name))
+                                            val blockArray = JSON.parseArray(settingObject.getString(cf4m.setting.getName(func, setting)))
                                             for (ba in blockArray) {
                                                 setting.blockList.add(ba.toString())
                                             }
@@ -78,31 +77,31 @@ class FuncConfig {
             val funcClassObject = JSONObject(true)
             funcClassObject["enable"] = cf4m.module.getEnable(func)
             funcClassObject["key"] = cf4m.module.getKey(func)
-            val settings = cf4m.module.getSettings(func)
-            if (settings.isNotEmpty()) {
+            val settings = cf4m.setting.getSettings(func)
+            if (settings != null) {
                 val settingObject = JSONObject(true)
-                for (s in settings) {
-                    when (s) {
+                for (setting in settings) {
+                    when (setting) {
                         is EnableSetting -> {
-                            settingObject[s.name] = s.enable
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.enable
                         }
                         is IntegerSetting -> {
-                            settingObject[s.name] = s.current
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.current
                         }
                         is FloatSetting -> {
-                            settingObject[s.name] = s.current
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.current
                         }
                         is DoubleSetting -> {
-                            settingObject[s.name] = s.current
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.current
                         }
                         is LongSetting -> {
-                            settingObject[s.name] = s.current
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.current
                         }
                         is ModeSetting -> {
-                            settingObject[s.name] = s.current
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.current
                         }
                         is BlockListSetting -> {
-                            settingObject[s.name] = s.blockList
+                            settingObject[cf4m.setting.getName(func, setting)] = setting.blockList
                         }
                     }
                 }
