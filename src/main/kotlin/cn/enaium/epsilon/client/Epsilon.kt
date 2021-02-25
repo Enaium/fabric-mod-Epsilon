@@ -21,8 +21,7 @@ object Epsilon {
     const val GAME = "21w08a"
     const val AUTHOR = "Enaium"
 
-
     fun run() {
-        cf4m.run(this, MinecraftClient.getInstance().runDirectory.toString() + "/" + NAME)
+        cf4m.run(this)
     }
 }
