@@ -128,7 +128,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             } else if (bl4) {
                 this.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookOnly(motionEventYaw, motionEventPitch, motionEventGround));
             } else if (this.lastOnGround != motionEventGround) {
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket(motionEventGround));
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.class_5911(motionEventGround));
             }
 
             if (bl3) {

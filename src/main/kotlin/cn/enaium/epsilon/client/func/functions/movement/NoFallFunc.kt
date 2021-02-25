@@ -21,6 +21,6 @@ class NoFallFunc {
     fun on(updateEvent: UpdateEvent) {
         if (MC.player!!.fallDistance <= 2) return
 
-        MC.player!!.networkHandler.sendPacket(PlayerMoveC2SPacket(true))
+        MC.player!!.networkHandler.sendPacket(PlayerMoveC2SPacket.class_5911(true))
     }
 }
