@@ -122,11 +122,11 @@ class SetCommand : ICommand {
     }
 
     override fun usage(): String {
-        return "set [module]\n" +
-                "set [module] [setting]\n" +
-                "set [module] [setting] [value]\n" +
-                "set [module] [setting] add [value]\n" +
-                "set [module] [setting] remove [value]"
+        return "set <module>\n" +
+                "set <module> <setting>\n" +
+                "set <module> <setting> <value>\n" +
+                "set <module> <setting> add <value>\n" +
+                "set <module> <setting> remove <value>"
     }
 
     private val success: String = "[" + Formatting.GREEN + Epsilon.NAME + Formatting.WHITE + "] "
