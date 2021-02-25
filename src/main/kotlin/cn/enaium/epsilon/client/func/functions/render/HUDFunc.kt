@@ -4,12 +4,16 @@ import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
+import cn.enaium.epsilon.client.Epsilon.AUTHOR
+import cn.enaium.epsilon.client.Epsilon.NAME
+import cn.enaium.epsilon.client.Epsilon.VERSION
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.events.Render2DEvent
 import cn.enaium.epsilon.client.settings.EnableSetting
+import cn.enaium.epsilon.client.utils.FontUtils
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.client.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.client.utils.FontUtils.getWidth
@@ -22,6 +26,8 @@ import java.awt.Color
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import org.lwjgl.opengl.GL11
+import kotlin.math.ceil
 
 
 /**
@@ -34,6 +40,9 @@ class HUDFunc {
 
     @Setting("TabGUI")
     private val tabGUI = EnableSetting(true)
+
+    @Setting("Log")
+    private val logo = EnableSetting(true)
 
     @Setting("List")
     private val list = EnableSetting(true)
@@ -94,8 +103,19 @@ class HUDFunc {
     }
 
     @Event
+    fun event(render2DEvent: Render2DEvent) {
+        if (!logo.enable)
+            return
+        GL11.glScaled(2.0, 2.0, 2.0)
+        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 2, 2, rainbow(0))
+        GL11.glScaled(0.5, 0.5, 0.5)
+        drawStringWithShadow(render2DEvent.matrixStack, VERSION, i * 2, 2, rainbow(100))
+        drawStringWithShadow(render2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight + 2, rainbow(200))
+    }
+
+    @Event
     fun infoList(render2DEvent: Render2DEvent) {
-        var infoY = 0
+        var infoY = 30
         val infoList: ArrayList<String> = ArrayList()
 
         if (coords.enable) {
@@ -160,11 +180,23 @@ class HUDFunc {
 
         val mods: ArrayList<Any> = functions
         mods.sortByDescending { getWidth(getDisplayName(it)) }
-        for (func in mods) {
+        for ((index, func) in mods.withIndex()) {
             val startX = scaledWidth - getWidth(getDisplayName(func)) - 6
-            drawStringWithShadow(render2DEvent.matrixStack, getDisplayName(func), startX + 3, yStart, Color.WHITE.rgb)
+            drawStringWithShadow(
+                render2DEvent.matrixStack,
+                getDisplayName(func),
+                startX + 3,
+                yStart,
+                rainbow(index * 100)
+            )
             yStart += fontHeight + 4
         }
+    }
+
+    private fun rainbow(delay: Int): Int {
+        var rainbowState = ceil((System.currentTimeMillis() + delay) / 20.0)
+        rainbowState %= 360.0
+        return Color.getHSBColor((rainbowState / 360.0f).toFloat(), 0.8f, 0.7f).rgb
     }
 
     private fun getDisplayName(module: Any): String {
