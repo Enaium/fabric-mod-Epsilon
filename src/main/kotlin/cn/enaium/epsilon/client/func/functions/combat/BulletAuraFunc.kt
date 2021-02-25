@@ -42,19 +42,19 @@ class BulletAuraFunc {
     @Event
     fun onMotion(motionEvent: MotionEvent) {
 
-        when (motionEvent.at) {
+        target = when (motionEvent.at) {
             At.HEAD -> {
                 if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                target =
-                    if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
+                if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
             }
             At.TAIL -> {
                 if (target == null) return
                 MC.interactionManager!!.attackEntity(MC.player, target)
                 MC.player!!.swingHand(Hand.MAIN_HAND)
-                target = null
+                null
             }
+            At.NONE -> TODO()
         }
     }
 
