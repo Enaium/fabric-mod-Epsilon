@@ -81,7 +81,10 @@ class AuraFunc {
         cf4m.module.setValue(this, "tag", priority.current)
         when (motionEvent.at) {
             At.HEAD -> {
+
                 if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
+
+
 
                 target = when (priority.current) {
                     "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) })
@@ -109,6 +112,7 @@ class AuraFunc {
                 MC.player!!.swingHand(Hand.MAIN_HAND)
                 target = null
             }
+            else -> TODO()
         }
     }
 
