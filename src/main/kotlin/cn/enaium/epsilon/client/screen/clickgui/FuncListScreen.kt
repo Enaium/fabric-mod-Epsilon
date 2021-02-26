@@ -21,7 +21,7 @@ class FuncListScreen(val category: Category) : UI() {
         super.initUI()
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
         var y = 0
-        for (func in getFuncForCategory(category)) {
+        for (func in cf4m.module.getModules(category)) {
             scrollPanel.addElement(object : Button(
                 0,
                 y,
@@ -45,16 +45,6 @@ class FuncListScreen(val category: Category) : UI() {
             y += 30
         }
         addElement(scrollPanel)
-    }
-
-    private fun getFuncForCategory(category: Category): ArrayList<Any> {
-        var list: ArrayList<Any> = ArrayList();
-        for (module in cf4m.module.modules) {
-            if (cf4m.module.getCategory(module).equals(category)) {
-                list.add(module)
-            }
-        }
-        return list;
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {

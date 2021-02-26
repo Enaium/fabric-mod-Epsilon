@@ -3,6 +3,7 @@ package cn.enaium.epsilon.client.func.functions.render
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
+import cn.enaium.cf4m.event.events.KeyboardEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.Epsilon.AUTHOR
 import cn.enaium.epsilon.client.Epsilon.NAME
@@ -13,7 +14,6 @@ import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.events.Render2DEvent
 import cn.enaium.epsilon.client.settings.EnableSetting
-import cn.enaium.epsilon.client.utils.FontUtils
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.client.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.client.utils.FontUtils.getWidth
@@ -25,9 +25,13 @@ import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import org.lwjgl.opengl.GL11
 import kotlin.math.ceil
+import java.util.Comparator
+
+import java.util.ArrayList
+
+import java.util.HashMap
 
 
 /**
@@ -71,9 +75,15 @@ class HUDFunc {
     @Setting("TitleInfo")
     private val titleInfo = EnableSetting(false)
 
-
     private var yaw = 0.0F
     private var pitch = 0.0F
+
+    var leftStartY = fontHeight * 2
+
+    @Event(priority = 100)
+    fun resetLeftStartY(render2DEvent: Render2DEvent) {
+        leftStartY = fontHeight * 2
+    }
 
     @Event
     fun entityList(render2DEvent: Render2DEvent) {
@@ -107,15 +117,14 @@ class HUDFunc {
         if (!logo.enable)
             return
         GL11.glScaled(2.0, 2.0, 2.0)
-        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 2, 2, rainbow(0))
+        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 0, 0, rainbow(0))
         GL11.glScaled(0.5, 0.5, 0.5)
-        drawStringWithShadow(render2DEvent.matrixStack, VERSION, i * 2, 2, rainbow(100))
-        drawStringWithShadow(render2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight + 2, rainbow(200))
+        drawStringWithShadow(render2DEvent.matrixStack, VERSION, i * 2, 0, rainbow(100))
+        drawStringWithShadow(render2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight, rainbow(200))
     }
 
     @Event
     fun infoList(render2DEvent: Render2DEvent) {
-        var infoY = 30
         val infoList: ArrayList<String> = ArrayList()
 
         if (coords.enable) {
@@ -154,8 +163,8 @@ class HUDFunc {
         infoList.sortedBy { getWidth(it) }
 
         for (s in infoList) {
-            drawStringWithShadow(render2DEvent.matrixStack, s, 5, infoY, Color.WHITE.rgb)
-            infoY += fontHeight + 4
+            drawStringWithShadow(render2DEvent.matrixStack, s, 0, leftStartY, Color.WHITE.rgb)
+            leftStartY += fontHeight + 4
         }
 
         if (titleInfo.enable) {

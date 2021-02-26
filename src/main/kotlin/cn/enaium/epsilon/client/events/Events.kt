@@ -15,12 +15,12 @@ import net.minecraft.util.math.Vec3d
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-class BlockBreakingProgressEvent(val blockPos: BlockPos, val direction: Direction) : Listener(At.HEAD)
+class BlockBreakingProgressEvent(val blockPos: BlockPos, val direction: Direction) : Listener(At.NONE)
 class MotionEvent(at: At, var yaw: Float, var pitch: Float, var ground: Boolean, var vec3d: Vec3d) : Listener(at)
-class MouseScrollEvent(val windowHandle: Long, val up: Double, val down: Double) : Listener(At.HEAD)
-class Render2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.HEAD)
-class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Listener(At.HEAD)
-class RenderBlockEntityEvent(val blockEntity: BlockEntity) : Listener(At.HEAD)
+class MouseScrollEvent(val windowHandle: Long, val up: Double, val down: Double) : Listener(At.NONE)
+class Render2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.NONE)
+class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Listener(At.NONE)
+class RenderBlockEntityEvent(val blockEntity: BlockEntity) : Listener(At.NONE)
 class RenderItemEntityEvent(
     val itemEntity: ItemEntity,
     val yaw: Float,
@@ -28,11 +28,11 @@ class RenderItemEntityEvent(
     val matrixStack: MatrixStack,
     val vertexConsumerProvider: VertexConsumerProvider,
     val light: Int
-) : Listener(At.HEAD)
+) : Listener(At.NONE)
 
-class RenderLivingEntityEvent : Listener(At.HEAD)
-class ShouldDrawSideEvent(val blockState: BlockState) : Listener(At.HEAD) {
+class RenderLivingEntityEvent : Listener(At.NONE)
+class ShouldDrawSideEvent(val blockState: BlockState) : Listener(At.NONE) {
     var rendered: Boolean? = null
 }
 
-class TessellateBlockEvent(val blockState: BlockState) : Listener(At.HEAD)
+class TessellateBlockEvent(val blockState: BlockState) : Listener(At.NONE)
