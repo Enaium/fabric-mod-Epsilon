@@ -125,7 +125,7 @@ class FuncConfig {
         }
         FileUtils.write(
             cf4m.config.getPath(this),
-            funcObject.asString
+            Gson().toJson(funcObject)
         )
     }
 
