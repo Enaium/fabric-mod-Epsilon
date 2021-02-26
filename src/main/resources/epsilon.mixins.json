@@ -19,6 +19,7 @@
     "LivingEntityRendererMixin",
     "MinecraftClientMixin",
     "MouseMixin",
+    "PlayerEntityMixin",
     "TerrainRenderContextMixin",
     "TitleScreenMixin",
     "WorldChunkMixin"
