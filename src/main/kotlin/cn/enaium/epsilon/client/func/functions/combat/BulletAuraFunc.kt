@@ -42,6 +42,7 @@ class BulletAuraFunc {
     @Event
     fun onMotion(motionEvent: MotionEvent) {
 
+        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
         target = when (motionEvent.at) {
             At.HEAD -> {
                 if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
