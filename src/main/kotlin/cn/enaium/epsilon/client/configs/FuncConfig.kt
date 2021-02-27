@@ -9,6 +9,7 @@ import cn.enaium.epsilon.client.utils.FileUtils
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import java.io.File
 
 
 /**
@@ -123,6 +124,7 @@ class FuncConfig {
             }
             funcObject.add(cf4m.module.getName(func), funcClassObject)
         }
+        File(cf4m.config.getPath(this)).delete()
         FileUtils.write(
             cf4m.config.getPath(this),
             Gson().toJson(funcObject)
