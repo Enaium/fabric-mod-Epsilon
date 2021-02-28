@@ -28,22 +28,19 @@ class SetCommand {
         currentFunc = cf4m.module.getModule(moduleName)
         if (currentFunc == null) {
             error("""The func with the name "$moduleName" does not exist.""", "")
-            return
-        }
-
-        settings = cf4m.setting.getSettings(currentFunc)
-
-        if (settings == null) {
-            error("""The func with the name "$moduleName" no setting exists.""", "")
-            return
-        }
-
-        message("Here are the list of settings:", "")
-        for (setting in settings) {
-            message(
-                cf4m.setting.getName(currentFunc, setting),
-                "[" + setting.javaClass.simpleName + "]" + cf4m.setting.getDescription(currentFunc, setting)
-            )
+        } else {
+            settings = cf4m.setting.getSettings(currentFunc)
+            if (settings == null) {
+                error("""The func with the name "$moduleName" no setting exists.""", "")
+            } else {
+                message("Here are the list of settings:", "")
+                for (setting in settings) {
+                    message(
+                        cf4m.setting.getName(currentFunc, setting),
+                        "[" + setting.javaClass.simpleName + "]" + cf4m.setting.getDescription(currentFunc, setting)
+                    )
+                }
+            }
         }
     }
 

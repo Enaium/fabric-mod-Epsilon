@@ -20,12 +20,12 @@ class EnableCommand {
     }
 
     @Exec
-    fun exec(@Param("") module: String) {
-        val func = cf4m.module.getModule(module)
+    fun exec(@Param("Module") moduleName: String) {
+        val func = cf4m.module.getModule(moduleName)
         if (func == null) {
-            error("The func with the name $module does not exist.")
-            return
+            error("The func with the name $moduleName does not exist.")
+        } else {
+            cf4m.module.enable(func)
         }
-        cf4m.module.enable(func)
     }
 }
