@@ -82,8 +82,9 @@ class AuraFunc {
         when (motionEvent.at) {
             At.HEAD -> {
 
-                if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
-
+                if (!cf4m.module.getEnable(cf4m.module.getModule("NoCooldown"))) {
+                    if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
+                }
 
 
                 target = when (priority.current) {
