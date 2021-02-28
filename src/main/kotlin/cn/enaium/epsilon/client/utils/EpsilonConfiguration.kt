@@ -20,6 +20,6 @@ class EpsilonConfiguration : IConfiguration {
      * @param string Message
      */
     override fun message(string: String) {
-        MC.inGameHud.chatHud.addMessage(LiteralText(string))
+        MC.inGameHud.chatHud.addMessage(LiteralText("[" + Formatting.GRAY + Epsilon.NAME + Formatting.WHITE + "]" + string))
     }
 }

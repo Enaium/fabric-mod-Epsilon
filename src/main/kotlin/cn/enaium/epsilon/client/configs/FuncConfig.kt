@@ -125,6 +125,7 @@ class FuncConfig {
             funcObject.add(cf4m.module.getName(func), funcClassObject)
         }
         File(cf4m.config.getPath(this)).delete()
+        File(cf4m.config.getPath(this)).createNewFile()
         FileUtils.write(
             cf4m.config.getPath(this),
             Gson().toJson(funcObject)
