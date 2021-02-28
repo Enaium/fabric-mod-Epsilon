@@ -13,10 +13,12 @@ import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
 import cn.enaium.epsilon.client.events.Render2DEvent
-import cn.enaium.epsilon.client.settings.EnableSetting
+import cn.enaium.epsilon.client.settings.*
+import cn.enaium.epsilon.client.utils.ColorUtils
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.client.utils.FontUtils.fontHeight
 import cn.enaium.epsilon.client.utils.FontUtils.getWidth
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import cn.enaium.epsilon.client.utils.Render2DUtils.scaledHeight
 import cn.enaium.epsilon.client.utils.Render2DUtils.scaledWidth
 import cn.enaium.epsilon.client.utils.Utils
@@ -27,11 +29,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import org.lwjgl.opengl.GL11
 import kotlin.math.ceil
-import java.util.Comparator
 
 import java.util.ArrayList
-
-import java.util.HashMap
 
 
 /**
@@ -40,7 +39,7 @@ import java.util.HashMap
  * Copyright © 2020 | Enaium | All rights reserved.
  */
 @Module("HUD", key = GLFW.GLFW_KEY_O, category = Category.RENDER)
-class HUDFunc {
+class HUDFunc() {
 
     @Setting("TabGUI")
     private val tabGUI = EnableSetting(true)
@@ -78,11 +77,23 @@ class HUDFunc {
     private var yaw = 0.0F
     private var pitch = 0.0F
 
-    var leftStartY = fontHeight * 2
+    private var categoryValues: ArrayList<Category> = ArrayList()
+    private var currentCategoryIndex = 0
+    private var currentModIndex = 0
+    private var currentSettingIndex = 0
 
-    @Event(priority = 100)
-    fun resetLeftStartY(render2DEvent: Render2DEvent) {
-        leftStartY = fontHeight * 2
+    private var editMode = false
+
+    private var screen = 0
+
+    init {
+        categoryValues = ArrayList()
+        currentCategoryIndex = 0
+        currentModIndex = 0
+        currentSettingIndex = 0
+        editMode = false
+        screen = 0
+        categoryValues.addAll(Category.values())
     }
 
     @Event
@@ -113,7 +124,7 @@ class HUDFunc {
     }
 
     @Event
-    fun event(render2DEvent: Render2DEvent) {
+    fun logo(render2DEvent: Render2DEvent) {
         if (!logo.enable)
             return
         GL11.glScaled(2.0, 2.0, 2.0)
@@ -123,9 +134,10 @@ class HUDFunc {
         drawStringWithShadow(render2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight, rainbow(200))
     }
 
-    @Event
+    @Event(priority = 2)
     fun infoList(render2DEvent: Render2DEvent) {
         val infoList: ArrayList<String> = ArrayList()
+        var infoY = 50;
 
         if (coords.enable) {
             infoList.add(
@@ -163,8 +175,8 @@ class HUDFunc {
         infoList.sortedBy { getWidth(it) }
 
         for (s in infoList) {
-            drawStringWithShadow(render2DEvent.matrixStack, s, 0, leftStartY, Color.WHITE.rgb)
-            leftStartY += fontHeight + 4
+            drawStringWithShadow(render2DEvent.matrixStack, s, 0, infoY, Color.WHITE.rgb)
+            infoY += fontHeight + 4
         }
 
         if (titleInfo.enable) {
@@ -200,6 +212,351 @@ class HUDFunc {
             )
             yStart += fontHeight + 4
         }
+    }
+
+    @Event
+    fun tabGUI(render2DEvent: Render2DEvent) {
+        if (!tabGUI.enable)
+            return
+
+        val startX = 0
+        var startY = 20
+        Render2DUtils.drawRect(
+            render2DEvent.matrixStack,
+            startX,
+            startY,
+            startX + getWidestCategory() + 5,
+            startY + categoryValues.size * (fontHeight + 2),
+            ColorUtils.BG
+        )
+        for (c in categoryValues) {
+            if (getCurrentCategory() == c) {
+                Render2DUtils.drawRect(
+                    render2DEvent.matrixStack,
+                    startX + 1,
+                    startY,
+                    startX + getWidestCategory() + 5 - 1,
+                    startY + fontHeight + 2,
+                    ColorUtils.SELECT
+                )
+            }
+            val name: String = c.name
+            drawStringWithShadow(
+                render2DEvent.matrixStack,
+                name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(),
+                startX + 2 + if (getCurrentCategory() == c) 2 else 0,
+                startY + 2,
+                -1
+            )
+            startY += fontHeight + 2
+        }
+
+        if (screen == 1 || screen == 2) {
+            val startModsX: Int = startX + getWidestCategory() + 6
+            var startModsY = startY + currentCategoryIndex * (fontHeight + 2)
+            Render2DUtils.drawRect(
+                render2DEvent.matrixStack,
+                startModsX,
+                startModsY,
+                startModsX + getWidestMod() + 5,
+                startModsY + getModsForCurrentCategory().size * (fontHeight + 2),
+                ColorUtils.BG
+            )
+            for (func in getModsForCurrentCategory()) {
+                if (getCurrentFunc() == func) {
+                    Render2DUtils.drawRect(
+                        render2DEvent.matrixStack,
+                        startModsX + 1,
+                        startModsY,
+                        startModsX + getWidestMod() + 5 - 1,
+                        startModsY + fontHeight + 2,
+                        ColorUtils.SELECT
+                    )
+                }
+                drawStringWithShadow(
+                    render2DEvent.matrixStack,
+                    cf4m.module.getName(func),
+                    startModsX + 2 + if (getCurrentFunc() == func) 2 else 0,
+                    startModsY + 2,
+                    if (cf4m.module.getEnable(func)) -1 else Color.GRAY.rgb
+                )
+                startModsY += fontHeight + 2
+            }
+        }
+
+        if (screen == 2) {
+            val startSettingX = startX + getWidestCategory() + 6 + getWidestCategory() + 8
+            var startSettingY = startY + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
+            Render2DUtils.drawRect(
+                render2DEvent.matrixStack,
+                startSettingX,
+                startSettingY,
+                startSettingX + getWidestSetting() + 5,
+                startSettingY + getSettingsForCurrentFunc().size * (fontHeight + 2),
+                ColorUtils.BG
+            )
+            for (setting in getSettingsForCurrentFunc()) {
+                if (getCurrentSetting() == setting) {
+                    Render2DUtils.drawRect(
+                        render2DEvent.matrixStack,
+                        startSettingX + 1,
+                        startSettingY,
+                        startSettingX + getWidestSetting() + 5 - 1,
+                        startSettingY + fontHeight + 2,
+                        ColorUtils.SELECT
+                    )
+                }
+                when (setting) {
+                    is EnableSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.enable,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                    is IntegerSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                    is DoubleSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                    is FloatSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                    is LongSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                    is ModeSetting -> {
+                        drawStringWithShadow(
+                            render2DEvent.matrixStack,
+                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
+                            startSettingY + 2,
+                            if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
+                        )
+                    }
+                }
+                startSettingY += fontHeight + 2
+            }
+        }
+    }
+
+    private fun up() {
+        if (currentCategoryIndex > 0 && screen == 0) {
+            currentCategoryIndex--
+        } else if (currentCategoryIndex == 0 && screen == 0) {
+            currentCategoryIndex = categoryValues.size - 1
+        } else if (currentModIndex > 0 && screen == 1) {
+            currentModIndex--
+        } else if (currentModIndex == 0 && screen == 1) {
+            currentModIndex = getModsForCurrentCategory().size - 1
+        } else if (currentSettingIndex > 0 && screen == 2 && !editMode) {
+            currentSettingIndex--
+        } else if (currentSettingIndex == 0 && screen == 2 && !editMode) {
+            currentSettingIndex = getSettingsForCurrentFunc().size - 1
+        }
+        if (editMode) {
+            val setting: Any = getCurrentSetting()
+            if (setting is EnableSetting) {
+                setting.enable = !setting.enable
+            } else if (setting is IntegerSetting) {
+                if (setting.current < setting.max) setting.current = setting.current + 1
+            } else if (setting is DoubleSetting) {
+                if (setting.current < setting.max) setting.current = Utils.valueFix(setting.current + 0.1)
+            } else if (setting is FloatSetting) {
+                if (setting.current < setting.max) setting.current = Utils.valueFix(setting.current + 0.1f)
+            } else if (setting is LongSetting) {
+                if (setting.current < setting.max) setting.current = setting.current + 1
+            } else {
+                try {
+                    (setting as ModeSetting).current = setting.modes[getCurrentModeIndex(setting) - 1]
+                } catch (e: Exception) {
+                    (setting as ModeSetting).current = setting.modes[setting.modes.size - 1]
+                }
+            }
+        }
+    }
+
+    private fun down() {
+        if (currentCategoryIndex < categoryValues.size - 1 && screen == 0) {
+            currentCategoryIndex++
+        } else if (currentCategoryIndex == categoryValues.size - 1 && screen == 0) {
+            currentCategoryIndex = 0
+        } else if (currentModIndex < getModsForCurrentCategory().size - 1 && screen == 1) {
+            currentModIndex++
+        } else if (currentModIndex == getModsForCurrentCategory().size - 1 && screen == 1) {
+            currentModIndex = 0
+        } else if (currentSettingIndex < getSettingsForCurrentFunc().size - 1 && screen == 2 && !editMode) {
+            currentSettingIndex++
+        } else if (currentSettingIndex == getSettingsForCurrentFunc().size - 1 && screen == 2 && !editMode) {
+            currentSettingIndex = 0
+        }
+        if (editMode) {
+            val setting: Any = getCurrentSetting()
+            if (setting is EnableSetting) {
+                setting.enable = !setting.enable
+            } else if (setting is IntegerSetting) {
+                if (setting.current > setting.min) setting.current = setting.current - 1
+            } else if (setting is DoubleSetting) {
+                if (setting.current > setting.min) setting.current = Utils.valueFix(setting.current - 0.1)
+            } else if (setting is FloatSetting) {
+                if (setting.current > setting.min) setting.current = Utils.valueFix(setting.current - 0.1f)
+            } else if (setting is LongSetting) {
+                if (setting.current > setting.min) setting.current = setting.current - 1
+            } else {
+                try {
+                    (setting as ModeSetting).current = setting.modes[getCurrentModeIndex(setting) + 1]
+                } catch (e: Exception) {
+                    (setting as ModeSetting).current = setting.modes[0]
+                }
+            }
+        }
+    }
+
+    private fun getCurrentModeIndex(modeSetting: ModeSetting): Int {
+        var index = 0
+        for (ms in modeSetting.modes) {
+            index++
+            if (modeSetting.current == ms) {
+                return index
+            }
+        }
+        return 0;
+    }
+
+    private fun right(key: Int) {
+        if (screen == 0) {
+            screen = 1
+        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) == null) {
+            cf4m.module.enable(getCurrentFunc())
+        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) != null && key == GLFW.GLFW_KEY_ENTER) {
+            cf4m.module.enable(getCurrentFunc())
+        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) != null) {
+            screen = 2
+        } else if (screen == 2) {
+            editMode = !editMode
+        }
+    }
+
+    private fun left() {
+        if (screen == 1) {
+            screen = 0
+            currentModIndex = 0
+        } else if (screen == 2) {
+            screen = 1
+            currentSettingIndex = 0
+        }
+    }
+
+    @Event
+    fun onKey(keyBoardEvent: KeyboardEvent) {
+        when (keyBoardEvent.key) {
+            GLFW.GLFW_KEY_UP -> up()
+            GLFW.GLFW_KEY_DOWN -> down()
+            GLFW.GLFW_KEY_RIGHT -> right(GLFW.GLFW_KEY_RIGHT)
+            GLFW.GLFW_KEY_LEFT -> left()
+            GLFW.GLFW_KEY_ENTER -> right(GLFW.GLFW_KEY_ENTER)
+        }
+    }
+
+    private fun getCurrentSetting(): Any {
+        return getSettingsForCurrentFunc()[currentSettingIndex]
+    }
+
+    private fun getSettingsForCurrentFunc(): ArrayList<Any> {
+        return cf4m.setting.getSettings(getCurrentFunc())
+    }
+
+    private fun getCurrentCategory(): Category {
+        return categoryValues[currentCategoryIndex]
+    }
+
+    private fun getCurrentFunc(): Any {
+        return getModsForCurrentCategory()[currentModIndex]
+    }
+
+    private fun getModsForCurrentCategory(): ArrayList<Any> {
+        return cf4m.module.getModules(getCurrentCategory())
+    }
+
+    private fun getWidestSetting(): Int {
+        var width = 0
+        for (setting in getSettingsForCurrentFunc()) {
+            val name: String = when (setting) {
+                is EnableSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.enable
+                }
+                is IntegerSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                }
+                is FloatSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                }
+                is DoubleSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                }
+                is LongSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                }
+                is ModeSetting -> {
+                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                }
+                else -> "NULL"
+            }
+            if (getWidth(name) > width) {
+                width = getWidth(name)
+            }
+        }
+        return width
+    }
+
+    private fun getWidestMod(): Int {
+        var width = 0
+        for (module in cf4m.module.modules) {
+            val cWidth = getWidth(cf4m.module.getName(module))
+            if (cWidth > width) {
+                width = cWidth
+            }
+        }
+        return width
+    }
+
+    private fun getWidestCategory(): Int {
+        var width = 0
+        for (c in categoryValues) {
+            val name: String = c.name
+            val cWidth = getWidth(name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase())
+            if (cWidth > width) {
+                width = cWidth
+            }
+        }
+        return width
     }
 
     private fun rainbow(delay: Int): Int {
