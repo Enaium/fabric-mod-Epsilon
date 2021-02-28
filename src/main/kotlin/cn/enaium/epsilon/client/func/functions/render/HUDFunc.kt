@@ -137,7 +137,7 @@ class HUDFunc() {
     @Event(priority = 2)
     fun infoList(render2DEvent: Render2DEvent) {
         val infoList: ArrayList<String> = ArrayList()
-        var infoY = 50;
+        var infoY = 100
 
         if (coords.enable) {
             infoList.add(
@@ -253,7 +253,7 @@ class HUDFunc() {
 
         if (screen == 1 || screen == 2) {
             val startModsX: Int = startX + getWidestCategory() + 6
-            var startModsY = startY + currentCategoryIndex * (fontHeight + 2)
+            var startModsY = 20 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(
                 render2DEvent.matrixStack,
                 startModsX,
@@ -286,7 +286,7 @@ class HUDFunc() {
 
         if (screen == 2) {
             val startSettingX = startX + getWidestCategory() + 6 + getWidestCategory() + 8
-            var startSettingY = startY + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
+            var startSettingY = 20 + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
             Render2DUtils.drawRect(
                 render2DEvent.matrixStack,
                 startSettingX,
