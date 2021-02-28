@@ -19,7 +19,7 @@ public class PlayerEntityMixin {
     @Inject(at = @At("HEAD"), method = "getAttackCooldownProgressPerTick", cancellable = true)
     public void getAttackCooldownProgressPerTick(CallbackInfoReturnable<Float> callbackInfoReturnable) {
         if (CF4M.INSTANCE.module.getEnable(CF4M.INSTANCE.module.getModule("NoCooldown"))) {
-            callbackInfoReturnable.setReturnValue(.1F);
+            callbackInfoReturnable.setReturnValue(0.01953125F);
         }
     }
 }
