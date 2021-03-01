@@ -12,7 +12,6 @@ import cn.enaium.epsilon.client.cf4m
  */
 @Command("e", "enable")
 class EnableCommand {
-
     @Exec
     fun exec() {
         for (ms in cf4m.module.modules)
