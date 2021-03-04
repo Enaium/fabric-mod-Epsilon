@@ -2,6 +2,7 @@ package cn.enaium.epsilon.client
 
 import cn.enaium.cf4m.CF4M
 import cn.enaium.epsilon.client.cf4m
+import cn.enaium.epsilon.client.message.MessageManager
 import net.minecraft.client.MinecraftClient
 
 
@@ -21,7 +22,10 @@ object Epsilon {
     const val GAME = "21w08a"
     const val AUTHOR = "Enaium"
 
+    lateinit var message: MessageManager
+
     fun run() {
+        message = MessageManager()
         cf4m.run(this)
     }
 }

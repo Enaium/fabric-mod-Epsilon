@@ -80,7 +80,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
      * @author Enaium
      */
     @Overwrite
-    private void sendMovementPackets() {
+    private void  sendMovementPackets() {
         MotionEvent motionEvent = new MotionEvent(Listener.At.HEAD, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
         motionEvent.call();
         boolean bl = this.isSprinting();

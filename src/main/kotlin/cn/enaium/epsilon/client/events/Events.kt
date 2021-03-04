@@ -18,7 +18,8 @@ import net.minecraft.util.math.Vec3d
 class BlockBreakingProgressEvent(val blockPos: BlockPos, val direction: Direction) : Listener(At.NONE)
 class MotionEvent(at: At, var yaw: Float, var pitch: Float, var ground: Boolean, var vec3d: Vec3d) : Listener(at)
 class MouseScrollEvent(val windowHandle: Long, val up: Double, val down: Double) : Listener(At.NONE)
-class Render2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.NONE)
+class Rendering2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.HEAD)
+class Rendered2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.TAIL)
 class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Listener(At.NONE)
 class RenderBlockEntityEvent(val blockEntity: BlockEntity) : Listener(At.NONE)
 class RenderItemEntityEvent(

@@ -5,6 +5,7 @@ import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
+import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.events.Render3DEvent
 import cn.enaium.epsilon.client.utils.BlockUtils
 import cn.enaium.epsilon.client.utils.Render3DUtils
@@ -40,8 +41,8 @@ class BlockEntityESPFunc {
 
     @Event
     fun onRender(render3DEvent: Render3DEvent) {
-        for (blockEntity in BlockUtils.blockEntities) {
-            Render3DUtils.drawBox(BlockUtils.getBoundingBox(blockEntity.value.pos), Color.DARK_GRAY, blockEntityBox)
+        for (blockEntity in IMC.world.blockEntityTickers) {
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(blockEntity.pos), Color.DARK_GRAY, blockEntityBox)
         }
     }
 }

@@ -21,8 +21,7 @@
     "MouseMixin",
     "PlayerEntityMixin",
     "TerrainRenderContextMixin",
-    "TitleScreenMixin",
-    "WorldChunkMixin"
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

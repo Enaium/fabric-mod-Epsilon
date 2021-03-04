@@ -5,6 +5,7 @@ import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.event.events.KeyboardEvent
 import cn.enaium.cf4m.module.Category
+import cn.enaium.epsilon.client.Epsilon
 import cn.enaium.epsilon.client.Epsilon.AUTHOR
 import cn.enaium.epsilon.client.Epsilon.NAME
 import cn.enaium.epsilon.client.Epsilon.VERSION
@@ -12,7 +13,8 @@ import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.events.MotionEvent
-import cn.enaium.epsilon.client.events.Render2DEvent
+import cn.enaium.epsilon.client.events.Rendered2DEvent
+import cn.enaium.epsilon.client.events.Rendering2DEvent
 import cn.enaium.epsilon.client.settings.*
 import cn.enaium.epsilon.client.utils.ColorUtils
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
@@ -97,7 +99,7 @@ class HUDFunc() {
     }
 
     @Event
-    fun entityList(render2DEvent: Render2DEvent) {
+    fun entityList(rendering2DEvent: Rendering2DEvent) {
         if (!entityList.enable)
             return
 
@@ -112,7 +114,7 @@ class HUDFunc() {
 
         for (entity in entities) {
             val startX = scaledWidth - getWidth(entity) - 6
-            drawStringWithShadow(render2DEvent.matrixStack, entity, startX + 3, yStart, Color.WHITE.rgb)
+            drawStringWithShadow(rendering2DEvent.matrixStack, entity, startX + 3, yStart, Color.WHITE.rgb)
             yStart -= fontHeight + 4
         }
     }
@@ -124,18 +126,18 @@ class HUDFunc() {
     }
 
     @Event
-    fun logo(render2DEvent: Render2DEvent) {
+    fun logo(rendering2DEvent: Rendering2DEvent) {
         if (!logo.enable)
             return
         GL11.glScaled(2.0, 2.0, 2.0)
-        val i = drawStringWithShadow(render2DEvent.matrixStack, NAME, 0, 0, rainbow(0))
+        val i = drawStringWithShadow(rendering2DEvent.matrixStack, NAME, 0, 0, rainbow(0))
         GL11.glScaled(0.5, 0.5, 0.5)
-        drawStringWithShadow(render2DEvent.matrixStack, VERSION, i * 2, 0, rainbow(100))
-        drawStringWithShadow(render2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight, rainbow(200))
+        drawStringWithShadow(rendering2DEvent.matrixStack, VERSION, i * 2, 0, rainbow(100))
+        drawStringWithShadow(rendering2DEvent.matrixStack, "by $AUTHOR", i * 2, fontHeight, rainbow(200))
     }
 
-    @Event(priority = 2)
-    fun infoList(render2DEvent: Render2DEvent) {
+    @Event
+    fun infoList(rendering2DEvent: Rendering2DEvent) {
         val infoList: ArrayList<String> = ArrayList()
         var infoY = 100
 
@@ -175,7 +177,7 @@ class HUDFunc() {
         infoList.sortedBy { getWidth(it) }
 
         for (s in infoList) {
-            drawStringWithShadow(render2DEvent.matrixStack, s, 0, infoY, Color.WHITE.rgb)
+            drawStringWithShadow(rendering2DEvent.matrixStack, s, 0, infoY, Color.WHITE.rgb)
             infoY += fontHeight + 4
         }
 
@@ -186,7 +188,7 @@ class HUDFunc() {
     }
 
     @Event
-    fun list(render2DEvent: Render2DEvent) {
+    fun list(rendering2DEvent: Rendering2DEvent) {
         if (!list.enable)
             return
 
@@ -204,7 +206,7 @@ class HUDFunc() {
         for ((index, func) in mods.withIndex()) {
             val startX = scaledWidth - getWidth(getDisplayName(func)) - 6
             drawStringWithShadow(
-                render2DEvent.matrixStack,
+                rendering2DEvent.matrixStack,
                 getDisplayName(func),
                 startX + 3,
                 yStart,
@@ -215,14 +217,24 @@ class HUDFunc() {
     }
 
     @Event
-    fun tabGUI(render2DEvent: Render2DEvent) {
+    fun messageRendering(rendering2DEvent: Rendering2DEvent) {
+        Epsilon.message.render(rendering2DEvent.matrixStack)
+    }
+
+    @Event
+    fun messageRendered(rendered2DEvent: Rendered2DEvent) {
+        Epsilon.message.remove()
+    }
+
+    @Event
+    fun tabGUI(rendering2DEvent: Rendering2DEvent) {
         if (!tabGUI.enable)
             return
 
         val startX = 0
         var startY = 20
         Render2DUtils.drawRect(
-            render2DEvent.matrixStack,
+            rendering2DEvent.matrixStack,
             startX,
             startY,
             startX + getWidestCategory() + 5,
@@ -232,7 +244,7 @@ class HUDFunc() {
         for (c in categoryValues) {
             if (getCurrentCategory() == c) {
                 Render2DUtils.drawRect(
-                    render2DEvent.matrixStack,
+                    rendering2DEvent.matrixStack,
                     startX + 1,
                     startY,
                     startX + getWidestCategory() + 5 - 1,
@@ -242,7 +254,7 @@ class HUDFunc() {
             }
             val name: String = c.name
             drawStringWithShadow(
-                render2DEvent.matrixStack,
+                rendering2DEvent.matrixStack,
                 name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase(),
                 startX + 2 + if (getCurrentCategory() == c) 2 else 0,
                 startY + 2,
@@ -255,7 +267,7 @@ class HUDFunc() {
             val startModsX: Int = startX + getWidestCategory() + 6
             var startModsY = 20 + currentCategoryIndex * (fontHeight + 2)
             Render2DUtils.drawRect(
-                render2DEvent.matrixStack,
+                rendering2DEvent.matrixStack,
                 startModsX,
                 startModsY,
                 startModsX + getWidestMod() + 5,
@@ -265,7 +277,7 @@ class HUDFunc() {
             for (func in getModsForCurrentCategory()) {
                 if (getCurrentFunc() == func) {
                     Render2DUtils.drawRect(
-                        render2DEvent.matrixStack,
+                        rendering2DEvent.matrixStack,
                         startModsX + 1,
                         startModsY,
                         startModsX + getWidestMod() + 5 - 1,
@@ -274,7 +286,7 @@ class HUDFunc() {
                     )
                 }
                 drawStringWithShadow(
-                    render2DEvent.matrixStack,
+                    rendering2DEvent.matrixStack,
                     cf4m.module.getName(func),
                     startModsX + 2 + if (getCurrentFunc() == func) 2 else 0,
                     startModsY + 2,
@@ -288,7 +300,7 @@ class HUDFunc() {
             val startSettingX = startX + getWidestCategory() + 6 + getWidestCategory() + 8
             var startSettingY = 20 + currentCategoryIndex * (9 + 2) + currentModIndex * (9 + 2)
             Render2DUtils.drawRect(
-                render2DEvent.matrixStack,
+                rendering2DEvent.matrixStack,
                 startSettingX,
                 startSettingY,
                 startSettingX + getWidestSetting() + 5,
@@ -298,7 +310,7 @@ class HUDFunc() {
             for (setting in getSettingsForCurrentFunc()) {
                 if (getCurrentSetting() == setting) {
                     Render2DUtils.drawRect(
-                        render2DEvent.matrixStack,
+                        rendering2DEvent.matrixStack,
                         startSettingX + 1,
                         startSettingY,
                         startSettingX + getWidestSetting() + 5 - 1,
@@ -309,7 +321,7 @@ class HUDFunc() {
                 when (setting) {
                     is EnableSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.enable,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -318,7 +330,7 @@ class HUDFunc() {
                     }
                     is IntegerSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -327,7 +339,7 @@ class HUDFunc() {
                     }
                     is DoubleSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -336,7 +348,7 @@ class HUDFunc() {
                     }
                     is FloatSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -345,7 +357,7 @@ class HUDFunc() {
                     }
                     is LongSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -354,7 +366,7 @@ class HUDFunc() {
                     }
                     is ModeSetting -> {
                         drawStringWithShadow(
-                            render2DEvent.matrixStack,
+                            rendering2DEvent.matrixStack,
                             cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
@@ -571,7 +583,7 @@ class HUDFunc() {
         return if (tag == null) {
             name
         } else {
-            "$name|$tag"
+            "$name {[<$tag>]}"
         }
     }
 }

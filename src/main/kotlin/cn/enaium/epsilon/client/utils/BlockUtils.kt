@@ -22,9 +22,6 @@ import net.minecraft.util.shape.VoxelShapes
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
 object BlockUtils {
-    
-    var blockEntities: Map<BlockPos, BlockEntity> = Maps.newHashMap()
-
     fun getState(pos: BlockPos): BlockState {
         return MC.world!!.getBlockState(pos)
     }

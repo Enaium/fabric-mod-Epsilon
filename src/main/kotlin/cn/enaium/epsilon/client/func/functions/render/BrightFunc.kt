@@ -6,7 +6,7 @@ import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.events.Render2DEvent
+import cn.enaium.epsilon.client.events.Rendering2DEvent
 import cn.enaium.epsilon.client.settings.ModeSetting
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -25,7 +25,7 @@ class BrightFunc {
     private val mode = ModeSetting("Gamma", arrayListOf("Gamma", "NightVision"))
 
     @Event
-    fun on(render2DEvent: Render2DEvent) {
+    fun on(rendering2DEvent: Rendering2DEvent) {
         when (mode.current) {
             "Gamma" -> MC.options.gamma = 300.0
             "NightVision" -> MC.player!!.addStatusEffect(

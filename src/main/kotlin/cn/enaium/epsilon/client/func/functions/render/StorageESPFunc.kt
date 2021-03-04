@@ -6,6 +6,7 @@ import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
+import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.events.Render3DEvent
 import cn.enaium.epsilon.client.settings.EnableSetting
 import cn.enaium.epsilon.client.utils.BlockUtils
@@ -13,6 +14,7 @@ import cn.enaium.epsilon.client.utils.Render3DUtils
 import net.minecraft.block.entity.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
+import net.minecraft.world.chunk.BlockEntityTickInvoker
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
@@ -78,25 +80,25 @@ class StorageESPFunc {
     @Event
     fun onRender(render3DEvent: Render3DEvent) {
         for (t in getTargets()) {
-            Render3DUtils.drawBox(BlockUtils.getBoundingBox(t), Color.GREEN, storageBox)
+            Render3DUtils.drawBox(BlockUtils.getBoundingBox(t.pos), Color.GREEN, storageBox)
         }
     }
 
-    private fun getTargets(): ArrayList<BlockPos> {
-        val blocks: ArrayList<BlockPos> = ArrayList()
-        for (blockEntity in BlockUtils.blockEntities.values) {
+    private fun getTargets(): ArrayList<BlockEntityTickInvoker> {
+        val blocks: ArrayList<BlockEntityTickInvoker> = ArrayList()
+        for (blockEntity in IMC.world.blockEntityTickers) {
             when (blockEntity) {
-                is ChestBlockEntity -> if (chest.enable) blocks.add(blockEntity.pos)
-                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(blockEntity.pos)
-                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(blockEntity.pos)
-                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(blockEntity.pos)
-                is HopperBlockEntity -> if (hopper.enable) blocks.add(blockEntity.pos)
-                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(blockEntity.pos)
-                is DropperBlockEntity -> if (dropper.enable) blocks.add(blockEntity.pos)
-                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(blockEntity.pos)
-                is BarrelBlockEntity -> if (barrel.enable) blocks.add(blockEntity.pos)
-                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(blockEntity.pos)
-                is SmokerBlockEntity -> if (smoker.enable) blocks.add(blockEntity.pos)
+                is ChestBlockEntity -> if (chest.enable) blocks.add(blockEntity)
+                is TrappedChestBlockEntity -> if (trappedChest.enable) blocks.add(blockEntity)
+                is EnderChestBlockEntity -> if (enderChest.enable) blocks.add(blockEntity)
+                is ShulkerBoxBlockEntity -> if (shulkerBoxChest.enable) blocks.add(blockEntity)
+                is HopperBlockEntity -> if (hopper.enable) blocks.add(blockEntity)
+                is DispenserBlockEntity -> if (dispenser.enable) blocks.add(blockEntity)
+                is DropperBlockEntity -> if (dropper.enable) blocks.add(blockEntity)
+                is FurnaceBlockEntity -> if (furnace.enable) blocks.add(blockEntity)
+                is BarrelBlockEntity -> if (barrel.enable) blocks.add(blockEntity)
+                is BlastFurnaceBlockEntity -> if (blastFurnace.enable) blocks.add(blockEntity)
+                is SmokerBlockEntity -> if (smoker.enable) blocks.add(blockEntity)
             }
         }
         return blocks
