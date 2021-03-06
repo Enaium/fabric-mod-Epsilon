@@ -26,7 +26,7 @@ import net.minecraft.util.math.Vec3d
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-@Module("Scaffold", category = Category.OTHER)
+@Module("Scaffold", category = Category.WORLD)
 class ScaffoldFunc {
     private var currentPos: BlockPos? = null
     private var currentDirection: Direction? = null
@@ -69,6 +69,7 @@ class ScaffoldFunc {
                     )
                 }
             }
+            else -> TODO()
         }
     }
 

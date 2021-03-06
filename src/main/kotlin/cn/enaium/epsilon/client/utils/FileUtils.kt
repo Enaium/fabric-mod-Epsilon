@@ -18,21 +18,16 @@ object FileUtils {
      * @return Text Content
      */
     fun read(path: String): String {
-        return FileUtils.readFileToString(File(path),"UTF-8")
+        return FileUtils.readFileToString(File(path), "UTF-8")
     }
 
     /**
      * Read Jar Resource Text File
-     * @param inputStream InputStream
+     * @param path package
      * @return Text Content
      */
-    fun readResource(inputStream: InputStream): String {
-        val scanner = Scanner(inputStream)
-        val stringBuilder = StringBuilder()
-        while (scanner.hasNext()) {
-            stringBuilder.append(scanner.next() + "\n")
-        }
-        return stringBuilder.toString()
+    fun readResource(path: String): String {
+        return object {}::class.java.getResourceAsStream(path).bufferedReader().readText()
     }
 
     /**

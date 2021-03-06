@@ -18,7 +18,7 @@ import org.lwjgl.glfw.GLFW
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-@Module("FastBreak", key = GLFW.GLFW_KEY_B, category = Category.OTHER)
+@Module("FastBreak", key = GLFW.GLFW_KEY_B, category = Category.WORLD)
 class FastBreakFunc {
 
     @Event

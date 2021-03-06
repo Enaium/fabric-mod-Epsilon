@@ -2,17 +2,23 @@ package cn.enaium.epsilon.client.screen
 
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.IMC
+import cn.enaium.epsilon.client.utils.Render2DUtils
 import com.mojang.authlib.Agent
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
+import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.FatalErrorScreen
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.ButtonWidget.PressAction
 import net.minecraft.client.gui.widget.TextFieldWidget
+import net.minecraft.client.render.*
 import net.minecraft.client.util.Session
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.LiteralText
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL20
+import java.awt.Color
 import java.net.Proxy
 
 
@@ -40,11 +46,15 @@ class AltScreen : Screen(LiteralText("")) {
     }
 
     override fun render(matrixStack: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
-        renderBackground(matrixStack)
+        val glsl = Render2DUtils.GLSL("/assets/epsilon/shaders/noise")
+        GL20.glUseProgram(glsl.program)
+        GL20.glUniform2i(GL20.glGetUniformLocation(glsl.program, "resolution"), width, height)
+        GL20.glUseProgram(0)
         drawCenteredString(matrixStack, textRenderer, "Username:", width / 2 - 250 / 2 - 50, 5, -1)
         drawCenteredString(matrixStack, textRenderer, "Password:", width / 2 - 250 / 2 - 50, 35, -1)
         usernameField.render(matrixStack, mouseX, mouseY, delta)
         passwordField.render(matrixStack, mouseX, mouseY, delta)
+
         super.render(matrixStack, mouseX, mouseY, delta)
     }
 
@@ -66,12 +76,14 @@ class AltScreen : Screen(LiteralText("")) {
     private fun createSession(username: String, password: String, proxy: Proxy): Session {
         val service = YggdrasilAuthenticationService(proxy, "")
         val auth = service
-                .createUserAuthentication(Agent.MINECRAFT) as YggdrasilUserAuthentication
+            .createUserAuthentication(Agent.MINECRAFT) as YggdrasilUserAuthentication
         auth.setUsername(username)
         auth.setPassword(password)
         auth.logIn()
-        return Session(auth.selectedProfile.name, auth.selectedProfile.id.toString(),
-                auth.authenticatedToken, "mojang")
+        return Session(
+            auth.selectedProfile.name, auth.selectedProfile.id.toString(),
+            auth.authenticatedToken, "mojang"
+        )
     }
 
 

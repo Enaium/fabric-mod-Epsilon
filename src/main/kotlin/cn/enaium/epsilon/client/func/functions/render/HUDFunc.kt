@@ -76,6 +76,9 @@ class HUDFunc() {
     @Setting("TitleInfo")
     private val titleInfo = EnableSetting(false)
 
+    @Setting("KeyStrokes")
+    private val keyStrokes = EnableSetting(true)
+
     private var yaw = 0.0F
     private var pitch = 0.0F
 
@@ -225,6 +228,16 @@ class HUDFunc() {
     fun messageRendered(rendered2DEvent: Rendered2DEvent) {
         Epsilon.message.remove()
     }
+
+    @Event
+    fun keyStrokes(rendering2DEvent: Rendering2DEvent) {
+        if (!keyStrokes.enable)
+            return
+
+        Render2DUtils.drawImage("keystrokes.png", 0.5 - 1, 251 / 2.0 - 1, 172 / 2.0, 172 / 2.0)
+
+    }
+
 
     @Event
     fun tabGUI(rendering2DEvent: Rendering2DEvent) {
@@ -583,7 +596,7 @@ class HUDFunc() {
         return if (tag == null) {
             name
         } else {
-            "$name {[<$tag>]}"
+            "$name[$tag]"
         }
     }
 }

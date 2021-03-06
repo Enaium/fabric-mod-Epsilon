@@ -12,7 +12,7 @@ import cn.enaium.epsilon.client.IMC
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-@Module("FastPlace", category = Category.OTHER)
+@Module("FastPlace", category = Category.WORLD)
 class FastPlaceFunc {
     @Event
     fun on(updateEvent: UpdateEvent) {

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Matrix4f
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL20
 import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
@@ -22,10 +23,13 @@ import kotlin.math.sin
  */
 object Render2DUtils {
 
-    val scaledWidth: Int
+    val scaleFactor
+        get() = MinecraftClient.getInstance().window.scaleFactor
+
+    val scaledWidth
         get() = MinecraftClient.getInstance().window.scaledWidth
 
-    val scaledHeight: Int
+    val scaledHeight
         get() = MinecraftClient.getInstance().window.scaledHeight
 
     fun drawRect(matrixStack: MatrixStack, x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
@@ -244,7 +248,7 @@ object Render2DUtils {
         RenderSystem.disableBlend()
     }
 
-    private fun blit(
+    fun blit(
         x: Double,
         y: Double,
         u: Float,
@@ -381,5 +385,24 @@ object Render2DUtils {
             if (animation - add > finalState) animation -= add.toDouble() else animation = finalState
         }
         return animation
+    }
+
+    class GLSL(fileName: String) {
+        val program = GL20.glCreateProgram()
+
+        init {
+            val vsh = GL20.glCreateShader(GL20.GL_VERTEX_SHADER)
+            GL20.glShaderSource(vsh, FileUtils.readResource("$fileName.vsh"))
+            GL20.glCompileShader(vsh)
+            GL20.glAttachShader(program, vsh)
+
+            val fsh = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER)
+            GL20.glShaderSource(fsh, FileUtils.readResource("$fileName.fsh"))
+            GL20.glCompileShader(fsh)
+            GL20.glAttachShader(program, fsh)
+
+            GL20.glLinkProgram(program)
+            GL20.glValidateProgram(program)
+        }
     }
 }
