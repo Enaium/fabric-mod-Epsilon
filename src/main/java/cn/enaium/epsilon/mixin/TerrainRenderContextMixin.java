@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.TessellateBlockEvent;
+import cn.enaium.epsilon.client.events.TessellateBlockEvent;
 import net.fabricmc.fabric.impl.client.indigo.renderer.render.TerrainRenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
@@ -23,7 +23,7 @@ public class TerrainRenderContextMixin {
         TessellateBlockEvent event = new TessellateBlockEvent(blockState);
         event.call();
 
-        if (event.getCancelled())
+        if (event.getCancel())
             callbackInfoReturnable.cancel();
     }
 }

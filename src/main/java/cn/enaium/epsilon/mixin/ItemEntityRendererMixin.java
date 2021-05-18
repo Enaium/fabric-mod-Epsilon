@@ -1,8 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.Epsilon;
-import cn.enaium.epsilon.event.events.Render2DEvent;
-import cn.enaium.epsilon.event.events.RenderItemEntityEvent;
+import cn.enaium.epsilon.client.events.RenderItemEntityEvent;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.ItemEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -24,7 +22,7 @@ public class ItemEntityRendererMixin {
     private void render(ItemEntity itemEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo callbackInfo) {
         RenderItemEntityEvent event = new RenderItemEntityEvent(itemEntity, f, g, matrixStack, vertexConsumerProvider, i);
         event.call();
-        if (event.getCancelled()) {
+        if (event.getCancel()) {
             callbackInfo.cancel();
         }
     }

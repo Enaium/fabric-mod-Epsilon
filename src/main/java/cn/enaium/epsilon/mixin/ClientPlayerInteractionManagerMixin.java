@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.BlockBreakingProgressEvent;
+import cn.enaium.epsilon.client.events.BlockBreakingProgressEvent;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

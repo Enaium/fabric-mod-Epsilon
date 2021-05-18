@@ -1,9 +1,9 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.Epsilon;
-import cn.enaium.epsilon.event.Event;
-import cn.enaium.epsilon.event.events.MotionEvent;
-import cn.enaium.epsilon.event.events.UpdateEvent;
+import cn.enaium.cf4m.CF4M;
+import cn.enaium.cf4m.event.Listener;
+import cn.enaium.epsilon.client.events.MotionedEvent;
+import cn.enaium.epsilon.client.events.MotioningEvent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -66,19 +66,9 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(at = @At("HEAD"), method = "sendChatMessage", cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo info) {
-        if (Epsilon.commandManager.processCommand(message)) {
+        if (CF4M.command.execCommand(message)) {
             info.cancel();
         }
-    }
-
-    @Inject(at = @At("HEAD"), method = "tick()V")
-    private void tick(CallbackInfo ci) {
-        new UpdateEvent().call();
-    }
-
-    @Inject(at = @At("RETURN"), method = "tick()V")
-    private void preTick(CallbackInfo ci) {
-        new MotionEvent(Event.Type.PRE, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
     }
 
     /**
@@ -86,8 +76,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
      */
     @Overwrite
     private void sendMovementPackets() {
-        MotionEvent motionEvent = new MotionEvent(Event.Type.POST, this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
-        motionEvent.call();
+        MotioningEvent motioningEvent = new MotioningEvent(this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ()));
+        motioningEvent.call();
         boolean bl = this.isSprinting();
         if (bl != this.lastSprinting) {
             ClientCommandC2SPacket.Mode mode = bl ? ClientCommandC2SPacket.Mode.START_SPRINTING : ClientCommandC2SPacket.Mode.STOP_SPRINTING;
@@ -103,17 +93,17 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         }
         if (this.isCamera()) {
 
-            float motionEventYaw = motionEvent.getYaw();
-            float motionEventPitch = motionEvent.getPitch();
-            boolean motionEventGround = motionEvent.getGround();
-            double motionEventX = motionEvent.getVec3d().x;
-            double motionEventY = motionEvent.getVec3d().y;
-            double motionEventZ = motionEvent.getVec3d().z;
+            float motionEventYaw = motioningEvent.getYaw();
+            float motionEventPitch = motioningEvent.getPitch();
+            boolean motionEventGround = motioningEvent.getGround();
+            double motionEventX = motioningEvent.getVec3d().x;
+            double motionEventY = motioningEvent.getVec3d().y;
+            double motionEventZ = motioningEvent.getVec3d().z;
 
             double d = motionEventX - this.lastX;
             double e = motionEventY - this.lastBaseY;
             double f = motionEventZ - this.lastZ;
-            double g = (motionEventZ - this.lastYaw);
+            double g = (motionEventYaw - this.lastYaw);
             double h = (motionEventPitch - this.lastPitch);
             ++this.ticksSinceLastPositionPacketSent;
             boolean bl3 = d * d + e * e + f * f > 9.0E-4D || this.ticksSinceLastPositionPacketSent >= 20;
@@ -124,16 +114,16 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             this.onGround = motionEventGround;
             if (this.hasVehicle()) {
                 Vec3d vec3d = this.getVelocity();
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.Both(vec3d.x, -999.0D, vec3d.z, motionEventYaw, motionEventPitch, motionEventGround));
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(vec3d.x, -999.0D, vec3d.z, this.yaw, this.pitch, this.onGround));
                 bl3 = false;
             } else if (bl3 && bl4) {
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.Both(motionEventX, motionEventY, motionEventZ, motionEventYaw, motionEventPitch, motionEventGround));
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(this.getX(), this.getY(), this.getZ(), this.yaw, this.pitch, this.onGround));
             } else if (bl3) {
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(motionEventX, motionEventY, motionEventZ, motionEventGround));
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(this.getX(), this.getY(), this.getZ(), this.onGround));
             } else if (bl4) {
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookOnly(motionEventYaw, motionEventPitch, motionEventGround));
-            } else if (this.lastOnGround != motionEventGround) {
-                this.networkHandler.sendPacket(new PlayerMoveC2SPacket(motionEventGround));
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(this.yaw, this.pitch, this.onGround));
+            } else if (this.lastOnGround != this.onGround) {
+                this.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(this.onGround));
             }
 
             if (bl3) {
@@ -148,8 +138,9 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
                 this.lastPitch = this.pitch;
             }
 
-            this.lastOnGround = motionEvent.getGround();
+            this.lastOnGround = motioningEvent.getGround();
             this.autoJumpEnabled = this.client.options.autoJump;
         }
+        new MotionedEvent(this.yaw, this.pitch, this.onGround, new Vec3d(this.getX(), this.getY(), this.getZ())).call();
     }
 }

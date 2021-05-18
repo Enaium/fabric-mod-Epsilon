@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "epsilon",
-  "version": "1.0",
+  "version": "${version}",
   "name": "Epsilon",
   "description": "Epsilon",
   "authors": [
@@ -26,6 +26,7 @@
   "depends": {
     "fabricloader": ">=0.8.7",
     "fabric": "*",
+    "cf4m": ">=1.4.11",
     "fabric-language-kotlin": "*"
   },
   "suggests": {

@@ -1,13 +1,10 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.event.events.RenderLivingEntityEvent;
+import cn.enaium.epsilon.client.events.RenderLivingEntityEvent;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +21,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity> {
     public void render(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo callbackInfo) {
         RenderLivingEntityEvent event = new RenderLivingEntityEvent();
         event.call();
-        if (event.getCancelled()) {
+        if (event.getCancel()) {
             callbackInfo.cancel();
         }
     }

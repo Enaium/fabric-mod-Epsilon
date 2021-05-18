@@ -1,6 +1,6 @@
 package cn.enaium.epsilon.mixin;
 
-import cn.enaium.epsilon.Epsilon;
+import cn.enaium.epsilon.client.Epsilon;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
@@ -28,11 +28,6 @@ class MinecraftClientMixin {
         Epsilon.INSTANCE.run();
     }
 
-    @Inject(at = @At("HEAD"), method = "stop()V")
-    private void stop(CallbackInfo callbackInfo) {
-        Epsilon.INSTANCE.stop();
-    }
-
     @Shadow
     public Screen currentScreen;
 
@@ -43,6 +38,6 @@ class MinecraftClientMixin {
     //    }
     @Inject(at = @At("RETURN"), method = "updateWindowTitle()V")
     private void updateWindowTitle(CallbackInfo callbackInfo) {
-        window.setTitle(Epsilon.INSTANCE.getNAME() + " | " + Epsilon.INSTANCE.getVERSION() + " | " + Epsilon.INSTANCE.getGAME() + " | " + Epsilon.INSTANCE.getAUTHOR());
+        window.setTitle(Epsilon.NAME + " | " + Epsilon.VERSION + " | " + Epsilon.GAME + " | " + Epsilon.AUTHOR);
     }
 }
