@@ -5,9 +5,9 @@ import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.cf4m.event.Listener.At
-import cn.enaium.epsilon.client.events.MotionEvent
-import cn.enaium.epsilon.client.settings.*
+import cn.enaium.epsilon.client.events.MotionedEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.setting.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.projectile.DragonFireballEntity
 import net.minecraft.entity.projectile.FireballEntity
@@ -40,23 +40,21 @@ class BulletAuraFunc {
     private val dragonFireball = EnableSetting(true)
 
     @Event
-    fun onMotion(motionEvent: MotionEvent) {
+    fun onMotion(motioningEvent: MotioningEvent) {
 
-        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
-        target = when (motionEvent.at) {
-            At.HEAD -> {
-                if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
 
-                if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
-            }
-            At.TAIL -> {
-                if (target == null) return
-                MC.interactionManager!!.attackEntity(MC.player, target)
-                MC.player!!.swingHand(Hand.MAIN_HAND)
-                null
-            }
-            At.NONE -> TODO()
-        }
+        if (delay.enable) if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
+
+        target = if (getTargets().isNotEmpty()) getTargets().sortedBy { MC.player!!.squaredDistanceTo(it) }[0] else null
+
+    }
+
+    @Event
+    fun onMotion(motionedEvent: MotionedEvent) {
+        if (target == null) return
+        MC.interactionManager!!.attackEntity(MC.player, target)
+        MC.player!!.swingHand(Hand.MAIN_HAND)
+        target = null
     }
 
     private fun getTargets(): ArrayList<Entity> {

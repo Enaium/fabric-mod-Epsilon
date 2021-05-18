@@ -3,10 +3,10 @@ package cn.enaium.epsilon.client.func.functions.movement
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.settings.DoubleSetting
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.setting.DoubleSetting
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 
@@ -24,7 +24,7 @@ class FlightFunc {
     private var speed = DoubleSetting(3.0, 1.0, 10.0)
 
     @Event
-    fun on(updateEvent: UpdateEvent) {
+    fun on(motioningEvent: MotioningEvent) {
 
         MC.player!!.abilities.flying = false
         MC.player!!.flyingSpeed = speed.current.toFloat()

@@ -1,14 +1,14 @@
 package cn.enaium.epsilon.client.func.functions.render
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Enable
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.screen.clickgui.CategoryListScreen
-import cn.enaium.epsilon.client.settings.EnableSetting
+import cn.enaium.epsilon.client.setting.EnableSetting
 import org.lwjgl.glfw.GLFW
 
 /**
@@ -30,6 +30,6 @@ class ClickGUIFunc {
         }
 
         MC.openScreen(CategoryListScreen())
-        cf4m.module.enable(this)
+        CF4M.module.getByInstance(this).enable()
     }
 }

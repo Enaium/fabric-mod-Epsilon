@@ -15,13 +15,14 @@ import net.minecraft.util.math.Vec3d
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-class BlockBreakingProgressEvent(val blockPos: BlockPos, val direction: Direction) : Listener(At.NONE)
-class MotionEvent(at: At, var yaw: Float, var pitch: Float, var ground: Boolean, var vec3d: Vec3d) : Listener(at)
-class MouseScrollEvent(val windowHandle: Long, val up: Double, val down: Double) : Listener(At.NONE)
-class Rendering2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.HEAD)
-class Rendered2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener(At.TAIL)
-class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Listener(At.NONE)
-class RenderBlockEntityEvent(val blockEntity: BlockEntity) : Listener(At.NONE)
+class BlockBreakingProgressEvent(val blockPos: BlockPos, val direction: Direction) : Listener()
+class MotioningEvent(var yaw: Float, var pitch: Float, var ground: Boolean, var vec3d: Vec3d) : Listener()
+class MotionedEvent(var yaw: Float, var pitch: Float, var ground: Boolean, var vec3d: Vec3d) : Listener()
+class MouseScrollEvent(val windowHandle: Long, val up: Double, val down: Double) : Listener()
+class Rendering2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener()
+class Rendered2DEvent(var matrixStack: MatrixStack, var partialTicks: Float) : Listener()
+class Render3DEvent(val tickDelta: Float, val limitTime: Long, val matrixStack: MatrixStack) : Listener()
+class RenderBlockEntityEvent(val blockEntity: BlockEntity) : Event()
 class RenderItemEntityEvent(
     val itemEntity: ItemEntity,
     val yaw: Float,
@@ -29,11 +30,15 @@ class RenderItemEntityEvent(
     val matrixStack: MatrixStack,
     val vertexConsumerProvider: VertexConsumerProvider,
     val light: Int
-) : Listener(At.NONE)
+) : Event()
 
-class RenderLivingEntityEvent : Listener(At.NONE)
-class ShouldDrawSideEvent(val blockState: BlockState) : Listener(At.NONE) {
+class RenderLivingEntityEvent : Event()
+class ShouldDrawSideEvent(val blockState: BlockState) : Listener() {
     var rendered: Boolean? = null
 }
 
-class TessellateBlockEvent(val blockState: BlockState) : Listener(At.NONE)
+class TessellateBlockEvent(val blockState: BlockState) : Event()
+class KeyboardEvent(val key: Int) : Listener()
+open class Event : Listener() {
+    var cancel: Boolean = false
+}

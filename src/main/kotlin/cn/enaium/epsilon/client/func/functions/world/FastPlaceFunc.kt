@@ -2,7 +2,7 @@ package cn.enaium.epsilon.client.func.functions.world
 
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.UpdateEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.IMC
 
@@ -15,7 +15,7 @@ import cn.enaium.epsilon.client.IMC
 @Module("FastPlace", category = Category.WORLD)
 class FastPlaceFunc {
     @Event
-    fun on(updateEvent: UpdateEvent) {
+    fun on(motioningEvent: MotioningEvent) {
         IMC.mc.itemUseCooldown = 0
     }
 }

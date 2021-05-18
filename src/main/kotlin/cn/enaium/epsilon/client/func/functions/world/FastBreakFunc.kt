@@ -2,7 +2,7 @@ package cn.enaium.epsilon.client.func.functions.world
 
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.UpdateEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.events.BlockBreakingProgressEvent
@@ -22,7 +22,7 @@ import org.lwjgl.glfw.GLFW
 class FastBreakFunc {
 
     @Event
-    fun onUpdate(updateEvent: UpdateEvent) {
+    fun onUpdate(motioningEvent: MotioningEvent) {
         IMC.interactionManager.blockBreakingCooldown = 0
     }
 

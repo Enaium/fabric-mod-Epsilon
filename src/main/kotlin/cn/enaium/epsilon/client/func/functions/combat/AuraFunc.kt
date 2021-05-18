@@ -1,14 +1,15 @@
 package cn.enaium.epsilon.client.func.functions.combat
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.cf4m
-import cn.enaium.cf4m.event.Listener.At
-import cn.enaium.epsilon.client.events.MotionEvent
-import cn.enaium.epsilon.client.settings.*
+import cn.enaium.epsilon.client.events.MotionedEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.func.Func
+import cn.enaium.epsilon.client.setting.*
 import cn.enaium.epsilon.client.utils.RotationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.*
@@ -77,44 +78,39 @@ class AuraFunc {
     private var target: LivingEntity? = null
 
     @Event
-    fun onMotion(motionEvent: MotionEvent) {
-        cf4m.module.setValue(this, "tag", priority.current)
-        when (motionEvent.at) {
-            At.HEAD -> {
+    fun onMotion(motioningEvent: MotioningEvent) {
+        CF4M.module.getByInstance(this).getExtend<Func>().tag = priority.current
 
-                if (!cf4m.module.getEnable(cf4m.module.getModule("NoCooldown"))) {
-                    if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
-                }
-
-
-                target = when (priority.current) {
-                    "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) })
-                        .orElse(null)
-                    "Fov" -> getTargets().min(Comparator.comparingDouble {
-                        RotationUtils.getDistanceBetweenAngles(it.boundingBox.center)
-                    }).orElse(null)
-                    "Angle" -> getTargets().min(Comparator.comparingDouble {
-                        RotationUtils.getAngleToLookVec(it.boundingBox.center)
-                    }).orElse(null)
-                    else -> getTargets().min(Comparator.comparingDouble { it.health.toDouble() }).orElse(null)
-                }
-            }
-            At.TAIL -> {
-                if (target == null) return
-
-                if (aim.enable) {
-                    motionEvent.yaw =
-                        RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).yaw
-                    motionEvent.pitch =
-                        RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).pitch
-                }
-
-                MC.interactionManager!!.attackEntity(MC.player, target)
-                MC.player!!.swingHand(Hand.MAIN_HAND)
-                target = null
-            }
-            else -> TODO()
+        if (!CF4M.module.getByName("NoCooldown").getEnable()) {
+            if (MC.player!!.getAttackCooldownProgress(0f) < 1) return
         }
+
+        target = when (priority.current) {
+            "Distance" -> getTargets().min(Comparator.comparingDouble { MC.player!!.squaredDistanceTo(it) })
+                .orElse(null)
+            "Fov" -> getTargets().min(Comparator.comparingDouble {
+                RotationUtils.getDistanceBetweenAngles(it.boundingBox.center)
+            }).orElse(null)
+            "Angle" -> getTargets().min(Comparator.comparingDouble {
+                RotationUtils.getAngleToLookVec(it.boundingBox.center)
+            }).orElse(null)
+            else -> getTargets().min(Comparator.comparingDouble { it.health.toDouble() }).orElse(null)
+        }
+    }
+
+    fun onMotion(motionedEvent: MotionedEvent) {
+        if (target == null) return
+
+        if (aim.enable) {
+            motionedEvent.yaw =
+                RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).yaw
+            motionedEvent.pitch =
+                RotationUtils.getNeededRotations(RotationUtils.getRandomCenter(target!!.boundingBox)).pitch
+        }
+
+        MC.interactionManager!!.attackEntity(MC.player, target)
+        MC.player!!.swingHand(Hand.MAIN_HAND)
+        target = null
     }
 
     private fun getTargets(): Stream<LivingEntity> {

@@ -7,7 +7,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.Rendering2DEvent
-import cn.enaium.epsilon.client.settings.ModeSetting
+import cn.enaium.epsilon.client.setting.ModeSetting
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 

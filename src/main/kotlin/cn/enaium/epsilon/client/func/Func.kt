@@ -1,7 +1,6 @@
 package cn.enaium.epsilon.client.func
 
-import cn.enaium.cf4m.annotation.module.extend.Extend
-import cn.enaium.cf4m.annotation.module.extend.Value
+import cn.enaium.cf4m.annotation.module.Extend
 
 /**
  * Project: Epsilon
@@ -10,6 +9,5 @@ import cn.enaium.cf4m.annotation.module.extend.Value
  */
 @Extend
 class Func {
-    @Value("tag")
-    lateinit var haha: String
+    lateinit var tag: String
 }

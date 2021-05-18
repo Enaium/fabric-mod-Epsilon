@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.client.screen.clickgui
 
-import cn.enaium.epsilon.client.cf4m
+import cn.enaium.cf4m.CF4M
+import cn.enaium.cf4m.provider.ModuleProvider
 import cn.enaium.epsilon.client.ui.UI
 import cn.enaium.epsilon.client.ui.elements.Label
 import org.lwjgl.glfw.GLFW
@@ -11,17 +12,17 @@ import org.lwjgl.glfw.GLFW
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
-class EditKeyboardScreen(val func: Any) : UI() {
+class EditKeyboardScreen(val func: ModuleProvider) : UI() {
     override fun initUI() {
         super.initUI()
-        addElement(Label(width / 2 - 50, height / 2 - 10, "Key:${cf4m.module.getKey(func)}"))
+        addElement(Label(width / 2 - 50, height / 2 - 10, "Key:${func.key}"))
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             onClose()
         } else {
-            cf4m.module.setKey(func, keyCode)
+            func.key = keyCode
             onClose()
         }
         return super.keyPressed(keyCode, scanCode, modifiers)

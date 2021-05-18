@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerEntityMixin {
     @Inject(at = @At("HEAD"), method = "getAttackCooldownProgressPerTick", cancellable = true)
     public void getAttackCooldownProgressPerTick(CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        if (CF4M.INSTANCE.module.getEnable(CF4M.INSTANCE.module.getModule("NoCooldown"))) {
+        if (CF4M.module.getByName("NoCooldown").getEnable()) {
             callbackInfoReturnable.setReturnValue(0.01953125F);
         }
     }

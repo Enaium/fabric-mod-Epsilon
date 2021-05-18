@@ -3,12 +3,12 @@ package cn.enaium.epsilon.client.func.functions.combat
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.settings.ModeSetting
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.setting.ModeSetting
 import net.minecraft.entity.LivingEntity
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket.PositionOnly
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.hit.HitResult
 
@@ -26,7 +26,7 @@ class CriticalFunc {
     private val mode = ModeSetting("Packet", arrayListOf("Packet", "LowJump", "Jump"))
 
     @Event
-    fun on(updateEvent: UpdateEvent) {
+    fun on(motioningEvent: MotioningEvent) {
 
         if (MC.crosshairTarget == null || MC.crosshairTarget!!.type != HitResult.Type.ENTITY || (MC.crosshairTarget as EntityHitResult).entity !is LivingEntity)
             return
@@ -61,7 +61,7 @@ class CriticalFunc {
 
     private fun sendPos(x: Double, y: Double, z: Double, onGround: Boolean) {
         MC.player!!.networkHandler.sendPacket(
-            PositionOnly(x, y, z, onGround)
+            PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, onGround)
         )
     }
 }

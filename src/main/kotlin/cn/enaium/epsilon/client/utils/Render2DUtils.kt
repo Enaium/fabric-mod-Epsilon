@@ -1,6 +1,7 @@
 package cn.enaium.epsilon.client.utils
 
 import cn.enaium.epsilon.client.MC
+import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawableHelper
@@ -83,9 +84,9 @@ object Render2DUtils {
         GL11.glTranslated(x, y, 0.0)
         GL11.glScaled(1.5, 1.5, 1.5)
         GL11.glScaled(0.75, 0.75, 0.75)
-        DiffuseLighting.enable()
+        DiffuseLighting.enableGuiDepthLighting()
         MC.itemRenderer.renderGuiItemIcon(itemStack, 0, 0)
-        DiffuseLighting.disable()
+        DiffuseLighting.disableGuiDepthLighting()
 
         GL11.glPopMatrix()
     }
@@ -320,7 +321,7 @@ object Render2DUtils {
         bufferBuilder.vertex(xEnd, yStart, z).texture(uEnd, vStart).next()
         bufferBuilder.vertex(xStart, yStart, z).texture(uStart, vStart).next()
         bufferBuilder.end()
-        RenderSystem.enableAlphaTest()
+        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA)
         BufferRenderer.draw(bufferBuilder)
     }
 

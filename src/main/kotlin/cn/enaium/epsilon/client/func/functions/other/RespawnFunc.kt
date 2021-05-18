@@ -2,9 +2,9 @@ package cn.enaium.epsilon.client.func.functions.other
 
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.UpdateEvent
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
+import cn.enaium.epsilon.client.events.MotioningEvent
 import net.minecraft.client.gui.screen.DeathScreen
 
 /**
@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.DeathScreen
 @Module("AutoRespawn", category = Category.OTHER)
 class RespawnFunc {
     @Event
-    fun on(updateEvent: UpdateEvent) {
+    fun on(motioningEvent: MotioningEvent) {
         if (MC.currentScreen is DeathScreen) {
             MC.player!!.requestRespawn()
             MC.openScreen(null)

@@ -1,6 +1,5 @@
 package cn.enaium.epsilon.client.utils
 
-import cn.enaium.epsilon.client.cf4m
 import net.minecraft.util.Formatting
 import java.text.DecimalFormat
 import java.util.*

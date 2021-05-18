@@ -4,12 +4,12 @@ import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Disable
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.Listener.At
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.events.MotionEvent
-import cn.enaium.epsilon.client.settings.EnableSetting
+import cn.enaium.epsilon.client.events.MotionedEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.setting.EnableSetting
 import net.minecraft.block.AirBlock
 import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
@@ -35,41 +35,37 @@ class ScaffoldFunc {
     private val eagle = EnableSetting(false)
 
     @Event
-    fun on(motionEvent: MotionEvent) {
+    fun on(motioningEvent: MotioningEvent) {
         if (eagle.enable) {
             MC.options.keySneak.isPressed = (currentPos != null)
         }
 
-        when (motionEvent.at) {
-            At.HEAD -> {
-                currentPos = null
-                currentDirection = null
-                val pos = BlockPos(MC.player!!.pos.x, MC.player!!.pos.y - 1.0, MC.player!!.pos.z)
-                if (MC.world!!.getBlockState(pos).block is AirBlock) {
-                    setBlockAndFacing(pos)
-                }
-            }
-            At.TAIL -> {
-                if (currentPos != null) {
-                    var newSlot = -1
-                    for (i in 0..9) {
-                        val itemStack = MC.player!!.inventory.getStack(i)
-                        if (itemStack.isEmpty || itemStack.item !is BlockItem)
-                            continue
-                        newSlot = i
-                    }
+        currentPos = null
+        currentDirection = null
+        val pos = BlockPos(MC.player!!.pos.x, MC.player!!.pos.y - 1.0, MC.player!!.pos.z)
+        if (MC.world!!.getBlockState(pos).block is AirBlock) {
+            setBlockAndFacing(pos)
+        }
+    }
 
-                    if (newSlot == -1)
-                        return
-
-                    MC.player!!.swingHand(Hand.MAIN_HAND)
-                    onPlayerRightClick(
-                        currentPos!!, currentDirection!!,
-                        Vec3d(currentPos!!.x.toDouble(), currentPos!!.y.toDouble(), currentPos!!.z.toDouble())
-                    )
-                }
+    fun onMotion(motionedEvent: MotionedEvent) {
+        if (currentPos != null) {
+            var newSlot = -1
+            for (i in 0..9) {
+                val itemStack = MC.player!!.inventory.getStack(i)
+                if (itemStack.isEmpty || itemStack.item !is BlockItem)
+                    continue
+                newSlot = i
             }
-            else -> TODO()
+
+            if (newSlot == -1)
+                return
+
+            MC.player!!.swingHand(Hand.MAIN_HAND)
+            onPlayerRightClick(
+                currentPos!!, currentDirection!!,
+                Vec3d(currentPos!!.x.toDouble(), currentPos!!.y.toDouble(), currentPos!!.z.toDouble())
+            )
         }
     }
 

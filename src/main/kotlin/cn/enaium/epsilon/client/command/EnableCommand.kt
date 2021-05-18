@@ -1,9 +1,9 @@
-package cn.enaium.epsilon.client.commands
+package cn.enaium.epsilon.client.command
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.command.Command
 import cn.enaium.cf4m.annotation.command.Exec
 import cn.enaium.cf4m.annotation.command.Param
-import cn.enaium.epsilon.client.cf4m
 
 /**
  * Project: Epsilon
@@ -14,17 +14,17 @@ import cn.enaium.epsilon.client.cf4m
 class EnableCommand {
     @Exec
     fun exec() {
-        for (ms in cf4m.module.modules)
-            cf4m.configuration.message(cf4m.module.getName(ms))
+        for (ms in CF4M.module.all)
+            CF4M.configuration.command().message(ms.name)
     }
 
     @Exec
     fun exec(@Param("Module") moduleName: String) {
-        val func = cf4m.module.getModule(moduleName)
+        val func = CF4M.module.getByName(moduleName)
         if (func == null) {
             error("The func with the name $moduleName does not exist.")
         } else {
-            cf4m.module.enable(func)
+            func.enable()
         }
     }
 }

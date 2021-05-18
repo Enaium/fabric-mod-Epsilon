@@ -1,11 +1,11 @@
 package cn.enaium.epsilon.client.func.functions.render
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.RenderItemEntityEvent
-import cn.enaium.epsilon.client.cf4m
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.item.BlockItem
@@ -30,7 +30,7 @@ class ItemPhysicsFunc {
 
         renderItemEntityEvent.cancel = true
 
-        if (cf4m.module.getEnable(cf4m.module.getModule("NoItem")))
+        if (CF4M.module.getByName("NoItem").enable)
             return
 
         val itemStack: ItemStack = renderItemEntityEvent.itemEntity.stack
@@ -55,7 +55,7 @@ class ItemPhysicsFunc {
         val rotator = Rotation()
         if (!renderItemEntityEvent.itemEntity.isOnGround && !renderItemEntityEvent.itemEntity.isSubmergedInWater) {
             val rotation =
-                (renderItemEntityEvent.itemEntity.age + renderItemEntityEvent.delta) / 20.0F + renderItemEntityEvent.itemEntity.hoverHeight
+                (renderItemEntityEvent.itemEntity.age + renderItemEntityEvent.delta) / 20.0F + renderItemEntityEvent.itemEntity.height
             renderItemEntityEvent.matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(rotation))
             rotator.setRotation(Vec3d(0.0, 0.0, rotation.toDouble()))
         } else {

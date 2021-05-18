@@ -1,4 +1,4 @@
-package cn.enaium.epsilon.client.settings
+package cn.enaium.epsilon.client.setting
 
 /**
  * Project: Epsilon

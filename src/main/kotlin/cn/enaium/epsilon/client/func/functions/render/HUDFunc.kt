@@ -1,21 +1,24 @@
 package cn.enaium.epsilon.client.func.functions.render
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
-import cn.enaium.cf4m.event.events.KeyboardEvent
 import cn.enaium.cf4m.module.Category
+import cn.enaium.cf4m.provider.ModuleProvider
+import cn.enaium.cf4m.provider.SettingProvider
 import cn.enaium.epsilon.client.Epsilon
 import cn.enaium.epsilon.client.Epsilon.AUTHOR
 import cn.enaium.epsilon.client.Epsilon.NAME
 import cn.enaium.epsilon.client.Epsilon.VERSION
 import cn.enaium.epsilon.client.IMC
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.cf4m
-import cn.enaium.epsilon.client.events.MotionEvent
+import cn.enaium.epsilon.client.events.KeyboardEvent
+import cn.enaium.epsilon.client.events.MotioningEvent
 import cn.enaium.epsilon.client.events.Rendered2DEvent
 import cn.enaium.epsilon.client.events.Rendering2DEvent
-import cn.enaium.epsilon.client.settings.*
+import cn.enaium.epsilon.client.func.Func
+import cn.enaium.epsilon.client.setting.*
 import cn.enaium.epsilon.client.utils.ColorUtils
 import cn.enaium.epsilon.client.utils.FontUtils.drawStringWithShadow
 import cn.enaium.epsilon.client.utils.FontUtils.fontHeight
@@ -123,9 +126,9 @@ class HUDFunc() {
     }
 
     @Event
-    fun motion(motionEvent: MotionEvent) {
-        yaw = Utils.valueFix(motionEvent.yaw)
-        pitch = Utils.valueFix(motionEvent.pitch)
+    fun motion(motioningEvent: MotioningEvent) {
+        yaw = Utils.valueFix(motioningEvent.yaw)
+        pitch = Utils.valueFix(motioningEvent.pitch)
     }
 
     @Event
@@ -197,14 +200,8 @@ class HUDFunc() {
 
         var yStart = 1
 
-        val functions = ArrayList<Any>()
-        for (m in cf4m.module.modules) {
-            if (cf4m.module.getEnable(m)) {
-                functions.add(m)
-            }
-        }
-
-        val mods: ArrayList<Any> = functions
+        val mods: ArrayList<ModuleProvider> =
+            CF4M.module.all.filter { it.enable }.toCollection(ArrayList<ModuleProvider>())
         mods.sortByDescending { getWidth(getDisplayName(it)) }
         for ((index, func) in mods.withIndex()) {
             val startX = scaledWidth - getWidth(getDisplayName(func)) - 6
@@ -300,10 +297,10 @@ class HUDFunc() {
                 }
                 drawStringWithShadow(
                     rendering2DEvent.matrixStack,
-                    cf4m.module.getName(func),
+                    func.name,
                     startModsX + 2 + if (getCurrentFunc() == func) 2 else 0,
                     startModsY + 2,
-                    if (cf4m.module.getEnable(func)) -1 else Color.GRAY.rgb
+                    if (func.enable) -1 else Color.GRAY.rgb
                 )
                 startModsY += fontHeight + 2
             }
@@ -331,11 +328,11 @@ class HUDFunc() {
                         ColorUtils.SELECT
                     )
                 }
-                when (setting) {
+                when (val s = setting.getSetting<Any>()) {
                     is EnableSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.enable,
+                            setting.name + ": " + s.enable,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -344,7 +341,7 @@ class HUDFunc() {
                     is IntegerSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            setting.name + ": " + s.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -353,7 +350,7 @@ class HUDFunc() {
                     is DoubleSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            setting.name + ": " + s.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -362,7 +359,7 @@ class HUDFunc() {
                     is FloatSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            setting.name + ": " + s.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -371,7 +368,7 @@ class HUDFunc() {
                     is LongSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            setting.name + ": " + s.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -380,7 +377,7 @@ class HUDFunc() {
                     is ModeSetting -> {
                         drawStringWithShadow(
                             rendering2DEvent.matrixStack,
-                            cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current,
+                            setting.name + ": " + s.current,
                             startSettingX + 2 + if (getCurrentSetting() == setting) 2 else 0,
                             startSettingY + 2,
                             if (editMode && getCurrentSetting() == setting) -1 else Color.GRAY.rgb
@@ -478,11 +475,11 @@ class HUDFunc() {
     private fun right(key: Int) {
         if (screen == 0) {
             screen = 1
-        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) == null) {
-            cf4m.module.enable(getCurrentFunc())
-        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) != null && key == GLFW.GLFW_KEY_ENTER) {
-            cf4m.module.enable(getCurrentFunc())
-        } else if (screen == 1 && cf4m.setting.getSettings(getCurrentFunc()) != null) {
+        } else if (screen == 1 && getCurrentFunc().setting.all.isNotEmpty()) {
+            getCurrentFunc().enable()
+        } else if (screen == 1 && getCurrentFunc().setting.all.isNotEmpty() && key == GLFW.GLFW_KEY_ENTER) {
+            getCurrentFunc().enable()
+        } else if (screen == 1 && getCurrentFunc().setting.all.isNotEmpty()) {
             screen = 2
         } else if (screen == 2) {
             editMode = !editMode
@@ -510,47 +507,47 @@ class HUDFunc() {
         }
     }
 
-    private fun getCurrentSetting(): Any {
+    private fun getCurrentSetting(): SettingProvider {
         return getSettingsForCurrentFunc()[currentSettingIndex]
     }
 
-    private fun getSettingsForCurrentFunc(): ArrayList<Any> {
-        return cf4m.setting.getSettings(getCurrentFunc())
+    private fun getSettingsForCurrentFunc(): ArrayList<SettingProvider> {
+        return getCurrentFunc().setting.all
     }
 
     private fun getCurrentCategory(): Category {
         return categoryValues[currentCategoryIndex]
     }
 
-    private fun getCurrentFunc(): Any {
+    private fun getCurrentFunc(): ModuleProvider {
         return getModsForCurrentCategory()[currentModIndex]
     }
 
-    private fun getModsForCurrentCategory(): ArrayList<Any> {
-        return cf4m.module.getModules(getCurrentCategory())
+    private fun getModsForCurrentCategory(): ArrayList<ModuleProvider> {
+        return CF4M.module.getAllByCategory(getCurrentCategory())
     }
 
     private fun getWidestSetting(): Int {
         var width = 0
         for (setting in getSettingsForCurrentFunc()) {
-            val name: String = when (setting) {
+            val name: String = when (val s = setting.getSetting<Any>()) {
                 is EnableSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.enable
+                    setting.name + ": " + s.enable
                 }
                 is IntegerSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                    setting.name + ": " + s.current
                 }
                 is FloatSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                    setting.name + ": " + s.current
                 }
                 is DoubleSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                    setting.name + ": " + s.current
                 }
                 is LongSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                    setting.name + ": " + s.current
                 }
                 is ModeSetting -> {
-                    cf4m.setting.getName(getCurrentFunc(), setting) + ": " + setting.current
+                    setting.name + ": " + s.current
                 }
                 else -> "NULL"
             }
@@ -563,8 +560,8 @@ class HUDFunc() {
 
     private fun getWidestMod(): Int {
         var width = 0
-        for (module in cf4m.module.modules) {
-            val cWidth = getWidth(cf4m.module.getName(module))
+        for (module in CF4M.module.all) {
+            val cWidth = getWidth(module.name)
             if (cWidth > width) {
                 width = cWidth
             }
@@ -576,7 +573,7 @@ class HUDFunc() {
         var width = 0
         for (c in categoryValues) {
             val name: String = c.name
-            val cWidth = getWidth(name.substring(0, 1).toUpperCase() + name.substring(1, name.length).toLowerCase())
+            val cWidth = getWidth(name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase())
             if (cWidth > width) {
                 width = cWidth
             }
@@ -590,9 +587,9 @@ class HUDFunc() {
         return Color.getHSBColor((rainbowState / 360.0f).toFloat(), 0.8f, 0.7f).rgb
     }
 
-    private fun getDisplayName(module: Any): String {
-        val name = cf4m.module.getName(module)
-        val tag = cf4m.module.getValue<String>(module, "tag")
+    private fun getDisplayName(module: ModuleProvider): String {
+        val name = module.name
+        val tag = module.getExtend<Func>()
         return if (tag == null) {
             name
         } else {

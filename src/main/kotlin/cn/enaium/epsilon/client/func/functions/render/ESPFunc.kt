@@ -8,7 +8,7 @@ import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.Render3DEvent
-import cn.enaium.epsilon.client.settings.EnableSetting
+import cn.enaium.epsilon.client.setting.EnableSetting
 import cn.enaium.epsilon.client.utils.Render3DUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.mob.SlimeEntity

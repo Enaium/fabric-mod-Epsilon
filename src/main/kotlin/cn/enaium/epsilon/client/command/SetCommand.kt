@@ -1,15 +1,14 @@
-package cn.enaium.epsilon.client.commands
+package cn.enaium.epsilon.client.command
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.annotation.command.Command
 import cn.enaium.cf4m.annotation.command.Exec
 import cn.enaium.cf4m.annotation.command.Param
-import cn.enaium.epsilon.client.Epsilon
-import cn.enaium.epsilon.client.bean.FuncBean
-import cn.enaium.epsilon.client.cf4m
-import cn.enaium.epsilon.client.settings.BlockListSetting
-import cn.enaium.epsilon.client.settings.*
+import cn.enaium.cf4m.provider.ModuleProvider
+import cn.enaium.cf4m.provider.SettingProvider
+import cn.enaium.epsilon.client.setting.BlockListSetting
+import cn.enaium.epsilon.client.setting.*
 import net.minecraft.util.Formatting
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -18,27 +17,28 @@ import kotlin.collections.ArrayList
  * -----------------------------------------------------------
  * Copyright © 2020-2021 | Enaium | All rights reserved.
  */
+@Suppress("ImplicitThis")
 @Command("s", "set")
 class SetCommand {
-    lateinit var currentFunc: FuncBean
-    lateinit var settings: ArrayList<Any>
-    lateinit var currentSetting: Any
+    lateinit var currentFunc: ModuleProvider
+    lateinit var settings: ArrayList<SettingProvider>
+    lateinit var currentSetting: SettingProvider
 
     @Exec
     fun exec(@Param("Module") moduleName: String) {
-        currentFunc = FuncBean(cf4m.module.getModule(moduleName))
-        if (currentFunc.func == null) {
+        currentFunc = CF4M.module.getByName(moduleName)
+        if (currentFunc == null) {
             error("""The func with the name "$moduleName" does not exist.""", "")
         } else {
-            settings = cf4m.setting.getSettings(currentFunc.func)
+            settings = currentFunc.setting.all
             if (settings == null) {
                 error("""The func with the name "$moduleName" no setting exists.""", "")
             } else {
                 message("Here are the list of settings:", "")
                 for (setting in settings) {
                     message(
-                        cf4m.setting.getName(currentFunc.func, setting),
-                        "[" + setting.javaClass.simpleName + "]" + cf4m.setting.getDescription(currentFunc.func, setting)
+                        setting.name,
+                        "[" + setting.javaClass.simpleName + "]" + setting.description
                     )
                 }
             }
@@ -48,27 +48,27 @@ class SetCommand {
     @Exec
     fun exec(@Param("Module") moduleName: String, @Param("Setting") settingName: String) {
         exec(moduleName)
-        val setting = cf4m.setting.getSetting(currentFunc.func, settingName)
+        val setting = currentFunc.setting.getByName(settingName)
         if (setting != null) {
             currentSetting = setting
-            when (setting) {
+            when (val s = setting.getSetting<Any>()) {
                 is EnableSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]" + "Enable:", setting.enable)
+                    message("[${setting.name}]" + "Enable:", s.enable)
                 }
                 is IntegerSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]" + "Current:", setting.current)
+                    message("[${setting.name}]" + "Current:", s.current)
                 }
                 is FloatSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]" + "Current:", setting.current)
+                    message("[${setting.name}]" + "Current:", s.current)
                 }
                 is DoubleSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]" + "Current:", setting.current)
+                    message("[${setting.name}]" + "Current:", s.current)
                 }
                 is LongSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]" + "Current:", setting.current)
+                    message("[${setting.name}]" + "Current:", s.current)
                 }
                 is BlockListSetting -> {
-                    message("[${cf4m.setting.getName(currentFunc.func, setting)}]", setting.blockList.toString())
+                    message("[${setting.name}]", s.blockList.toString())
                 }
             }
         } else {
@@ -83,7 +83,7 @@ class SetCommand {
         @Param("SettingValue") settingValue: String
     ) {
         exec(moduleName, settingName)
-        when (val setting = currentSetting) {
+        when (val setting = currentSetting.getSetting<Any>()) {
             is EnableSetting -> {
                 setting.enable = settingValue.toBoolean()
                 success("Enable:", setting.enable)
@@ -112,14 +112,14 @@ class SetCommand {
     private val error: String = "[" + Formatting.RED + "error" + Formatting.WHITE + "] "
 
     private fun message(string: String, args: Any) {
-        cf4m.configuration.message(string + Formatting.LIGHT_PURPLE + args)
+        CF4M.configuration.command().message(string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun error(string: String, args: Any) {
-        cf4m.configuration.message(error + string + Formatting.LIGHT_PURPLE + args)
+        CF4M.configuration.command().message(error + string + Formatting.LIGHT_PURPLE + args)
     }
 
     private fun success(string: String, args: Any) {
-        cf4m.configuration.message(success + string + Formatting.LIGHT_PURPLE + args)
+        CF4M.configuration.command().message(success + string + Formatting.LIGHT_PURPLE + args)
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Util
 import net.minecraft.util.math.MathHelper
+import org.lwjgl.opengl.GL11
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Consumer
@@ -454,7 +455,7 @@ class TextField : Element {
         }
         val tessellator = Tessellator.getInstance()
         val bufferBuilder = tessellator.buffer
-        RenderSystem.color4f(0.0f, 0.0f, 255.0f, 255.0f)
+        GL11.glColor4f(0.0f, 0.0f, 255.0f, 255.0f)
         RenderSystem.disableTexture()
         RenderSystem.enableColorLogicOp()
         RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE)

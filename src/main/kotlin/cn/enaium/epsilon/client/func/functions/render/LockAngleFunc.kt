@@ -4,8 +4,8 @@ import cn.enaium.cf4m.annotation.Event
 import cn.enaium.cf4m.annotation.Setting
 import cn.enaium.cf4m.annotation.module.Module
 import cn.enaium.cf4m.module.Category
-import cn.enaium.epsilon.client.events.MotionEvent
-import cn.enaium.epsilon.client.settings.FloatSetting
+import cn.enaium.epsilon.client.events.MotioningEvent
+import cn.enaium.epsilon.client.setting.FloatSetting
 
 /**
  * Project: Epsilon
@@ -22,8 +22,8 @@ class LockAngleFunc {
     private val pitch = FloatSetting(0F, -90F, 90F)
 
     @Event
-    fun on(motionEvent: MotionEvent) {
-        motionEvent.yaw = yaw.current
-        motionEvent.pitch = pitch.current
+    fun on(motioningEvent: MotioningEvent) {
+        motioningEvent.yaw = yaw.current
+        motioningEvent.pitch = pitch.current
     }
 }

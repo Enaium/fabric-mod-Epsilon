@@ -10,7 +10,7 @@ import cn.enaium.epsilon.client.MC
 import cn.enaium.epsilon.client.events.RenderBlockEntityEvent
 import cn.enaium.epsilon.client.events.ShouldDrawSideEvent
 import cn.enaium.epsilon.client.events.TessellateBlockEvent
-import cn.enaium.epsilon.client.settings.BlockListSetting
+import cn.enaium.epsilon.client.setting.BlockListSetting
 import cn.enaium.epsilon.client.utils.BlockUtils
 import net.minecraft.block.Block
 import org.lwjgl.glfw.GLFW

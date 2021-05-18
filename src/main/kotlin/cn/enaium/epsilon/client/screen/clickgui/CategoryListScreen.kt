@@ -1,8 +1,8 @@
 package cn.enaium.epsilon.client.screen.clickgui
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.ui.UI
 import cn.enaium.epsilon.client.ui.elements.Button
 import cn.enaium.epsilon.client.utils.Render2DUtils
@@ -19,7 +19,7 @@ class CategoryListScreen : UI() {
         var y = 50
         for (category in Category.values()) {
 
-            if (cf4m.module.getModules(category).isEmpty())
+            if (CF4M.module.getAllByCategory(category).isEmpty())
                 continue
 
             addElement(object : Button(

@@ -1,8 +1,8 @@
 package cn.enaium.epsilon.client.screen.clickgui
 
+import cn.enaium.cf4m.CF4M
 import cn.enaium.cf4m.module.Category
 import cn.enaium.epsilon.client.MC
-import cn.enaium.epsilon.client.cf4m
 import cn.enaium.epsilon.client.ui.UI
 import cn.enaium.epsilon.client.ui.elements.Button
 import cn.enaium.epsilon.client.ui.elements.ScrollPanel
@@ -21,14 +21,14 @@ class FuncListScreen(val category: Category) : UI() {
         super.initUI()
         val scrollPanel = ScrollPanel(Render2DUtils.scaledWidth / 2 - 50, 50, 100, 120)
         var y = 0
-        for (func in cf4m.module.getModules(category)) {
+        for (func in CF4M.module.getAllByCategory(category)) {
             scrollPanel.addElement(object : Button(
                 0,
                 y,
-                cf4m.module.getName(func)
+                func.name
             ) {
                 override fun onLeftClicked() {
-                    cf4m.module.enable(func)
+                    func.enable()
                     super.onLeftClicked()
                 }
 
